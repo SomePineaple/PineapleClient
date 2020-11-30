@@ -1,0 +1,23 @@
+{
+	"required"           : true,
+	"compatibilityLevel" : "JAVA_8",
+	"package"            : "me.somepineaple.pineapleclient.mixins",
+	"refmap"             : "mixins.wurstplus.refmap.json",
+	"mixins"             : [
+		"MixinPlayerControllerMP",
+		"MixinNetworkManager",
+		"MixinMinecraft",
+		"MixinEntitySP",
+		"MixinEntity",
+		"MixinGuiNewChat",
+		"MixinGuiScreen",
+		"MixinEntityRenderer",
+		"MixinWorld",
+		"MixinRenderPlayer",
+		"MixinPlayer",
+		"MixinItemRenderer",
+		"MixinGuiPlayerTabOverlay",
+		"MixinRenderLivingBase",
+		"MixinAbstractClientPlayer"
+	]
+}
