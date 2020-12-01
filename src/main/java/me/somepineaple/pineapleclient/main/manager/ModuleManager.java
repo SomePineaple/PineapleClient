@@ -78,6 +78,7 @@ public class ModuleManager {
 		add_hack(new Step());
 		add_hack(new Sprint());
 		add_hack(new Anchor());
+		add_hack(new Freecam());
 		
 		// Render.
 		add_hack(new Highlight());

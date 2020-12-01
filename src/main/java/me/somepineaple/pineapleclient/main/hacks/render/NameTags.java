@@ -45,7 +45,6 @@ public class NameTags extends Hack {
     Setting show_invis = create("Invis", "NametagInvis", true);
     Setting reverse = create("Armour Reverse", "NametagReverse", true);
     Setting simplify = create("Simplify", "NametagSimp", false);
-    Setting does_scale = create("Scale", "DoesNametagScale", false);
     Setting m_scale = create("Scale", "NametagScale", 4, 1, 15);
     Setting range = create("Range", "NametagRange", 75, 1, 250);
 
@@ -121,9 +120,7 @@ public class NameTags extends Hack {
         GlStateManager.translate((float)x, (float)tempY + 1.4f, (float)z);
         GlStateManager.rotate(-mc.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f);
         GlStateManager.rotate(mc.getRenderManager().playerViewX, (mc.gameSettings.thirdPersonView == 2) ? -1.0f : 1.0f, 0.0f, 0.0f);
-        if (does_scale.get_value(true)) {
-            GlStateManager.scale(-scale, -scale, scale);
-        }
+        GlStateManager.scale(-scale, -scale, scale);
         GlStateManager.disableDepth();
         GlStateManager.enableBlend();
         GlStateManager.enableBlend();

@@ -13,6 +13,7 @@ import org.lwjgl.opengl.EXTFramebufferObject;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glHint;
@@ -145,9 +146,9 @@ public class RenderUtil {
         GL11.glDisable(3553);
         glEnable(2884);
         GL11.glDisable(2929);
-        final double viewerPosX = mc.getRenderManager().viewerPosX;
-        final double viewerPosY = mc.getRenderManager().viewerPosY;
-        final double viewerPosZ = mc.getRenderManager().viewerPosZ;
+        final double viewerPosX = Objects.requireNonNull(mc.getRenderViewEntity()).posX;
+        final double viewerPosY = mc.getRenderViewEntity().posY;
+        final double viewerPosZ = mc.getRenderViewEntity().posZ;
         GL11.glPushMatrix();
         GL11.glTranslated(-viewerPosX, -viewerPosY, -viewerPosZ);
     }

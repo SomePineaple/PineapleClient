@@ -12,16 +12,8 @@ public class FullBright extends Hack {
         this.description = "Makes everything bright";
     }
 
-    float prev_gamma = 1F;
-
     @Override
     protected void enable() {
-        prev_gamma = mc.gameSettings.gammaSetting;
         mc.gameSettings.gammaSetting = 10;
-    }
-
-    @Override
-    protected void disable() {
-        mc.gameSettings.gammaSetting = prev_gamma;
     }
 }

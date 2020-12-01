@@ -2,13 +2,13 @@
 	"modid"        : "pineapleclient",
 	"name"         : "PineapleClient",
 	"description"  : "Epic!",
-	"version"      : "1.0",
+	"version"      : "1.1",
 	"mcversion"    : "1.12.2-14.23.5.2772",
 	"url"          : "https://wurst.plus",
 	"updateUrl"    : "https://wurst.plus",
 	"authorList"   : ["travis","SomePineaple"],
 	"credits"      : "Original by travis, some extra shit by SomePineaple",
-	"logoFile"     : "proxy.jpeg",
+	"logoFile"     : "",
 	"screenshots"  : [],
 	"dependencies" : []
 

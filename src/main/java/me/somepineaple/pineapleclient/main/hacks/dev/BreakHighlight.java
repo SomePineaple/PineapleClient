@@ -35,8 +35,6 @@ public class BreakHighlight extends Hack {
 
     Setting mode = create("Mode", "HighlightMode", "Pretty", combobox("Pretty", "Solid", "Outline"));
 
-    Setting debug = create("Debug", "Debug", false);
-
     Setting rgb = create("RGB Effect", "HighlightRGBEffect", true);
 
     Setting r = create("R", "BreakR", 255, 0, 255);
@@ -74,7 +72,9 @@ public class BreakHighlight extends Hack {
             }
         }
 
-        BlocksBeingBroken.removeIf(block -> mc.world.getBlockState(block).getBlock() instanceof BlockAir);
+        try {
+            BlocksBeingBroken.removeIf(block -> mc.world.getBlockState(block).getBlock() instanceof BlockAir);
+        } catch (Exception ignored) {}
     }
 
     @Override
@@ -158,17 +158,16 @@ public class BreakHighlight extends Hack {
         {
             SPacketBlockBreakAnim l_Packet = (SPacketBlockBreakAnim)event.get_packet();
 
-            if (!BlocksBeingBroken.contains(l_Packet.getPosition()) && (l_Packet.getProgress() > 0 && l_Packet.getProgress() <= 10))
-            {
-                BlocksBeingBroken.add(l_Packet.getPosition());
-                BlocksHashMap.remove(l_Packet.getPosition());
-                BlocksHashMap.put(l_Packet.getPosition(), l_Packet.getProgress());
-            }
-            else if (l_Packet.getProgress() <= 0 || l_Packet.getProgress() > 10)
-            {
-                BlocksBeingBroken.remove(l_Packet.getPosition());
-                BlocksHashMap.remove(l_Packet.getPosition());
-            }
+            try {
+                if (!BlocksBeingBroken.contains(l_Packet.getPosition()) && (l_Packet.getProgress() > 0 && l_Packet.getProgress() <= 10)) {
+                    BlocksBeingBroken.add(l_Packet.getPosition());
+                    BlocksHashMap.remove(l_Packet.getPosition());
+                    BlocksHashMap.put(l_Packet.getPosition(), l_Packet.getProgress());
+                } else if (l_Packet.getProgress() <= 0 || l_Packet.getProgress() > 10) {
+                    BlocksBeingBroken.remove(l_Packet.getPosition());
+                    BlocksHashMap.remove(l_Packet.getPosition());
+                }
+            } catch (Exception ignored){}
         }
     });
 }
