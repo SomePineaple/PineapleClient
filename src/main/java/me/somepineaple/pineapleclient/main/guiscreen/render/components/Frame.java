@@ -261,11 +261,6 @@ public class Frame {
 
 		int color_a = Color.HSBtoRGB(tick_color[0], 1, 1);
 
-		int border_a;
-		if ((color_a) <= 50) {
-			border_a = 50;
-		} else border_a = Math.min((color_a), 120);
-
 		int nc_r = Pineapleclient.click_gui.theme_frame_name_r;
 		int nc_g = Pineapleclient.click_gui.theme_frame_name_g;
 		int nc_b = Pineapleclient.click_gui.theme_frame_name_b;
@@ -279,7 +274,7 @@ public class Frame {
 		int bd_r = Pineapleclient.click_gui.theme_frame_border_r;
 		int bd_g = Pineapleclient.click_gui.theme_frame_border_g;
 		int bd_b = Pineapleclient.click_gui.theme_frame_border_b;
-		int bd_a = border_a;
+		int bd_a = Pineapleclient.click_gui.theme_frame_border_a;
 
 		this.frame_name = this.category.get_name();
 		this.width_name = font.get_string_width(this.category.get_name());

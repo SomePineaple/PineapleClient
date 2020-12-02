@@ -39,6 +39,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class AutoCrystal extends Hack {
 
+    private static EntityPlayer ca_target = null;
+
     public AutoCrystal() {
         super(Category.COMBAT);
 
@@ -373,7 +375,7 @@ public class AutoCrystal extends Hack {
 
         for (Entity player : mc.world.playerEntities) {
 
-            if (FriendUtil.isFriend(player.getName())) continue;
+            if (FriendUtil.isFriend(player.getName()) || player.getName().equals(mc.player.getName())) continue;
 
             for (BlockPos block : blocks) {
 
@@ -390,6 +392,8 @@ public class AutoCrystal extends Hack {
                 }
 
                 final EntityPlayer target = (EntityPlayer) player;
+
+                ca_target = target;
 
                 if (target.isDead || target.getHealth() <= 0) continue;
 
@@ -415,6 +419,8 @@ public class AutoCrystal extends Hack {
                 }
 
             }
+
+            if (best_block == null) ca_target = null;
 
         }
 
@@ -762,4 +768,8 @@ public class AutoCrystal extends Hack {
         return (detail_name != null) ? detail_name + " | " + detail_hp : "None";
     }
 
+
+    public static EntityPlayer get_target() {
+        return ca_target;
+    }
 }

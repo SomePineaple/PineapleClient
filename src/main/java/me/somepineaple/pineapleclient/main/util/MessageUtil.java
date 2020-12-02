@@ -22,20 +22,24 @@ public class MessageUtil {
 	public static ChatFormatting a = ChatFormatting.DARK_AQUA;
 	public static ChatFormatting r = ChatFormatting.RESET;
 
-	public static String opener = g + Pineapleclient.NAME + ChatFormatting.GRAY + " > " + r;
+	public static String opener = g + "[" + Pineapleclient.NAME + "]" + ChatFormatting.GRAY + " " + r;
 
 	public static void toggle_message(Hack module) {
 		if (module.is_active()) {
 			if (module.get_tag().equals("AutoCrystal")) {
 				client_message_simple(opener + "we" + ChatFormatting.DARK_GREEN + " gaming ");
+				if (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "notificationenable").get_value(true)) NotificationUtil.send_notification(new Notification("We Gaming"));
 			} else {
 				client_message_simple(opener + r + module.get_name() + ChatFormatting.DARK_GREEN + " Enabled");
+				if (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "notificationenable").get_value(true)) NotificationUtil.send_notification(new Notification(module.get_name() + " Enabled"));
 			}			
 		} else {
 			if (module.get_tag().equals("AutoCrystal")) {
 				client_message_simple(opener + "we aint" + ChatFormatting.RED + " gaming " + r + "no more");
+				if (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "notificationenable").get_value(true)) NotificationUtil.send_notification(new Notification("We aint gaming no more"));
 			} else {
 				client_message_simple(opener + r + module.get_name() + ChatFormatting.RED + " Disabled");
+				if (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "notificationenable").get_value(true)) NotificationUtil.send_notification(new Notification(module.get_name() + " Disabled"));
 			}
 		}
 	}
@@ -58,7 +62,7 @@ public class MessageUtil {
 	}
 
 	public static void send_client_message(String message) {
-		client_message(ChatFormatting.GOLD + Pineapleclient.NAME + " " + r + message);
+		client_message(ChatFormatting.GOLD + "[" + Pineapleclient.NAME + "] " + r + message);
 	}
 
 	public static void send_client_error_message(String message) {

@@ -36,6 +36,7 @@ public class GUI extends GuiScreen {
 	public int theme_frame_border_r = 0;
 	public int theme_frame_border_g = 0;
 	public int theme_frame_border_b = 0;
+	public int theme_frame_border_a = 0;
 
 	// Module.
 	public int theme_widget_name_r = 0;

@@ -29,6 +29,7 @@ public class ClickGUI extends Hack {
 	Setting border_frame_r = create("Border R", "ClickGUIBorderFrameR", 255, 0, 255);
 	Setting border_frame_g = create("Border G", "ClickGUIBorderFrameG", 255, 0, 255);
 	Setting border_frame_b = create("Border B", "ClickGUIBorderFrameB", 255, 0, 255);
+	Setting border_frame_a = create("Border A", "ClickGUIBorderFrameA", 255, 0, 255);
 
 	Setting label_widget = create("info", "ClickGUIInfoWidget", "Widgets");
 
@@ -60,6 +61,7 @@ public class ClickGUI extends Hack {
 		Pineapleclient.click_gui.theme_frame_border_r = border_frame_r.get_value(1);
 		Pineapleclient.click_gui.theme_frame_border_g = border_frame_g.get_value(1);
 		Pineapleclient.click_gui.theme_frame_border_b = border_frame_b.get_value(1);
+		Pineapleclient.click_gui.theme_frame_border_a = border_frame_a.get_value(1);
 
 		// Update widget colors.
 		Pineapleclient.click_gui.theme_widget_name_r = name_widget_r.get_value(1);

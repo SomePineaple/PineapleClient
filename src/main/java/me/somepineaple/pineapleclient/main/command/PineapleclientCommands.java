@@ -30,6 +30,7 @@ public class PineapleclientCommands {
 		add_command(new EzMessage());
 		add_command(new Enemy());
 		add_command(new Config());
+		add_command(new NotificationTest());
 
 		command_list.sort(Comparator.comparing(PineapleclientCommand::get_name));
 	}

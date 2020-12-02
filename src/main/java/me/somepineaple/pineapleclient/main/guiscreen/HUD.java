@@ -45,7 +45,7 @@ public class HUD extends GuiScreen {
 		Frame.bd_r = Pineapleclient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderFrameR").get_value(1);
 		Frame.bd_g = Pineapleclient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderFrameG").get_value(1);
 		Frame.bd_b = Pineapleclient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderFrameB").get_value(1);
-		Frame.bd_a = 0;
+		Frame.bd_a = Pineapleclient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderFrameA").get_value(1);
 		
 		Frame.bdw_r = Pineapleclient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderWidgetR").get_value(1);
 		Frame.bdw_g = Pineapleclient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderWidgetG").get_value(1);

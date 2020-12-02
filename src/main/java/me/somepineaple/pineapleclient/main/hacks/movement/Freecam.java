@@ -24,11 +24,6 @@ public class Freecam extends Hack {
     private double posZ;
     private float pitch;
     private float yaw;
-    private double startPosX;
-    private double startPosY;
-    private double startPosZ;
-    private float startPitch;
-    private float startYaw;
     private EntityOtherPlayerMP clonedPlayer;
     private boolean isRidingEntity;
     private Entity ridingEntity;
@@ -130,49 +125,6 @@ public class Freecam extends Hack {
         }
     });
 
-    @EventHandler
-    private final Listener<EventPacket.ReceivePacket> receivePacketListener = new Listener<>(event -> {
-        if (event.get_packet() instanceof SPacketPlayerPosLook) {
-            final SPacketPlayerPosLook packet = (SPacketPlayerPosLook)event.get_packet();
-            this.startPosX = packet.getX();
-            this.startPosY = packet.getY();
-            this.startPosZ = packet.getZ();
-            this.startPitch = packet.getPitch();
-            this.startYaw = packet.getYaw();
-        }
-    });
-
-    private void playersSpeed(final double speed) {
-        if (mc.player != null) {
-            final MovementInput movementInput = mc.player.movementInput;
-            double forward = movementInput.moveForward;
-            double strafe = movementInput.moveStrafe;
-            float yaw = mc.player.rotationYaw;
-            if (forward == 0.0 && strafe == 0.0) {
-                mc.player.motionX = 0.0;
-                mc.player.motionZ = 0.0;
-            }
-            else {
-                if (forward != 0.0) {
-                    if (strafe > 0.0) {
-                        yaw += ((forward > 0.0) ? -45 : 45);
-                    }
-                    else if (strafe < 0.0) {
-                        yaw += ((forward > 0.0) ? 45 : -45);
-                    }
-                    strafe = 0.0;
-                    if (forward > 0.0) {
-                        forward = 1.0;
-                    }
-                    else if (forward < 0.0) {
-                        forward = -1.0;
-                    }
-                }
-                mc.player.motionX = forward * speed * Math.cos(Math.toRadians(yaw + 90.0f)) + strafe * speed * Math.sin(Math.toRadians(yaw + 90.0f));
-                mc.player.motionZ = forward * speed * Math.sin(Math.toRadians(yaw + 90.0f)) - strafe * speed * Math.cos(Math.toRadians(yaw + 90.0f));
-            }
-        }
-    }
     @EventHandler
     private final Listener<EventPlayerTravel> travelListener = new Listener<>(event -> {
         if (event.get_era() != EventCancellable.Era.EVENT_PRE) {

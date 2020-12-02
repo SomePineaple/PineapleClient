@@ -2,11 +2,16 @@ package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import me.somepineaple.pineapleclient.main.hacks.chat.Totempop;
+import me.somepineaple.pineapleclient.main.hacks.combat.AutoCrystal;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -28,18 +33,18 @@ public class EnemyInfo extends Pinnable {
             return;
         }
 
-        RenderHelper.enableGUIStandardItemLighting();
-
-        EntityLivingBase target = mc.player;
+        EntityPlayer target = mc.player;
 
         float lowest_distance = 999F;
 
-        for (EntityLivingBase e : mc.world.playerEntities) {
+        for (EntityPlayer e : mc.world.playerEntities) {
             if (e.getDistance(mc.player) < lowest_distance && !e.getName().equals(mc.player.getName()) && e.getDistance(mc.player) != 0) {
                 target = e;
                 lowest_distance = e.getDistance(mc.player);
             }
         }
+
+        if (AutoCrystal.get_target() != null) target = AutoCrystal.get_target();
 
         create_rect(0, 0, this.get_width(), this.get_height(), 0, 0, 0, 69);
 
@@ -85,19 +90,27 @@ public class EnemyInfo extends Pinnable {
 
             ArrayList<Block> surroundblocks = get_surround_blocks(target);
 
-            mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(surroundblocks.get(0)), this.get_x() + 75, this.get_y() - 20 + 40);
-            mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(surroundblocks.get(1)), this.get_x() + 20 + 75, this.get_y() + 40);
-            mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(surroundblocks.get(2)), this.get_x() + 75, this.get_y() + 20 + 40);
-            mc.getRenderItem().renderItemAndEffectIntoGUI(new ItemStack(surroundblocks.get(3)), this.get_x() - 20 + 75, this.get_y() + 40);
+            renderItemStack(new ItemStack(surroundblocks.get(0)), this.get_x() + 75, this.get_y() - 20 + 40);
+            renderItemStack(new ItemStack(surroundblocks.get(1)), this.get_x() + 20 + 75, this.get_y() + 40);
+            renderItemStack(new ItemStack(surroundblocks.get(2)), this.get_x() + 75, this.get_y() + 20 + 40);
+            renderItemStack(new ItemStack(surroundblocks.get(3)), this.get_x() - 20 + 75, this.get_y() + 40);
 
-            create_rect(0, this.get_height(), (int) (target_hp / 36 * this.get_width()), this.get_height() -10, hp_r, hp_g, hp_b, 255);
+            int i1 = 3;
+            for (int i = target.inventory.armorInventory.size(); i > 0; i--) {
+                final ItemStack stack2 = target.inventory.armorInventory.get(i - 1);
+                final ItemStack armourStack = stack2.copy();
+                if (armourStack.hasEffect() && (armourStack.getItem() instanceof ItemTool || armourStack.getItem() instanceof ItemArmor)) {
+                    armourStack.stackSize = 1;
+                }
+                renderItemStack(armourStack, this.get_x() + i1, this.get_y() + str_height * 4);
+                i1 += 16;
+            }
+
+            create_rect(0, this.get_height(), (int) (target_hp / 36 * this.get_width()), this.get_height() -5, hp_r, hp_g, hp_b, 255);
 
             GuiInventory.drawEntityOnScreen(this.get_x() + this.get_width() -20, this.get_y()
                     + this.get_height() - 10, 30, -target.rotationYaw, -target.rotationPitch, target);
         } catch (Exception ignored){}
-
-
-        RenderHelper.disableStandardItemLighting();
     }
 
     private ArrayList<Block> get_surround_blocks(EntityLivingBase e) {
@@ -108,5 +121,27 @@ public class EnemyInfo extends Pinnable {
         surroundblocks.add(mc.world.getBlockState(entityblock.south()).getBlock());
         surroundblocks.add(mc.world.getBlockState(entityblock.west()).getBlock());
         return surroundblocks;
+    }
+
+    private void renderItemStack(final ItemStack stack, final int x, final int y) {
+        GlStateManager.pushMatrix();
+        GlStateManager.depthMask(true);
+        GlStateManager.clear(256);
+        RenderHelper.enableStandardItemLighting();
+        mc.getRenderItem().zLevel = -150.0f;
+        GlStateManager.disableAlpha();
+        GlStateManager.enableDepth();
+        GlStateManager.disableCull();
+        mc.getRenderItem().renderItemAndEffectIntoGUI(stack, x, y);
+        mc.getRenderItem().renderItemOverlays(mc.fontRenderer, stack, x, y);
+        mc.getRenderItem().zLevel = 0.0f;
+        RenderHelper.disableStandardItemLighting();
+        GlStateManager.enableCull();
+        GlStateManager.enableAlpha();
+        GlStateManager.scale(0.5f, 0.5f, 0.5f);
+        GlStateManager.disableDepth();
+        GlStateManager.enableDepth();
+        GlStateManager.scale(2.0f, 2.0f, 2.0f);
+        GlStateManager.popMatrix();
     }
 }

@@ -20,9 +20,13 @@ public class ClickHUD extends Hack {
 	Setting strings_b = create("Color B", "HUDStringsColorB", 255, 0, 255);
 	Setting strings_a = create("Alpha", "HUDStringsColorA", 230, 0, 255);
 	Setting compass_scale = create("Compass Scale", "HUDCompassScale", 16, 1, 60);
-	Setting arraylist_mode = create("ArrayList", "HUDArrayList", "Free", combobox("Free", "Top R", "Top L", "Bottom R", "Bottom L"));
+	Setting arraylist_mode = create("PineapleArrayList", "HUDArrayList", "Free", combobox("Free", "Top R", "Top L", "Bottom R", "Bottom L"));
 	Setting show_all_pots = create("All Potions", "HUDAllPotions", false);
 	Setting max_player_list = create("Max Players", "HUDMaxPlayers", 24, 1, 64);
+
+	Setting notification_pop = create("Notify on Totem", "notificationtotem", true);
+	Setting notificaiton_enable = create("Notify on Enable", "notificationenable", true);
+	Setting max_notifications = create("Max notifications", "maxnotifications", 3, 1, 10);
 
 	@Override
 	public void enable() {

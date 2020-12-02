@@ -1,11 +1,14 @@
 package me.somepineaple.pineapleclient.main.hacks.chat;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
+import me.somepineaple.pineapleclient.Pineapleclient;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
 import me.somepineaple.pineapleclient.main.util.FriendUtil;
 import me.somepineaple.pineapleclient.main.util.MessageUtil;
+import me.somepineaple.pineapleclient.main.util.Notification;
+import me.somepineaple.pineapleclient.main.util.NotificationUtil;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.entity.Entity;
@@ -24,6 +27,8 @@ public class Totempop extends Hack {
 		this.tag         = "TotemPopCounter";
 		this.description = "tells u when someone pops a totem";
     }
+
+    private boolean should_notify;
 
     public static final HashMap<String, Integer> totem_pop_counter = new HashMap<String, Integer>();
     
@@ -58,8 +63,10 @@ public class Totempop extends Hack {
 
                 if (FriendUtil.isFriend(entity.getName())) {
                     MessageUtil.send_client_message( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + green + entity.getName() + reset + " has popped " + bold + count + reset + " totems. you should go help them");
+                    if (should_notify) NotificationUtil.send_notification(new Notification(entity.getName() + " has poped " + count + " totems, go help"));
                 } else {
                     MessageUtil.send_client_message( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + red + entity.getName() + reset + " has popped " + bold + count + reset + " totems. what a loser");
+                    if (should_notify) NotificationUtil.send_notification(new Notification(entity.getName() + " has poped " + count + " totems"));
                 }
 
             }
@@ -70,7 +77,7 @@ public class Totempop extends Hack {
 
     @Override
 	public void update() {
-        
+        should_notify = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "notificationtotem").get_value(true);
         for (EntityPlayer player : mc.world.playerEntities) {
 
             if (!totem_pop_counter.containsKey(player.getName())) continue;
@@ -85,8 +92,10 @@ public class Totempop extends Hack {
 
                 if (FriendUtil.isFriend(player.getName())) {
                     MessageUtil.send_client_message( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + green + player.getName() + reset + " just fucking DIED after popping " + bold + count + reset + " totems. RIP :pray:");
+                    if (should_notify) NotificationUtil.send_notification(new Notification(player.getName() + " died after poping " + count + " totems"));
                 } else {
                     MessageUtil.send_client_message( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + red + player.getName() + reset + " just fucking DIED after popping " + bold + count + reset + " totems");
+                    if (should_notify) NotificationUtil.send_notification(new Notification(player.getName() + " died after poping " + count + " totems"));
                 }
 
             }
@@ -95,4 +104,13 @@ public class Totempop extends Hack {
 
 	}
 
+    @Override
+    protected void enable() {
+        totem_pop_counter.clear();
+    }
+
+    @Override
+    protected void disable() {
+        totem_pop_counter.clear();
+    }
 }

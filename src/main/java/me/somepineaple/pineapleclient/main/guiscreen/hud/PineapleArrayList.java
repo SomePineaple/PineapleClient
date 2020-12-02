@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class ArrayList extends Pinnable {
-	public ArrayList() {
-		super("Array List", "ArrayList", 1, 0, 0);
+public class PineapleArrayList extends Pinnable {
+	public PineapleArrayList() {
+		super("Array List", "PineapleArrayList", 1, 0, 0);
 	}
 
 	boolean flag = true;

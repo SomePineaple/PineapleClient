@@ -3,17 +3,18 @@ package me.somepineaple.pineapleclient.main.manager;
 import me.somepineaple.pineapleclient.main.guiscreen.hud.*;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 
 public class HUDManager {
 
-	public static java.util.ArrayList<Pinnable> array_hud = new java.util.ArrayList();
+	public static ArrayList<Pinnable> array_hud = new ArrayList<>();
 
 	public HUDManager() {
 
 		add_component_pinnable(new Watermark());
-		add_component_pinnable(new ArrayList());
+		add_component_pinnable(new PineapleArrayList());
 		add_component_pinnable(new Coordinates());
 		add_component_pinnable(new InventoryPreview());
 		add_component_pinnable(new InventoryXCarryPreview());
@@ -40,6 +41,7 @@ public class HUDManager {
 		add_component_pinnable(new Direction());
 		add_component_pinnable(new PlayerModel());
 		add_component_pinnable(new EnemyInfo());
+		add_component_pinnable(new Notifications());
 
 		array_hud.sort(Comparator.comparing(Pinnable::get_title));
 	}
