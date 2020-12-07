@@ -1,5 +1,8 @@
 package me.somepineaple.pineapleclient.main.manager;
 
+import me.somepineaple.pineapleclient.main.util.MessageUtil;
+import me.somepineaple.pineapleclient.main.util.Notification;
+import me.somepineaple.pineapleclient.main.util.NotificationUtil;
 import me.somepineaple.turok.draw.RenderHelp;
 import me.somepineaple.pineapleclient.main.event.events.EventRender;
 import me.somepineaple.pineapleclient.main.hacks.dev.BreakHighlight;
@@ -96,6 +99,7 @@ public class ModuleManager {
 		add_hack(new AlwaysNight());
 		add_hack(new CityEsp());
 		add_hack(new FullBright());
+		add_hack(new BreakHighlight());
 
 		// Misc.
 		add_hack(new MiddleClickFriends());
@@ -107,7 +111,6 @@ public class ModuleManager {
 
 		// Dev
 		add_hack(new FakePlayer());
-		add_hack(new BreakHighlight());
 
 		array_hacks.sort(Comparator.comparing(Hack::get_name));
 	}
@@ -194,7 +197,12 @@ public class ModuleManager {
 	public void update() {
 		for (Hack modules : get_array_hacks()) {
 			if (modules.is_active()) {
-				modules.update();
+				try {
+					modules.update();
+				} catch (Exception e) {
+					MessageUtil.client_message("Error at " + modules.get_name() + " update method " + e.getMessage());
+					NotificationUtil.send_notification(new Notification("Error at " + modules.get_name() + " update method " + e.getMessage(), 255, 0, 0));
+				}
 			}
 		}
 	}
@@ -202,7 +210,14 @@ public class ModuleManager {
 	public void render() {
 		for (Hack modules : get_array_hacks()) {
 			if (modules.is_active()) {
-				modules.render();
+				try {
+					modules.render();
+				} catch (Exception e) {
+					if (mc.world != null && mc.player != null) {
+						MessageUtil.client_message("Error at " + modules.get_name() + " render method " + e.getMessage());
+						NotificationUtil.send_notification(new Notification("Error at " + modules.get_name() + " render method " + e.getMessage(), 255, 0, 0));
+					}
+				}
 			}
 		}
 	}

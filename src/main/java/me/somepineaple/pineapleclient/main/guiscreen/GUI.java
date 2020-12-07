@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 
 public class GUI extends GuiScreen {
-	private ArrayList<Frame> frame;
+	private final ArrayList<Frame> frame;
 
 	private int frame_x;
 

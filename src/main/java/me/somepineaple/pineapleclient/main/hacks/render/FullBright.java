@@ -16,4 +16,11 @@ public class FullBright extends Hack {
     protected void enable() {
         mc.gameSettings.gammaSetting = 10;
     }
+
+    @Override
+    public void update() {
+        if (mc.gameSettings.gammaSetting != 10) {
+            mc.gameSettings.gammaSetting = 10;
+        }
+    }
 }

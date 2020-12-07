@@ -27,7 +27,7 @@ public class BreakHighlight extends Hack {
     private final HashMap<BlockPos, Integer> BlocksHashMap = new HashMap<>();
 
     public BreakHighlight() {
-        super(Category.BETA);
+        super(Category.RENDER);
         this.name = "Break Highlight";
         this.tag = "BreakHighlight";
         this.description = "Highlight blocks being broken & warns u when someone is mining your feet";

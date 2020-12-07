@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.projectile.EntityEgg;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;
@@ -14,6 +16,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -228,4 +231,46 @@ public class BlockInteractHelper {
         mc = Minecraft.getMinecraft();
     }
 
+    public static float[] getDirectionToBlock(final int var0, final int var1, final int var2, final EnumFacing var3) {
+        final EntityEgg var4 = new EntityEgg(mc.world);
+        var4.posX = var0 + 0.5;
+        var4.posY = var1 + 0.5;
+        var4.posZ = var2 + 0.5;
+        final EntityEgg entityEgg = var4;
+        entityEgg.posX += var3.getDirectionVec().getX() * 0.25;
+        final EntityEgg entityEgg2 = var4;
+        entityEgg2.posY += var3.getDirectionVec().getY() * 0.25;
+        final EntityEgg entityEgg3 = var4;
+        entityEgg3.posZ += var3.getDirectionVec().getZ() * 0.25;
+        return getDirectionToEntity((Entity)var4);
+    }
+
+    private static float[] getDirectionToEntity(final Entity var0) {
+        return new float[] { getYaw(var0) + mc.player.rotationYaw, getPitch(var0) + mc.player.rotationPitch };
+    }
+
+    public static float getYaw(final Entity var0) {
+        final double var = var0.posX - mc.player.posX;
+        final double var2 = var0.posZ - mc.player.posZ;
+        double var3;
+        if (var2 < 0.0 && var < 0.0) {
+            var3 = 90.0 + Math.toDegrees(Math.atan(var2 / var));
+        }
+        else if (var2 < 0.0 && var > 0.0) {
+            var3 = -90.0 + Math.toDegrees(Math.atan(var2 / var));
+        }
+        else {
+            var3 = Math.toDegrees(-Math.atan(var / var2));
+        }
+        return MathHelper.wrapDegrees(-(mc.player.rotationYaw - (float)var3));
+    }
+
+    public static float getPitch(final Entity var0) {
+        final double var = var0.posX - mc.player.posX;
+        final double var2 = var0.posZ - mc.player.posZ;
+        final double var3 = var0.posY - 1.6 + var0.getEyeHeight() - mc.player.posY;
+        final double var4 = MathHelper.sqrt(var * var + var2 * var2);
+        final double var5 = -Math.toDegrees(Math.atan(var3 / var4));
+        return -MathHelper.wrapDegrees(mc.player.rotationPitch - (float)var5);
+    }
 }

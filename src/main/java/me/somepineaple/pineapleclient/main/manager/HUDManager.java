@@ -2,6 +2,10 @@ package me.somepineaple.pineapleclient.main.manager;
 
 import me.somepineaple.pineapleclient.main.guiscreen.hud.*;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
+import me.somepineaple.pineapleclient.main.util.MessageUtil;
+import me.somepineaple.pineapleclient.main.util.Notification;
+import me.somepineaple.pineapleclient.main.util.NotificationUtil;
+import net.minecraft.client.Minecraft;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -57,7 +61,14 @@ public class HUDManager {
 	public void render() {
 		for (Pinnable pinnables : get_array_huds()) {
 			if (pinnables.is_active()) {
-				pinnables.render();
+				try {
+					pinnables.render();
+				} catch (Exception e) {
+					if (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().world != null) {
+						MessageUtil.client_message("Error at " + pinnables.get_tag() + " " + e.getMessage());
+						NotificationUtil.send_notification(new Notification("Error at " + pinnables.get_tag() + " " + e.getMessage(), 255, 0, 0));
+					}
+				}
 			}
 		}
 	}

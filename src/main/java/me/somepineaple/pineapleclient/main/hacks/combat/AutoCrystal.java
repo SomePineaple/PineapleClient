@@ -142,14 +142,14 @@ public class AutoCrystal extends Hack {
     private int place_delay_counter;
 
     @EventHandler
-    private Listener<EventEntityRemoved> on_entity_removed = new Listener<>(event -> {
+    private final Listener<EventEntityRemoved> on_entity_removed = new Listener<>(event -> {
         if (event.get_entity() instanceof EntityEnderCrystal) {
             attacked_crystals.remove(event.get_entity());
         }
     });
 
     @EventHandler
-    private Listener<EventPacket.SendPacket> send_listener = new Listener<>(event -> {
+    private final Listener<EventPacket.SendPacket> send_listener = new Listener<>(event -> {
         if (event.get_packet() instanceof CPacketPlayer && is_rotating && rotate_mode.in("Old")) {
             if (debug.get_value(true)) {
                 MessageUtil.send_client_message("Rotating");
@@ -172,7 +172,7 @@ public class AutoCrystal extends Hack {
     });
 
     @EventHandler
-    private Listener<EventMotionUpdate> on_movement = new Listener<>(event -> {
+    private final Listener<EventMotionUpdate> on_movement = new Listener<>(event -> {
         if (event.stage == 0 && (rotate_mode.in("Good") || rotate_mode.in("Const"))) {
             if (debug.get_value(true)) {
                 MessageUtil.send_client_message("updating rotation");
@@ -264,6 +264,8 @@ public class AutoCrystal extends Hack {
         if (rotate_mode.in("Off") || rotate_mode.in("Old")) {
             do_ca();
         }
+
+        if (mc.player.isDead || mc.player.getHealth() <= 0) ca_target = null;
     }
 
     public void cycle_rainbow() {

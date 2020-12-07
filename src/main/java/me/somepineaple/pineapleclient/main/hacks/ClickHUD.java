@@ -26,6 +26,7 @@ public class ClickHUD extends Hack {
 
 	Setting notification_pop = create("Notify on Totem", "notificationtotem", true);
 	Setting notificaiton_enable = create("Notify on Enable", "notificationenable", true);
+	Setting notification_armor = create("Armor Notifications", "notificationarmor", true);
 	Setting max_notifications = create("Max notifications", "maxnotifications", 3, 1, 10);
 
 	@Override
