@@ -19,5 +19,4 @@ import net.minecraft.util.text.TextFormatting;
 	public static String get_prefix() {
 		return command_list.get_prefix();
 	}
-
 }

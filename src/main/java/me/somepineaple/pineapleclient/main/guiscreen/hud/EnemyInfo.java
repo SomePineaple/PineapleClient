@@ -1,20 +1,30 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
+import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import me.somepineaple.pineapleclient.main.hacks.chat.Totempop;
 import me.somepineaple.pineapleclient.main.hacks.combat.AutoCrystal;
+import me.somepineaple.pineapleclient.main.util.FriendUtil;
+import me.somepineaple.pineapleclient.main.util.MessageUtil;
+import me.somepineaple.pineapleclient.main.util.Notification;
+import me.somepineaple.pineapleclient.main.util.NotificationUtil;
+import me.zero.alpine.fork.listener.EventHandler;
+import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 import static me.somepineaple.pineapleclient.main.util.TabUtil.section_sign;
@@ -29,6 +39,8 @@ public class EnemyInfo extends Pinnable {
 
     @Override
     public void render() {
+        update_pops();
+
         if (mc.world == null || mc.player == null) {
             return;
         }
@@ -44,7 +56,7 @@ public class EnemyInfo extends Pinnable {
             }
         }
 
-        if (AutoCrystal.get_target() != null) target = AutoCrystal.get_target();
+        if (AutoCrystal.get_target() != null && !AutoCrystal.get_target().isDead) target = AutoCrystal.get_target();
 
         create_rect(0, 0, this.get_width(), this.get_height(), 0, 0, 0, 69);
 
@@ -77,7 +89,7 @@ public class EnemyInfo extends Pinnable {
         String pop_str = "";
 
         try {
-            pop_str += (Totempop.totem_pop_counter.get(target.getName()) == null ? section_sign() + "70" : section_sign() + "c " + Totempop.totem_pop_counter.get(target.getName()));
+            pop_str += (totem_pop_counter.get(target.getName()) == null ? section_sign() + "70" : section_sign() + "c " + totem_pop_counter.get(target.getName()));
         } catch (Exception ignore) {}
 
         int str_height = this.get("00hpRRRta", "height") + 3;
@@ -143,5 +155,49 @@ public class EnemyInfo extends Pinnable {
         GlStateManager.enableDepth();
         GlStateManager.scale(2.0f, 2.0f, 2.0f);
         GlStateManager.popMatrix();
+    }
+
+    public static final HashMap<String, Integer> totem_pop_counter = new HashMap<String, Integer>();
+
+
+    @EventHandler
+    private final Listener<EventPacket.ReceivePacket> packet_event = new Listener<>(event -> {
+
+        if (event.get_packet() instanceof SPacketEntityStatus) {
+
+            SPacketEntityStatus packet = (SPacketEntityStatus) event.get_packet();
+
+            if (packet.getOpCode() == 35) {
+
+                Entity entity = packet.getEntity(mc.world);
+
+                int count = 1;
+
+                if (totem_pop_counter.containsKey(entity.getName())) {
+                    count = totem_pop_counter.get(entity.getName());
+                    totem_pop_counter.put(entity.getName(), ++count);
+                } else {
+                    totem_pop_counter.put(entity.getName(), count);
+                }
+
+                if (entity == mc.player) return;
+            }
+
+        }
+    });
+
+
+    private void update_pops () {
+        for (EntityPlayer player : mc.world.playerEntities) {
+
+            if (!totem_pop_counter.containsKey(player.getName())) continue;
+
+            if (player.isDead || player.getHealth() <= 0) {
+
+                int count = totem_pop_counter.get(player.getName());
+
+                totem_pop_counter.remove(player.getName());
+            }
+        }
     }
 }
