@@ -1,14 +1,11 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
+import me.somepineaple.pineapleclient.main.event.PineapleEventBus;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
-import me.somepineaple.pineapleclient.main.hacks.chat.Totempop;
 import me.somepineaple.pineapleclient.main.hacks.combat.AutoCrystal;
-import me.somepineaple.pineapleclient.main.util.FriendUtil;
-import me.somepineaple.pineapleclient.main.util.MessageUtil;
-import me.somepineaple.pineapleclient.main.util.Notification;
-import me.somepineaple.pineapleclient.main.util.NotificationUtil;
 import me.zero.alpine.fork.listener.EventHandler;
+import me.zero.alpine.fork.listener.Listenable;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -29,12 +26,14 @@ import java.util.Objects;
 
 import static me.somepineaple.pineapleclient.main.util.TabUtil.section_sign;
 
-public class EnemyInfo extends Pinnable {
+public class EnemyInfo extends Pinnable implements Listenable {
     public EnemyInfo() {
         super("Enemy Info", "EnemyInfo", 1, 0, 0);
 
         this.set_height(80);
         this.set_width(150);
+
+        PineapleEventBus.EVENT_BUS.subscribe(this);
     }
 
     @Override
@@ -162,7 +161,6 @@ public class EnemyInfo extends Pinnable {
 
     @EventHandler
     private final Listener<EventPacket.ReceivePacket> packet_event = new Listener<>(event -> {
-
         if (event.get_packet() instanceof SPacketEntityStatus) {
 
             SPacketEntityStatus packet = (SPacketEntityStatus) event.get_packet();
