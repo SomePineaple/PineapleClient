@@ -220,8 +220,8 @@ public class HoleESP extends Hack {
 					RenderHelp.draw_gradiant_rect(RenderHelp.get_buffer_build(),
 						hole.getKey().getX(), hole.getKey().getY(), hole.getKey().getZ(),
 						(double)hole.getKey().getX() + 1, (double)hole.getKey().getY() + (double)off_set_h,
-						hole.getKey().getZ(),
-						new Color(0, 0, 0, 0), new Color(color_r, color_g, color_g, color_a));
+						hole.getKey().getZ() + 1, new Color(color_r, color_g, color_b, color_a),
+						new Color(0, 0, 0, 0));
 
 					RenderHelp.release();
 				}
