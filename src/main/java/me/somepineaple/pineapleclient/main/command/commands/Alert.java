@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.command.commands;
 
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.command.PineapleclientCommand;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
 import me.somepineaple.pineapleclient.main.util.MessageUtil;
@@ -45,7 +45,7 @@ public class Alert extends PineapleclientCommand {
 		module = module.toLowerCase();
 		state  = state.toLowerCase();
 
-		Hack module_requested = Pineapleclient.get_hack_manager().get_module_with_tag(module);
+		Hack module_requested = PineapleClient.get_hack_manager().get_module_with_tag(module);
 
 		if (module_requested == null) {
 			MessageUtil.send_client_error_message("This module does not exist.");

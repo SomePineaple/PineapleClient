@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.hacks.chat;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
@@ -106,7 +106,7 @@ public class ChatSuffix extends Hack {
 		if (accept_suffix) {
 			if (suffix_default) {
 				// Just default.
-				message += Pineapleclient.SIGN + convert_base("pineapleclient");
+				message += PineapleClient.SIGN + convert_base("pineapleclient");
 			}
 
 			if (suffix_random) {
@@ -117,7 +117,7 @@ public class ChatSuffix extends Hack {
 				suffix_with_randoms.append(convert_base(random_string(random_client_name)));
 				suffix_with_randoms.append(convert_base(random_string(random_client_finish)));
 
-				message += Pineapleclient.SIGN + suffix_with_randoms.toString();
+				message += PineapleClient.SIGN + suffix_with_randoms.toString();
 			}
 
 			// If message 256 string length substring.
@@ -137,7 +137,7 @@ public class ChatSuffix extends Hack {
 
 	// Convert the base using the TravisFont.
 	public String convert_base(String base) {
-		return Pineapleclient.smoth(base);
+		return PineapleClient.smoth(base);
 	}
 
 	@Override

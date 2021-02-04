@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.hacks.chat;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
@@ -183,10 +183,10 @@ public class Announcer extends Hack {
     private void send_message(String s) {
         if (suffix.get_value(true)) {
             String i = " \u2763 ";
-            s += i + Pineapleclient.smoth("sponsored by pineapleclient");
+            s += i + PineapleClient.smoth("sponsored by pineapleclient");
         }
         if (smol.get_value(true)) {
-            s = Pineapleclient.smoth(s.toLowerCase());
+            s = PineapleClient.smoth(s.toLowerCase());
         }
         mc.player.connection.sendPacket(new CPacketChatMessage(s.replaceAll("\u00a7", "")));
     }

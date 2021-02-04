@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.hacks.chat;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
@@ -77,7 +77,7 @@ public class Totempop extends Hack {
 
     @Override
 	public void update() {
-        should_notify = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "notificationtotem").get_value(true);
+        should_notify = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "notificationtotem").get_value(true);
         for (EntityPlayer player : mc.world.playerEntities) {
 
             if (!totem_pop_counter.containsKey(player.getName())) continue;

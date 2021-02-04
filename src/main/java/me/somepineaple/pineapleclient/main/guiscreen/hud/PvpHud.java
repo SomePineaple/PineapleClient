@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -13,10 +13,10 @@ public class PvpHud extends Pinnable {
 
     @Override
 	public void render() {
-		int nl_r = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
-		int nl_g = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
-		int nl_b = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
-        int nl_a = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
+		int nl_r = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
+		int nl_g = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
+		int nl_b = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
+        int nl_a = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
 
         String totem = "Totems: " + get_totems();
         String trap = "Trap: " + trap_enabled();
@@ -40,7 +40,7 @@ public class PvpHud extends Pinnable {
 
     public String selftrap_enabled() {
         try {
-            if (Pineapleclient.get_hack_manager().get_module_with_tag("SelfTrap").is_active()) {
+            if (PineapleClient.get_hack_manager().get_module_with_tag("SelfTrap").is_active()) {
                 return "\u00A7a 1";
             }
             return "\u00A74 0";
@@ -51,7 +51,7 @@ public class PvpHud extends Pinnable {
 
     public String trap_enabled() {
         try {
-            if (Pineapleclient.get_hack_manager().get_module_with_tag("Trap").is_active()) {
+            if (PineapleClient.get_hack_manager().get_module_with_tag("Trap").is_active()) {
                 return "\u00A7a 1";
             }
             return "\u00A74 0";
@@ -64,7 +64,7 @@ public class PvpHud extends Pinnable {
     public String aura_enabled() {
 
         try {
-            if (Pineapleclient.get_hack_manager().get_module_with_tag("AutoCrystal").is_active()) {
+            if (PineapleClient.get_hack_manager().get_module_with_tag("AutoCrystal").is_active()) {
                 return "\u00A7a 1";
             }
             return "\u00A74 0";
@@ -76,7 +76,7 @@ public class PvpHud extends Pinnable {
 
     public String socks_enabled() {
         try {
-            if (Pineapleclient.get_hack_manager().get_module_with_tag("Socks").is_active()) {
+            if (PineapleClient.get_hack_manager().get_module_with_tag("Socks").is_active()) {
                 return "\u00A7a 1";
             }
             return "\u00A74 0";
@@ -89,7 +89,7 @@ public class PvpHud extends Pinnable {
     public String surround_enabled() {
 
         try {
-            if (Pineapleclient.get_hack_manager().get_module_with_tag("Surround").is_active()) {
+            if (PineapleClient.get_hack_manager().get_module_with_tag("Surround").is_active()) {
                 return "\u00A7a 1";
             }
             return "\u00A74 0";
@@ -102,7 +102,7 @@ public class PvpHud extends Pinnable {
     public String holefill_enabled() {
 
         try {
-            if (Pineapleclient.get_hack_manager().get_module_with_tag("HoleFill").is_active()) {
+            if (PineapleClient.get_hack_manager().get_module_with_tag("HoleFill").is_active()) {
                 return "\u00A7a 1";
             }
             return "\u00A74 0";

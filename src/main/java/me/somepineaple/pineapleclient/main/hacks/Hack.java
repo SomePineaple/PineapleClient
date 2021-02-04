@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.hacks;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.PineapleEventBus;
 import me.somepineaple.pineapleclient.main.event.events.EventRender;
 import me.somepineaple.pineapleclient.main.event.events.EventRenderEntityModel;
@@ -131,33 +131,33 @@ public class Hack implements Listenable {
 	}
 
 	protected Setting create(String name, String tag, int value, int min, int max) {
-		Pineapleclient.get_setting_manager().register(new Setting(this, name, tag, value, min, max));
+		PineapleClient.get_setting_manager().register(new Setting(this, name, tag, value, min, max));
 
-		return Pineapleclient.get_setting_manager().get_setting_with_tag(this, tag);
+		return PineapleClient.get_setting_manager().get_setting_with_tag(this, tag);
 	}
 
 	protected Setting create(String name, String tag, double value, double min, double max) {
-		Pineapleclient.get_setting_manager().register(new Setting(this, name, tag, value, min, max));
+		PineapleClient.get_setting_manager().register(new Setting(this, name, tag, value, min, max));
 
-		return Pineapleclient.get_setting_manager().get_setting_with_tag(this, tag);
+		return PineapleClient.get_setting_manager().get_setting_with_tag(this, tag);
 	}
 
 	protected Setting create(String name, String tag, boolean value) {
-		Pineapleclient.get_setting_manager().register(new Setting(this, name, tag, value));
+		PineapleClient.get_setting_manager().register(new Setting(this, name, tag, value));
 
-		return Pineapleclient.get_setting_manager().get_setting_with_tag(this, tag);
+		return PineapleClient.get_setting_manager().get_setting_with_tag(this, tag);
 	}
 
 	protected Setting create(String name, String tag, String value) {
-		Pineapleclient.get_setting_manager().register(new Setting(this, name, tag, value));
+		PineapleClient.get_setting_manager().register(new Setting(this, name, tag, value));
 
-		return Pineapleclient.get_setting_manager().get_setting_with_tag(this, tag);
+		return PineapleClient.get_setting_manager().get_setting_with_tag(this, tag);
 	}
 
 	protected Setting create(String name, String tag, String value, List<String> values) {
-		Pineapleclient.get_setting_manager().register(new Setting(this, name, tag, values, value));
+		PineapleClient.get_setting_manager().register(new Setting(this, name, tag, values, value));
 
-		return Pineapleclient.get_setting_manager().get_setting_with_tag(this, tag);
+		return PineapleClient.get_setting_manager().get_setting_with_tag(this, tag);
 	}
 
 	protected List<String> combobox(String... item) {

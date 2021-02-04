@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.util;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class NotificationUtil {
     public static void update () {
         active_notifications.removeIf(notification -> (System.currentTimeMillis() - notification.getTimeCreated()) > 5000);
 
-        int maxnotifications = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "maxnotifications").get_value(1);
+        int maxnotifications = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "maxnotifications").get_value(1);
         if (maxnotifications < active_notifications.size()) {
             active_notifications.remove(maxnotifications - 1);
         }

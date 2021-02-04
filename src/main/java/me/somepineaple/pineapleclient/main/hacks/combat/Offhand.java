@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.hacks.combat;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
@@ -46,7 +46,7 @@ public class Offhand extends Hack {
             float hp = mc.player.getHealth() + mc.player.getAbsorptionAmount();
 
             if (hp > totem_switch.get_value(1)) {
-                if (switch_mode.in("Crystal") && Pineapleclient.get_hack_manager().get_module_with_tag("AutoCrystal").is_active()) {
+                if (switch_mode.in("Crystal") && PineapleClient.get_hack_manager().get_module_with_tag("AutoCrystal").is_active()) {
                     swap_items(get_item_slot(Items.END_CRYSTAL),0);
                     return;
                 }
@@ -62,7 +62,7 @@ public class Offhand extends Hack {
                     swap_items(get_item_slot(Items.GOLDEN_APPLE), delay.get_value(true) ? 1 : 0);
                     return;
                 }
-                if (switch_mode.in("Crystal") && !Pineapleclient.get_hack_manager().get_module_with_tag("AutoCrystal").is_active()) {
+                if (switch_mode.in("Crystal") && !PineapleClient.get_hack_manager().get_module_with_tag("AutoCrystal").is_active()) {
                     swap_items(get_item_slot(Items.TOTEM_OF_UNDYING),0);
                     return;
                 }

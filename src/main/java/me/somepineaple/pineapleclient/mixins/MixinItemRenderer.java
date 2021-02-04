@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.mixins;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -33,15 +33,15 @@ public abstract class MixinItemRenderer {
             float yOffset = 0.0f;
             this.injection = false;
             if (hand == EnumHand.MAIN_HAND) {
-                if (Pineapleclient.get_hack_manager().get_module_with_tag("CustomViewmodel").is_active()) {
-                    xOffset = Pineapleclient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVMainX").get_value(1);
-                    yOffset = Pineapleclient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVMainY").get_value(1);
+                if (PineapleClient.get_hack_manager().get_module_with_tag("CustomViewmodel").is_active()) {
+                    xOffset = PineapleClient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVMainX").get_value(1);
+                    yOffset = PineapleClient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVMainY").get_value(1);
                 }
             }
-            else if (Pineapleclient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVOffset").get_value(true) &&
-            Pineapleclient.get_hack_manager().get_module_with_tag("CustomViewmodel").is_active()) {
-                xOffset = Pineapleclient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVOffsetX").get_value(1);
-                yOffset = Pineapleclient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVOffsetY").get_value(1);
+            else if (PineapleClient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVOffset").get_value(true) &&
+            PineapleClient.get_hack_manager().get_module_with_tag("CustomViewmodel").is_active()) {
+                xOffset = PineapleClient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVOffsetX").get_value(1);
+                yOffset = PineapleClient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVOffsetY").get_value(1);
             }
             this.renderItemInFirstPerson(player, p_187457_2_, p_187457_3_, hand, p_187457_5_ + xOffset, stack, p_187457_7_ + yOffset);
             this.injection = true;
@@ -50,8 +50,8 @@ public abstract class MixinItemRenderer {
 
     @Redirect(method = { "renderArmFirstPerson" }, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;translate(FFF)V", ordinal = 0))
     public void translateHook(final float x, final float y, final float z) {
-        GlStateManager.translate(x + (Pineapleclient.get_hack_manager().get_module_with_tag("CustomViewmodel").is_active() ? Pineapleclient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVMainX").get_value(1) : 0.0f),
-                y + (Pineapleclient.get_hack_manager().get_module_with_tag("CustomViewmodel").is_active() ? Pineapleclient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVMainX").get_value(1) : 0.0f), z);
+        GlStateManager.translate(x + (PineapleClient.get_hack_manager().get_module_with_tag("CustomViewmodel").is_active() ? PineapleClient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVMainX").get_value(1) : 0.0f),
+                y + (PineapleClient.get_hack_manager().get_module_with_tag("CustomViewmodel").is_active() ? PineapleClient.get_setting_manager().get_setting_with_tag("CustomViewmodel", "FOVMainX").get_value(1) : 0.0f), z);
     }
 
 }

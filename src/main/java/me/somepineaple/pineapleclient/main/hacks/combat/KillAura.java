@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.hacks.combat;
 
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
@@ -75,7 +75,7 @@ public class KillAura extends Hack {
 
 				if (entity != null && start_verify) {
 					// Tick.
-					float tick_to_hit  = 20.0f - Pineapleclient.get_event_handler().get_tick_rate();
+					float tick_to_hit  = 20.0f - PineapleClient.get_event_handler().get_tick_rate();
 
 					// If possible hit or no.
 					boolean is_possible_attack = mc.player.getCooledAttackStrength(sync_tps.get_value(true) ? -tick_to_hit : 0.0f) >= 1;

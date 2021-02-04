@@ -16,14 +16,14 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
-@Mod(modid = "pineapleclient", version = Pineapleclient.VERSION)
-public class Pineapleclient {
+@Mod(modid = "pineapleclient", version = PineapleClient.VERSION)
+public class PineapleClient {
 
 	@Mod.Instance
-	private static Pineapleclient MASTER;
+	private static PineapleClient MASTER;
 
 	public static final String NAME = "PineapleClient";
-	public static final String VERSION = "1.3";
+	public static final String VERSION = "1.4";
 	public static final String SIGN = " ⚔ ";
 
 	public static final int KEY_GUI = Keyboard.KEY_RSHIFT;

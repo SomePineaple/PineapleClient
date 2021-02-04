@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.guiscreen;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.Frame;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import net.minecraft.client.Minecraft;
@@ -87,9 +87,9 @@ public class GUI extends GuiScreen {
 
 	@Override
 	public void onGuiClosed() {
-		Pineapleclient.get_hack_manager().get_module_with_tag("GUI").set_active(false);
+		PineapleClient.get_hack_manager().get_module_with_tag("GUI").set_active(false);
 
-		Pineapleclient.get_config_manager().save_settings();
+		PineapleClient.get_config_manager().save_settings();
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class GUI extends GuiScreen {
 		for (Frame frame : this.frame) {
 			frame.bind(char_, key);
 
-			if (key == Pineapleclient.KEY_GUI_ESCAPE && !frame.is_binding()) {
+			if (key == PineapleClient.KEY_GUI_ESCAPE && !frame.is_binding()) {
 				mc.displayGuiScreen(null);
 			}
 

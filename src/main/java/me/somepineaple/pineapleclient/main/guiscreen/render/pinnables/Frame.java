@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.guiscreen.render.pinnables;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
 import net.minecraft.client.Minecraft;
 
@@ -69,10 +69,10 @@ public class Frame {
 
 		this.can = true;
 
-		int size  = Pineapleclient.get_hud_manager().get_array_huds().size();
+		int size  = PineapleClient.get_hud_manager().get_array_huds().size();
 		int count = 0;
 
-		for (Pinnable pinnables : Pineapleclient.get_hud_manager().get_array_huds()) {
+		for (Pinnable pinnables : PineapleClient.get_hud_manager().get_array_huds()) {
 			PinnableButton pinnables_buttons = new PinnableButton(this, pinnables.get_title(), pinnables.get_tag());
 
 			pinnables_buttons.set_y(this.height);

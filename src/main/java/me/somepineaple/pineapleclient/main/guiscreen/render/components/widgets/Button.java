@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.guiscreen.render.components.widgets;
 
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.AbstractWidget;
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.Frame;
@@ -33,7 +33,7 @@ public class Button extends AbstractWidget {
 	public Button(Frame frame, ModuleButton master, String tag, int update_postion) {
 		this.frame   = frame;
 		this.master  = master;
-		this.setting = Pineapleclient.get_setting_manager().get_setting_with_tag(master.get_module(), tag);
+		this.setting = PineapleClient.get_setting_manager().get_setting_with_tag(master.get_module(), tag);
 
 		this.x = master.get_x();
 		this.y = update_postion;
@@ -135,19 +135,19 @@ public class Button extends AbstractWidget {
 
 		this.save_y = this.y + master_y;
 
-		int ns_r = Pineapleclient.click_gui.theme_widget_name_r;
-		int ns_g = Pineapleclient.click_gui.theme_widget_name_g;
-		int ns_b = Pineapleclient.click_gui.theme_widget_name_b;
-		int ns_a = Pineapleclient.click_gui.theme_widget_name_a;
+		int ns_r = PineapleClient.click_gui.theme_widget_name_r;
+		int ns_g = PineapleClient.click_gui.theme_widget_name_g;
+		int ns_b = PineapleClient.click_gui.theme_widget_name_b;
+		int ns_a = PineapleClient.click_gui.theme_widget_name_a;
 
-		int bg_r = Pineapleclient.click_gui.theme_widget_background_r;
-		int bg_g = Pineapleclient.click_gui.theme_widget_background_g;
-		int bg_b = Pineapleclient.click_gui.theme_widget_background_b;
-		int bg_a = Pineapleclient.click_gui.theme_widget_background_a;
+		int bg_r = PineapleClient.click_gui.theme_widget_background_r;
+		int bg_g = PineapleClient.click_gui.theme_widget_background_g;
+		int bg_b = PineapleClient.click_gui.theme_widget_background_b;
+		int bg_a = PineapleClient.click_gui.theme_widget_background_a;
 
-		int bd_r = Pineapleclient.click_gui.theme_widget_border_r;
-		int bd_g = Pineapleclient.click_gui.theme_widget_border_g;
-		int bd_b = Pineapleclient.click_gui.theme_widget_border_b;
+		int bd_r = PineapleClient.click_gui.theme_widget_border_r;
+		int bd_g = PineapleClient.click_gui.theme_widget_border_g;
+		int bd_b = PineapleClient.click_gui.theme_widget_border_b;
 
 		if (this.setting.get_value(true)) { // filling in the button box if button is enabled
 			Draw.draw_rect(get_x(), this.save_y, get_x() + this.width, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);

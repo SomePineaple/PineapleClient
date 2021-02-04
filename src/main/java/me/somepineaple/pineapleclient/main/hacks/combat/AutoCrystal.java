@@ -4,7 +4,7 @@ import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.event.events.EventRender;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.turok.draw.RenderHelp;
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.events.EventEntityRemoved;
 import me.somepineaple.pineapleclient.main.event.events.EventMotionUpdate;
 import me.somepineaple.pineapleclient.main.hacks.Category;
@@ -602,21 +602,21 @@ public class AutoCrystal extends Hack {
             return true;
         }
 
-        if (Pineapleclient.get_hack_manager().get_module_with_tag("Surround").is_active()) {
+        if (PineapleClient.get_hack_manager().get_module_with_tag("Surround").is_active()) {
             if (old_render.get_value(true)) {
                 render_block_init = null;
             }
             return true;
         }
 
-        if (Pineapleclient.get_hack_manager().get_module_with_tag("HoleFill").is_active()) {
+        if (PineapleClient.get_hack_manager().get_module_with_tag("HoleFill").is_active()) {
             if (old_render.get_value(true)) {
                 render_block_init = null;
             }
             return true;
         }
 
-        if (Pineapleclient.get_hack_manager().get_module_with_tag("Trap").is_active()) {
+        if (PineapleClient.get_hack_manager().get_module_with_tag("Trap").is_active()) {
             if (old_render.get_value(true)) {
                 render_block_init = null;
             }

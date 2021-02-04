@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.guiscreen.render.pinnables;
 
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
 
 
@@ -44,7 +44,7 @@ public class PinnableButton {
 		this.name = name;
 		this.tag  = tag;
 
-		this.pinnable = Pineapleclient.get_hud_manager().get_pinnable_with_tag(tag);
+		this.pinnable = PineapleClient.get_hud_manager().get_pinnable_with_tag(tag);
 
 		this.x = master.get_x();
 		this.y = master.get_y();

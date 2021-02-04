@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.hacks;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 
 public class ClickHUD extends Hack {
@@ -32,11 +32,11 @@ public class ClickHUD extends Hack {
 	@Override
 	public void enable() {
 		if (mc.world != null && mc.player != null) {
-			Pineapleclient.get_hack_manager().get_module_with_tag("GUI").set_active(false);
+			PineapleClient.get_hack_manager().get_module_with_tag("GUI").set_active(false);
 				
-			Pineapleclient.click_hud.back = false;
+			PineapleClient.click_hud.back = false;
 
-			mc.displayGuiScreen(Pineapleclient.click_hud);
+			mc.displayGuiScreen(PineapleClient.click_hud);
 		}
 	}
 }

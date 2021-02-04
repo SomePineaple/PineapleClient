@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.manager;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.turok.draw.RenderHelp;
 import me.somepineaple.pineapleclient.main.command.PineapleclientCommand;
 import me.somepineaple.pineapleclient.main.command.PineapleclientCommands;
@@ -44,7 +44,7 @@ public class EventManager {
 			return;
 		}
 
-		Pineapleclient.get_hack_manager().update();
+		PineapleClient.get_hack_manager().update();
 	}
 
 	@SubscribeEvent
@@ -53,7 +53,7 @@ public class EventManager {
 			return;
 		}
 
-		Pineapleclient.get_hack_manager().render(event);
+		PineapleClient.get_hack_manager().render(event);
 	}
 
 	@SubscribeEvent
@@ -72,10 +72,10 @@ public class EventManager {
 		}
 
 		if (event.getType() == target) {
-			Pineapleclient.get_hack_manager().render();
+			PineapleClient.get_hack_manager().render();
 
-			if (!Pineapleclient.get_hack_manager().get_module_with_tag("GUI").is_active()) {
-				Pineapleclient.get_hud_manager().render();
+			if (!PineapleClient.get_hack_manager().get_module_with_tag("GUI").is_active()) {
+				PineapleClient.get_hud_manager().render();
 			}
 
 			GL11.glPushMatrix();
@@ -94,7 +94,7 @@ public class EventManager {
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
 	public void onKeyInput(InputEvent.KeyInputEvent event) {
 		if (Keyboard.getEventKeyState()) {
-			Pineapleclient.get_hack_manager().bind(Keyboard.getEventKey());
+			PineapleClient.get_hack_manager().bind(Keyboard.getEventKey());
 		}
 	}
 

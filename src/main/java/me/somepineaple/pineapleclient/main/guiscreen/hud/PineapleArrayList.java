@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
 import com.google.common.collect.Lists;
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
@@ -29,18 +29,18 @@ public class PineapleArrayList extends Pinnable {
 		updateResolution();
 		int position_update_y = 2;
 
-		int nl_r = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
-		int nl_g = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
-		int nl_b = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
-		int nl_a = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
+		int nl_r = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
+		int nl_g = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
+		int nl_b = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
+		int nl_a = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
 
-		List<Hack> pretty_modules = Pineapleclient.get_hack_manager().get_array_active_hacks().stream()
-			.sorted(Comparator.comparing(modules -> get(modules.array_detail() == null ? modules.get_tag() : modules.get_tag() + Pineapleclient.g + " [" + Pineapleclient.r + modules.array_detail() + Pineapleclient.g + "]" + Pineapleclient.r, "width")))
+		List<Hack> pretty_modules = PineapleClient.get_hack_manager().get_array_active_hacks().stream()
+			.sorted(Comparator.comparing(modules -> get(modules.array_detail() == null ? modules.get_tag() : modules.get_tag() + PineapleClient.g + " [" + PineapleClient.r + modules.array_detail() + PineapleClient.g + "]" + PineapleClient.r, "width")))
 			.collect(Collectors.toList());
 
 		int count = 0;
 
-		if (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Top R") || Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Top L") ) {
+		if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Top R") || PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Top L") ) {
 			pretty_modules = Lists.reverse(pretty_modules);
 		}
 
@@ -63,10 +63,10 @@ public class PineapleArrayList extends Pinnable {
 			if (flag) {
 				String module_name = (
 					modules.array_detail() == null ? modules.get_tag() :
-					modules.get_tag() + Pineapleclient.g + " [" + Pineapleclient.r + modules.array_detail() + Pineapleclient.g + "]" + Pineapleclient.r
+					modules.get_tag() + PineapleClient.g + " [" + PineapleClient.r + modules.array_detail() + PineapleClient.g + "]" + PineapleClient.r
 				);
 
-				if (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Free")) {
+				if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Free")) {
 					create_line(module_name, this.docking(2, module_name), position_update_y, nl_r, nl_g, nl_b, nl_a);
 
 					position_update_y += get(module_name, "height") + 2;
@@ -77,19 +77,19 @@ public class PineapleArrayList extends Pinnable {
 
 					this.set_height(position_update_y);
 				} else {
-					if (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Top R")) {
+					if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Top R")) {
 						mc.fontRenderer.drawStringWithShadow(module_name, scaled_width - 2 - mc.fontRenderer.getStringWidth(module_name), 3 + count * 10, new Draw.TravisColor(nl_r,nl_g,nl_b,nl_a).hex());
 						count++;
 					}
-					if (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Top L")) {
+					if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Top L")) {
 						mc.fontRenderer.drawStringWithShadow(module_name, 2, 3 + count * 10, new Draw.TravisColor(nl_r,nl_g,nl_b,nl_a).hex());
 						count++;
 					}
-					if (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Bottom R")) {
+					if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Bottom R")) {
 						mc.fontRenderer.drawStringWithShadow(module_name, scaled_width - 2 - mc.fontRenderer.getStringWidth(module_name), scaled_height - (count * 10), new Draw.TravisColor(nl_r,nl_g,nl_b,nl_a).hex());
 						count++;
 					}
-					if (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Bottom L")) {
+					if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDArrayList").in("Bottom L")) {
 						mc.fontRenderer.drawStringWithShadow(module_name, 2, scaled_height - (count * 10), new Draw.TravisColor(nl_r,nl_g,nl_b,nl_a).hex());
 						count++;
 					}

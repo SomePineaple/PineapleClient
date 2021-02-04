@@ -2,7 +2,7 @@ package me.somepineaple.pineapleclient.main.manager;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.*;
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.Frame;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
@@ -20,7 +20,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.somepineaple.pineapleclient.Pineapleclient.send_minecraft_log;
+import static me.somepineaple.pineapleclient.PineapleClient.send_minecraft_log;
 
 public class ConfigManager {
 
@@ -173,7 +173,7 @@ public class ConfigManager {
 
     private void save_hacks() throws IOException {
 
-        for (Hack hack : Pineapleclient.get_hack_manager().get_array_hacks()) {
+        for (Hack hack : PineapleClient.get_hack_manager().get_array_hacks()) {
 
             final String file_name = ACTIVE_CONFIG_FOLDER + hack.get_tag() + ".txt";
             final Path file_path = Paths.get(file_name);
@@ -183,7 +183,7 @@ public class ConfigManager {
             final File file = new File(file_name);
             final BufferedWriter br = new BufferedWriter(new FileWriter(file));
 
-            for (Setting setting : Pineapleclient.get_setting_manager().get_settings_with_hack(hack)) {
+            for (Setting setting : PineapleClient.get_setting_manager().get_settings_with_hack(hack)) {
                 switch (setting.get_type()) {
                     case "button":
                         br.write(setting.get_tag() + ":" + setting.get_value(true) + "\r\n");
@@ -210,7 +210,7 @@ public class ConfigManager {
 
     private void load_hacks() throws IOException {
 
-        for (Hack hack : Pineapleclient.get_hack_manager().get_array_hacks()) {
+        for (Hack hack : PineapleClient.get_hack_manager().get_array_hacks()) {
 
             final String file_name = ACTIVE_CONFIG_FOLDER + hack.get_tag() + ".txt";
             final File file = new File(file_name);
@@ -228,7 +228,7 @@ public class ConfigManager {
                     final String tag = colune.split(":")[0];
                     final String value = colune.split(":")[1];
 
-                    Setting setting = Pineapleclient.get_setting_manager().get_setting_with_tag(hack, tag);
+                    Setting setting = PineapleClient.get_setting_manager().get_setting_with_tag(hack, tag);
 
                     // send_minecraft_log("Attempting to assign value '" + value + "' to setting '" + tag + "'");
 
@@ -279,12 +279,12 @@ public class ConfigManager {
         JsonObject config = new JsonObject();
         JsonObject gui = new JsonObject();
 
-        config.add("name", new JsonPrimitive(Pineapleclient.get_name()));
-        config.add("version", new JsonPrimitive(Pineapleclient.get_version()));
-        config.add("user", new JsonPrimitive(Pineapleclient.get_actual_user()));
+        config.add("name", new JsonPrimitive(PineapleClient.get_name()));
+        config.add("version", new JsonPrimitive(PineapleClient.get_version()));
+        config.add("user", new JsonPrimitive(PineapleClient.get_actual_user()));
         config.add("prefix", new JsonPrimitive(CommandManager.get_prefix()));
 
-        for (Frame frames_gui : Pineapleclient.click_gui.get_array_frames()) {
+        for (Frame frames_gui : PineapleClient.click_gui.get_array_frames()) {
             JsonObject frame_info = new JsonObject();
 
             frame_info.add("name", new JsonPrimitive(frames_gui.get_name()));
@@ -318,10 +318,10 @@ public class ConfigManager {
 
         CommandManager.set_prefix(json_config.get("prefix").getAsString());
 
-        for (Frame frames : Pineapleclient.click_gui.get_array_frames()) {
+        for (Frame frames : PineapleClient.click_gui.get_array_frames()) {
             JsonObject frame_info = json_gui.get(frames.get_tag()).getAsJsonObject();
 
-            Frame frame_requested = Pineapleclient.click_gui.get_frame_with_tag(frame_info.get("tag").getAsString());
+            Frame frame_requested = PineapleClient.click_gui.get_frame_with_tag(frame_info.get("tag").getAsString());
 
             frame_requested.set_x(frame_info.get("x").getAsInt());
             frame_requested.set_y(frame_info.get("y").getAsInt());
@@ -341,12 +341,12 @@ public class ConfigManager {
         JsonObject main_frame = new JsonObject();
         JsonObject main_hud   = new JsonObject();
 
-        main_frame.add("name", new JsonPrimitive(Pineapleclient.click_hud.get_frame_hud().get_name()));
-        main_frame.add("tag",  new JsonPrimitive(Pineapleclient.click_hud.get_frame_hud().get_tag()));
-        main_frame.add("x",    new JsonPrimitive(Pineapleclient.click_hud.get_frame_hud().get_x()));
-        main_frame.add("y",    new JsonPrimitive(Pineapleclient.click_hud.get_frame_hud().get_y()));
+        main_frame.add("name", new JsonPrimitive(PineapleClient.click_hud.get_frame_hud().get_name()));
+        main_frame.add("tag",  new JsonPrimitive(PineapleClient.click_hud.get_frame_hud().get_tag()));
+        main_frame.add("x",    new JsonPrimitive(PineapleClient.click_hud.get_frame_hud().get_x()));
+        main_frame.add("y",    new JsonPrimitive(PineapleClient.click_hud.get_frame_hud().get_y()));
 
-        for (Pinnable pinnables_hud : Pineapleclient.get_hud_manager().get_array_huds()) {
+        for (Pinnable pinnables_hud : PineapleClient.get_hud_manager().get_array_huds()) {
             JsonObject frame_info = new JsonObject();
 
             frame_info.add("title", new JsonPrimitive(pinnables_hud.get_title()));
@@ -383,13 +383,13 @@ public class ConfigManager {
         JsonObject  main_frame = main_hud.get("frame").getAsJsonObject();
         JsonObject  main_huds  = main_hud.get("hud").getAsJsonObject();
 
-        Pineapleclient.click_hud.get_frame_hud().set_x(main_frame.get("x").getAsInt());
-        Pineapleclient.click_hud.get_frame_hud().set_y(main_frame.get("y").getAsInt());
+        PineapleClient.click_hud.get_frame_hud().set_x(main_frame.get("x").getAsInt());
+        PineapleClient.click_hud.get_frame_hud().set_y(main_frame.get("y").getAsInt());
 
-        for (Pinnable pinnables : Pineapleclient.get_hud_manager().get_array_huds()) {
+        for (Pinnable pinnables : PineapleClient.get_hud_manager().get_array_huds()) {
             JsonObject hud_info = main_huds.get(pinnables.get_tag()).getAsJsonObject();
 
-            Pinnable pinnable_requested = Pineapleclient.get_hud_manager().get_pinnable_with_tag(hud_info.get("tag").getAsString());
+            Pinnable pinnable_requested = PineapleClient.get_hud_manager().get_pinnable_with_tag(hud_info.get("tag").getAsString());
 
             pinnable_requested.set_active(hud_info.get("state").getAsBoolean());
             pinnable_requested.set_dock(hud_info.get("dock").getAsBoolean());
@@ -411,7 +411,7 @@ public class ConfigManager {
         this.verify_file(file_path);
         final File file = new File(file_name);
         final BufferedWriter br = new BufferedWriter(new FileWriter(file));
-        for (final Hack modules : Pineapleclient.get_hack_manager().get_array_hacks()) {
+        for (final Hack modules : PineapleClient.get_hack_manager().get_array_hacks()) {
             br.write(modules.get_tag() + ":" + modules.get_bind(1) + ":" + modules.is_active() + "\r\n");
         }
         br.close();
@@ -431,7 +431,7 @@ public class ConfigManager {
                 final String tag = colune.split(":")[0];
                 final String bind = colune.split(":")[1];
                 final String active = colune.split(":")[2];
-                final Hack module = Pineapleclient.get_hack_manager().get_module_with_tag(tag);
+                final Hack module = PineapleClient.get_hack_manager().get_module_with_tag(tag);
                 module.set_bind(Integer.parseInt(bind));
                 module.set_active(Boolean.parseBoolean(active));
             } catch (Exception ignored) {}

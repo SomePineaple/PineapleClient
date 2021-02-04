@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.mixins;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
@@ -34,7 +34,7 @@ public class MixinGuiScreen {
 
     @Inject(method = "renderToolTip", at = @At("HEAD"), cancellable = true)
     public void renderToolTip(ItemStack stack, int x, int y, CallbackInfo info) {
-        if (Pineapleclient.get_hack_manager().get_module_with_tag("ShulkerPreview").is_active() && stack.getItem() instanceof ItemShulkerBox) {
+        if (PineapleClient.get_hack_manager().get_module_with_tag("ShulkerPreview").is_active() && stack.getItem() instanceof ItemShulkerBox) {
             NBTTagCompound tagCompound = stack.getTagCompound();
             if (tagCompound != null && tagCompound.hasKey("BlockEntityTag", 10)) {
                 NBTTagCompound blockEntityTag = tagCompound.getCompoundTag("BlockEntityTag");

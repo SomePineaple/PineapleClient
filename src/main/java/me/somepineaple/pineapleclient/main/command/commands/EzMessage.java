@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.command.commands;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.command.PineapleclientCommand;
 import me.somepineaple.pineapleclient.main.util.EzMessageUtil;
 import me.somepineaple.pineapleclient.main.util.MessageUtil;
@@ -31,7 +31,7 @@ public class EzMessage extends PineapleclientCommand {
             }
             EzMessageUtil.set_message(ez.toString());
             MessageUtil.send_client_message("ez message changed to " + ChatFormatting.BOLD + ez.toString());
-            Pineapleclient.get_config_manager().save_settings();
+            PineapleClient.get_config_manager().save_settings();
             return true;
         }
 

@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import me.somepineaple.pineapleclient.main.util.MathUtil;
@@ -26,10 +26,10 @@ public class Compass extends Pinnable {
     @Override
 	public void render() {
         
-        int r = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
-        int g = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
-        int b = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
-        int a = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
+        int r = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
+        int g = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
+        int b = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
+        int a = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
 
         for (Direction dir : Direction.values()) {
 
@@ -56,14 +56,14 @@ public class Compass extends Pinnable {
     }
 
     private double get_x(double rad) {
-        return Math.sin(rad) * (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDCompassScale").get_value(1));
+        return Math.sin(rad) * (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDCompassScale").get_value(1));
     }
 
     private double get_y(double rad) {
 
         final double epic_pitch = MathUtil.clamp2(mc.getRenderViewEntity().rotationPitch + 30f, -90f, 90f);
         final double pitch_radians = Math.toRadians(epic_pitch);
-        return Math.cos(rad) * Math.sin(pitch_radians) * (Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDCompassScale").get_value(1));
+        return Math.cos(rad) * Math.sin(pitch_radians) * (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDCompassScale").get_value(1));
 
     }
 

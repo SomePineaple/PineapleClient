@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.guiscreen.render.pinnables;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.turok.draw.RenderHelp;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
 import net.minecraft.client.Minecraft;
@@ -246,6 +246,6 @@ public class Pinnable {
 	}
 
 	protected boolean is_on_gui() {
-		return Pineapleclient.click_hud.on_gui;
+		return PineapleClient.click_hud.on_gui;
 	}
 }

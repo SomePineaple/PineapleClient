@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 
 
@@ -16,17 +16,17 @@ public class Coordinates extends Pinnable {
 
 	@Override
 	public void render() {
-		int nl_r = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
-		int nl_g = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
-		int nl_b = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
-		int nl_a = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
+		int nl_r = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
+		int nl_g = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
+		int nl_b = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
+		int nl_a = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
 
-		String x = Pineapleclient.g + "[" + Pineapleclient.r + Integer.toString((int) (mc.player.posX)) + Pineapleclient.g + "]" + Pineapleclient.r;
-		String y = Pineapleclient.g + "[" + Pineapleclient.r + Integer.toString((int) (mc.player.posY)) + Pineapleclient.g + "]" + Pineapleclient.r;
-		String z = Pineapleclient.g + "[" + Pineapleclient.r + Integer.toString((int) (mc.player.posZ)) + Pineapleclient.g + "]" + Pineapleclient.r;
+		String x = PineapleClient.g + "[" + PineapleClient.r + Integer.toString((int) (mc.player.posX)) + PineapleClient.g + "]" + PineapleClient.r;
+		String y = PineapleClient.g + "[" + PineapleClient.r + Integer.toString((int) (mc.player.posY)) + PineapleClient.g + "]" + PineapleClient.r;
+		String z = PineapleClient.g + "[" + PineapleClient.r + Integer.toString((int) (mc.player.posZ)) + PineapleClient.g + "]" + PineapleClient.r;
 
-		String x_nether = Pineapleclient.g + "[" + Pineapleclient.r + Long.toString(Math.round(mc.player.dimension != -1 ? (mc.player.posX / 8) : (mc.player.posX * 8))) + Pineapleclient.g + "]" + Pineapleclient.r;
-		String z_nether = Pineapleclient.g + "[" + Pineapleclient.r + Long.toString(Math.round(mc.player.dimension != -1 ? (mc.player.posZ / 8) : (mc.player.posZ * 8))) + Pineapleclient.g + "]" + Pineapleclient.r;
+		String x_nether = PineapleClient.g + "[" + PineapleClient.r + Long.toString(Math.round(mc.player.dimension != -1 ? (mc.player.posX / 8) : (mc.player.posX * 8))) + PineapleClient.g + "]" + PineapleClient.r;
+		String z_nether = PineapleClient.g + "[" + PineapleClient.r + Long.toString(Math.round(mc.player.dimension != -1 ? (mc.player.posZ / 8) : (mc.player.posZ * 8))) + PineapleClient.g + "]" + PineapleClient.r;
 
 		String line = "XYZ " + x + y + z + " XZ " + x_nether + z_nether;
 

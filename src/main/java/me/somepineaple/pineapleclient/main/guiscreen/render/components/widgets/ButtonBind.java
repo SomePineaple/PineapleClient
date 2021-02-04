@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.guiscreen.render.components.widgets;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.AbstractWidget;
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.Frame;
@@ -127,13 +127,13 @@ public class ButtonBind extends AbstractWidget {
 	public void bind(char char_, int key) {
 		if (this.waiting) {
 			switch (key) {
-				case Pineapleclient.KEY_GUI_ESCAPE: {
+				case PineapleClient.KEY_GUI_ESCAPE: {
 					this.waiting = false;
 
 					break;
 				}
 
-				case Pineapleclient.KEY_DELETE: {
+				case PineapleClient.KEY_DELETE: {
 					this.master.get_module().set_bind(0);
 
 					this.waiting = false;
@@ -202,19 +202,19 @@ public class ButtonBind extends AbstractWidget {
 
 		this.save_y = this.y + master_y;
 
-		int ns_r = Pineapleclient.click_gui.theme_widget_name_r;
-		int ns_g = Pineapleclient.click_gui.theme_widget_name_g;
-		int ns_b = Pineapleclient.click_gui.theme_widget_name_b;
-		int ns_a = Pineapleclient.click_gui.theme_widget_name_a;
+		int ns_r = PineapleClient.click_gui.theme_widget_name_r;
+		int ns_g = PineapleClient.click_gui.theme_widget_name_g;
+		int ns_b = PineapleClient.click_gui.theme_widget_name_b;
+		int ns_a = PineapleClient.click_gui.theme_widget_name_a;
 
-		int bg_r = Pineapleclient.click_gui.theme_widget_background_r;
-		int bg_g = Pineapleclient.click_gui.theme_widget_background_g;
-		int bg_b = Pineapleclient.click_gui.theme_widget_background_b;
-		int bg_a = Pineapleclient.click_gui.theme_widget_background_a;
+		int bg_r = PineapleClient.click_gui.theme_widget_background_r;
+		int bg_g = PineapleClient.click_gui.theme_widget_background_g;
+		int bg_b = PineapleClient.click_gui.theme_widget_background_b;
+		int bg_a = PineapleClient.click_gui.theme_widget_background_a;
 
-		int bd_r = Pineapleclient.click_gui.theme_widget_border_r;
-		int bd_g = Pineapleclient.click_gui.theme_widget_border_g;
-		int bd_b = Pineapleclient.click_gui.theme_widget_border_b;
+		int bd_r = PineapleClient.click_gui.theme_widget_border_r;
+		int bd_g = PineapleClient.click_gui.theme_widget_border_g;
+		int bd_b = PineapleClient.click_gui.theme_widget_border_b;
 
 		if (this.waiting) {
 			Draw.draw_rect(get_x(), this.save_y, get_x() + this.width, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);

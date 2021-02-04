@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import me.somepineaple.pineapleclient.main.util.FriendUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,10 +23,10 @@ public class PlayerList extends Pinnable {
 
         int counter = 12;
 
-        int nl_r = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
-		int nl_g = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
-		int nl_b = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
-		int nl_a = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
+        int nl_r = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
+		int nl_g = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
+		int nl_b = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
+		int nl_a = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
 
         df_health.setRoundingMode(RoundingMode.HALF_UP);
 
@@ -65,7 +65,7 @@ public class PlayerList extends Pinnable {
 
         players = sortByValue(players);
 
-        int max = Pineapleclient.get_setting_manager().get_setting_with_tag("HUD", "HUDMaxPlayers").get_value(1);
+        int max = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDMaxPlayers").get_value(1);
         int count = 0;
 
         for (Map.Entry<String, Integer> player : players.entrySet()) {

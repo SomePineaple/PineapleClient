@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.guiscreen.render.components;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
@@ -59,10 +59,10 @@ public class Frame {
 		this.move_x = 0;
 		this.move_y = 0;
 
-		int size  = Pineapleclient.get_hack_manager().get_modules_with_category(category).size();
+		int size  = PineapleClient.get_hack_manager().get_modules_with_category(category).size();
 		int count = 0;
 
-		for (Hack modules : Pineapleclient.get_hack_manager().get_modules_with_category(category)) {
+		for (Hack modules : PineapleClient.get_hack_manager().get_modules_with_category(category)) {
 			ModuleButton buttons = new ModuleButton(modules, this);
 
 			buttons.set_y(this.height);
@@ -86,7 +86,7 @@ public class Frame {
 
 		this.height = 25;
 
-		int size  = Pineapleclient.get_hack_manager().get_modules_with_category(this.category).size();
+		int size  = PineapleClient.get_hack_manager().get_modules_with_category(this.category).size();
 		int count = 0;
 
 		for (ModuleButton buttons : this.module_button) {
@@ -261,20 +261,20 @@ public class Frame {
 
 		int color_a = Color.HSBtoRGB(tick_color[0], 1, 1);
 
-		int nc_r = Pineapleclient.click_gui.theme_frame_name_r;
-		int nc_g = Pineapleclient.click_gui.theme_frame_name_g;
-		int nc_b = Pineapleclient.click_gui.theme_frame_name_b;
-		int nc_a = Pineapleclient.click_gui.theme_frame_name_a;
+		int nc_r = PineapleClient.click_gui.theme_frame_name_r;
+		int nc_g = PineapleClient.click_gui.theme_frame_name_g;
+		int nc_b = PineapleClient.click_gui.theme_frame_name_b;
+		int nc_a = PineapleClient.click_gui.theme_frame_name_a;
 
-		int bg_r = Pineapleclient.click_gui.theme_frame_background_r;
-		int bg_g = Pineapleclient.click_gui.theme_frame_background_g;
-		int bg_b = Pineapleclient.click_gui.theme_frame_background_b;
-		int bg_a = Pineapleclient.click_gui.theme_frame_background_a;
+		int bg_r = PineapleClient.click_gui.theme_frame_background_r;
+		int bg_g = PineapleClient.click_gui.theme_frame_background_g;
+		int bg_b = PineapleClient.click_gui.theme_frame_background_b;
+		int bg_a = PineapleClient.click_gui.theme_frame_background_a;
 
-		int bd_r = Pineapleclient.click_gui.theme_frame_border_r;
-		int bd_g = Pineapleclient.click_gui.theme_frame_border_g;
-		int bd_b = Pineapleclient.click_gui.theme_frame_border_b;
-		int bd_a = Pineapleclient.click_gui.theme_frame_border_a;
+		int bd_r = PineapleClient.click_gui.theme_frame_border_r;
+		int bd_g = PineapleClient.click_gui.theme_frame_border_g;
+		int bd_b = PineapleClient.click_gui.theme_frame_border_b;
+		int bd_a = PineapleClient.click_gui.theme_frame_border_a;
 
 		this.frame_name = this.category.get_name();
 		this.width_name = font.get_string_width(this.category.get_name());

@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.mixins;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.PineapleEventBus;
 import me.somepineaple.pineapleclient.main.event.events.EventGUIScreen;
 import net.minecraft.client.Minecraft;
@@ -24,7 +24,7 @@ public class MixinMinecraft {
 
 	@Inject(method = "shutdown", at = @At("HEAD"))
 	private void shutdown(CallbackInfo info) {
-		Pineapleclient.get_config_manager().save_settings();
+		PineapleClient.get_config_manager().save_settings();
 	}
 
 }

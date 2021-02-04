@@ -1,6 +1,6 @@
 package me.somepineaple.pineapleclient.main.command.commands;
 
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.command.PineapleclientCommand;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
 import me.somepineaple.pineapleclient.main.manager.CommandManager;
@@ -30,7 +30,7 @@ public class Toggle extends PineapleclientCommand {
 			return true;
 		}
 
-		Hack module_requested = Pineapleclient.get_module_manager().get_module_with_tag(module);
+		Hack module_requested = PineapleClient.get_module_manager().get_module_with_tag(module);
 
 		if (module_requested != null) {
 			module_requested.toggle();

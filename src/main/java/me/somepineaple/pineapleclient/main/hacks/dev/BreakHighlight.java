@@ -1,7 +1,7 @@
 package me.somepineaple.pineapleclient.main.hacks.dev;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import me.somepineaple.pineapleclient.Pineapleclient;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.util.RenderUtil;
@@ -64,10 +64,10 @@ public class BreakHighlight extends Hack {
         String line = "Warning >>> Ur feet r being mined rn";
         if (IsFootBeingMined()) {
             WasJustMined = true;
-            client_message_simple(ChatFormatting.GOLD + Pineapleclient.NAME + ChatFormatting.GRAY + " > " + ChatFormatting.RED + line);
+            client_message_simple(ChatFormatting.GOLD + PineapleClient.NAME + ChatFormatting.GRAY + " > " + ChatFormatting.RED + line);
         } else {
             if (WasJustMined) {
-                client_message_simple(ChatFormatting.GOLD + Pineapleclient.NAME + ChatFormatting.GRAY + " > " + ChatFormatting.DARK_AQUA + "Your feet r no longer being mined out!");
+                client_message_simple(ChatFormatting.GOLD + PineapleClient.NAME + ChatFormatting.GRAY + " > " + ChatFormatting.DARK_AQUA + "Your feet r no longer being mined out!");
                 WasJustMined = false;
             }
         }
