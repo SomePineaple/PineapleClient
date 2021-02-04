@@ -10,11 +10,9 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-// Travis.
-
 
 public class HoleESP extends Hack {
 
@@ -26,12 +24,11 @@ public class HoleESP extends Hack {
 		this.description = "lets you know where holes are";
 	}
 
-	Setting mode 				= create("Mode", "HoleESPMode", "Pretty", combobox("Pretty", "Solid", "Outline"));
+	Setting mode 				= create("Mode", "HoleESPMode", "Pretty", combobox("Pretty", "Solid", "Outline", "Glow"));
 	Setting off_set 			= create("Height", "HoleESPOffSetSide", 0.2, 0.0, 1.0);
 	Setting range   			= create("Range", "HoleESPRange", 6, 1, 12);
 	Setting hide_own         	= create("Hide Own", "HoleESPHideOwn", true);
 
-	Setting bedrock_view 		= create("info", "HoleESPbedrock", "Bedrock");
 	Setting bedrock_enable 	= create("Bedrock Holes", "HoleESPBedrockHoles", true);
 	// Setting rgb_b 				= create("RGB Effect", "HoleColorRGBEffect", true);
 	Setting rb 				= create("R", "HoleESPRb", 0, 0, 255);
@@ -39,7 +36,6 @@ public class HoleESP extends Hack {
 	Setting bb 				= create("B", "HoleESPBb", 0, 0, 255);
 	Setting ab				    = create("A", "HoleESPAb", 50, 0, 255);
 
-	Setting obsidian_view 		= create("info", "HoleESPObsidian", "Obsidian");
 	Setting obsidian_enable	= create("Obsidian Holes", "HoleESPObsidianHoles", true);
 	// Setting rgb_o 				= create("RGB Effect", "HoleColorRGBEffect", true);
 	Setting ro 				= create("R", "HoleESPRo", 255, 0, 255);
@@ -53,7 +49,7 @@ public class HoleESP extends Hack {
 
 	boolean outline = false;
 	boolean solid   = false;
-	boolean docking = false;
+	boolean glow = false;
 
 	int color_r_o;
 	int color_g_o;
@@ -72,41 +68,6 @@ public class HoleESP extends Hack {
 
 	@Override
 	public void update() {
-		// float[] tick_color = {
-		// 	(System.currentTimeMillis() % (360 * 32)) / (360f * 32)
-		// };
-	
-		// int color_rgb_o = Color.HSBtoRGB(tick_color[0], 1, 1);
-		// int color_rgb_b = Color.HSBtoRGB(tick_color[0], 1, 1);
-	
-		// if (rgb_o.get_value(true)) {
-		// 	color_r_o = ((color_rgb_o >> 16) & 0xFF);
-		// 	color_g_o = ((color_rgb_o >> 8) & 0xFF);
-		// 	color_b_o = (color_rgb_o & 0xFF);
-	
-		// 	r_o.set_value(color_r_o);
-		// 	g_o.set_value(color_g_o);
-		// 	b_o.set_value(color_b_o);
-		// } else {
-		// 	color_r_o = r_o.get_value(1);
-		// 	color_g_o = g_o.get_value(2);
-		// 	color_b_o = b_o.get_value(3);
-		// }
-
-		// if (rgb_b.get_value(true)) {
-		// 	color_r_b = ((color_rgb_b >> 16) & 0xFF);
-		// 	color_g_b = ((color_rgb_b >> 8) & 0xFF);
-		// 	color_b_b = (color_rgb_b & 0xFF);
-	
-		// 	r_b.set_value(color_r_b);
-		// 	g_b.set_value(color_g_b);
-		// 	b_b.set_value(color_b_b);
-		// } else {
-		// 	color_r_b = r_b.get_value(1);
-		// 	color_g_b = g_b.get_value(2);
-		// 	color_b_b = b_b.get_value(3);
-		// }
-
 		color_r_b = rb.get_value(1);
 		color_g_b = gb.get_value(1);
 		color_b_b = bb.get_value(1);
@@ -121,21 +82,30 @@ public class HoleESP extends Hack {
 			if (mode.in("Pretty")) {
 				outline = true;
 				solid   = true;
+				glow = false;
 			}
 
 			if (mode.in("Solid")) {
 				outline = false;
 				solid   = true;
+				glow = false;
 			}
 
 			if (mode.in("Outline")) {
 				outline = true;
 				solid   = false;
+				glow = false;
+			}
+
+			if (mode.in("Glow")) {
+				outline = false;
+				solid = false;
+				glow = true;
 			}
 
 			int colapso_range = (int) Math.ceil(range.get_value(1));
 
-			List<BlockPos> spheres = sphere(player_as_blockpos(), colapso_range, colapso_range);
+			List<BlockPos> spheres = sphere(player_as_blockpos(), colapso_range);
 
 			for (BlockPos pos : spheres) {
 				if (!mc.world.getBlockState(pos).getBlock().equals(Blocks.AIR)) {
@@ -177,10 +147,10 @@ public class HoleESP extends Hack {
 				if (possible) {
 					if (safe_sides == 5) {
 						if (!this.bedrock_enable.get_value(true)) continue;
-						holes.add(new Pair<BlockPos,Boolean>(pos, true));
+						holes.add(new Pair<>(pos, true));
 					} else {
 						if (!this.obsidian_enable.get_value(true)) continue;
-						holes.add(new Pair<BlockPos,Boolean>(pos, false));
+						holes.add(new Pair<>(pos, false));
 					}
 				}
 			}
@@ -189,7 +159,7 @@ public class HoleESP extends Hack {
 
 	@Override
 	public void render(EventRender event) {
-		float off_set_h = 0;
+		float off_set_h;
  
 		if (!holes.isEmpty()) {
 			off_set_h = (float) off_set.get_value(1.0);
@@ -207,7 +177,7 @@ public class HoleESP extends Hack {
 					color_a = ao.get_value(1);
 				} else continue;
 
-				if (hide_own.get_value(true) && hole.getKey().equals((Object)new BlockPos(mc.player.posX, mc.player.posY, mc.player.posZ))) {
+				if (hide_own.get_value(true) && hole.getKey().equals(new BlockPos(mc.player.posX, mc.player.posY, mc.player.posZ))) {
 					continue;
 				}
 
@@ -234,17 +204,35 @@ public class HoleESP extends Hack {
 
 					RenderHelp.release();
 				}
+
+				if (glow) {
+					RenderHelp.prepare("lines");
+					RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
+						hole.getKey().getX(), hole.getKey().getY(), hole.getKey().getZ(),
+						1, 0, 1,
+						color_r, color_g, color_b, line_a.get_value(1),
+						"all"
+					);
+
+					RenderHelp.release();
+
+					RenderHelp.prepare("triangles");
+					RenderHelp.draw_gradiant_rect(RenderHelp.get_buffer_build(),
+						hole.getKey().getX(), hole.getKey().getY(), hole.getKey().getZ(),
+						(double)hole.getKey().getX() + 1, (double)hole.getKey().getY() + (double)off_set_h,
+						hole.getKey().getZ(),
+						new Color(0, 0, 0, 0), new Color(color_r, color_g, color_g, color_a));
+
+					RenderHelp.release();
+				}
 			}
 		}
 	}
 
-    public List<BlockPos> sphere(BlockPos pos, float r, int h) {
-    	boolean hollow = false;
-    	boolean sphere = true;
+    public List<BlockPos> sphere(BlockPos pos, float r) {
+		int plus_y = 0;
 
-    	int plus_y = 0;
-
-		List<BlockPos> sphere_block = new ArrayList<BlockPos>();
+		List<BlockPos> sphere_block = new ArrayList<>();
 
 		int cx = pos.getX();
 		int cy = pos.getY();
@@ -252,11 +240,10 @@ public class HoleESP extends Hack {
 
 		for (int x = cx - (int)r; x <= cx + r; ++x) {
 			for (int z = cz - (int)r; z <= cz + r; ++z) {
-				for (int y = sphere ? (cy - (int)r) : cy; y < (sphere ? (cy + r) : ((float)(cy + h))); ++y) {
-					double dist = (cx - x) * (cx - x) + (cz - z) * (cz - z) + (sphere ? ((cy - y) * (cy - y)) : 0);
-					if (dist < r * r && (!hollow || dist >= (r - 1.0f) * (r - 1.0f))) {
+				for (int y = cy - (int)r; y < cy + r; ++y) {
+					double dist = (cx - x) * (cx - x) + (cz - z) * (cz - z) + (cy - y) * (cy - y);
+					if (dist < r * r) {
 						BlockPos spheres = new BlockPos(x, y + plus_y, z);
-
 						sphere_block.add(spheres);
 					}
 				}
@@ -267,6 +254,6 @@ public class HoleESP extends Hack {
 	}
 
 	public BlockPos player_as_blockpos() {
-		return new BlockPos(Math.floor((double) mc.player.posX), Math.floor((double) mc.player.posY), Math.floor((double) mc.player.posZ));
+		return new BlockPos(Math.floor(mc.player.posX), Math.floor(mc.player.posY), Math.floor(mc.player.posZ));
 	}
 }

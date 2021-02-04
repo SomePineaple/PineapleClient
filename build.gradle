@@ -1,10 +1,9 @@
 buildscript {
 	repositories {
 		jcenter()
-
 		maven {
 			name = "SpongePowered"
-			url  = "http://repo.spongepowered.org/maven"
+			url  = "https://repo.spongepowered.org/repository/maven-public/"
 		}
 
 		maven {
@@ -38,7 +37,7 @@ minecraft {
 repositories {
 	maven {
 		name = "spongepowered-repo"
-		url  = "http://repo.spongepowered.org/maven/"
+		url  = "https://repo.spongepowered.org/repository/maven-public/"
 	}
 
 	maven {

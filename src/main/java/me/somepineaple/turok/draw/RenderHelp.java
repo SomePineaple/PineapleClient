@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.BlockPos;
 
+import java.awt.*;
 import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -31,7 +32,9 @@ public class RenderHelp extends Tessellator {
     		mode = GL_QUADS;
     	} else if (mode_requested.equalsIgnoreCase("lines")) {
     		mode = GL_LINES;
-    	}
+    	} else if (mode_requested.equalsIgnoreCase("triangles")) {
+    	    mode = GL_TRIANGLES;
+        }
 
         prepare_gl();
         begin(mode);
@@ -158,6 +161,23 @@ public class RenderHelp extends Tessellator {
             buffer.pos(x + w, y + h, z).color(r, g, b, a).endVertex();
             buffer.pos(x + w, y + h, z + d).color(r, g, b, a).endVertex();
         }
+    }
+
+    public static void draw_gradiant_rect(final BufferBuilder buffer, double x1, double y1, double z1, double x2, double y2, double z2, Color startColor, Color endColor) {
+        draw_gradiant_quad(buffer, x1, y1, z1, x1, y2, z1, x2, y2, z1, x2, y1, z1, startColor, endColor); // Front
+        draw_gradiant_quad(buffer, x1, y1, z2, x1, y2, z2, x2, y2, z2, x2, y1, z2, startColor, endColor); // Back
+        draw_gradiant_quad(buffer, x1, y1, z1, x1, y2, z1, x1, y2, z2, x1, y1, z2, startColor, endColor); // Left
+        draw_gradiant_quad(buffer, x2, y1, z1, x2, y2, z1, x2, y2, z2, x2, y1, z2, startColor, endColor); // Right
+    }
+
+    public static void draw_gradiant_quad(final BufferBuilder buffer, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3, double x4, double y4, double z4, Color startColor, Color endColor) {
+        buffer.pos(x1, y1, z1).color(startColor.getRed(), startColor.getGreen(), startColor.getBlue(), startColor.getAlpha()).endVertex();
+        buffer.pos(x2, y2, z2).color(endColor.getRed(), endColor.getGreen(), endColor.getBlue(), endColor.getAlpha()).endVertex();
+        buffer.pos(x3, y3, z3).color(endColor.getRed(), endColor.getGreen(), endColor.getBlue(), endColor.getAlpha()).endVertex();
+
+        buffer.pos(x1, y1, z1).color(startColor.getRed(), startColor.getGreen(), startColor.getBlue(), startColor.getAlpha()).endVertex();
+        buffer.pos(x3, y3, z3).color(endColor.getRed(), endColor.getGreen(), endColor.getBlue(), endColor.getAlpha()).endVertex();
+        buffer.pos(x4, y4, z4).color(startColor.getRed(), startColor.getGreen(), startColor.getBlue(), startColor.getAlpha()).endVertex();
     }
 
     public static void draw_cube_line(final BufferBuilder buffer, float x, float y, float z, float w, float h, float d, int r, int g, int b, int a, String sides) {
