@@ -231,7 +231,7 @@ public class HoleESP extends Hack {
 					RenderHelp.prepare("quads");
 					RenderHelp.draw_gradiant_cube(RenderHelp.get_buffer_build(),
 						hole.getKey().getX(), hole.getKey().getY(), hole.getKey().getZ(),
-						1, off_set_h * 2, 1, 
+						1, off_set_h, 1, 
 						new Color(color_r, color_g, color_b, color_a), new Color(0, 0, 0, 0), 
 						"all");
 
