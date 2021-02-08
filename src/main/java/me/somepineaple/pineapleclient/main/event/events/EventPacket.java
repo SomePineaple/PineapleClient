@@ -5,7 +5,7 @@ import net.minecraft.network.Packet;
 
 // External.
 
-
+@SuppressWarnings("rawtypes")
 public class EventPacket extends EventCancellable {
 	private final Packet packet;
 

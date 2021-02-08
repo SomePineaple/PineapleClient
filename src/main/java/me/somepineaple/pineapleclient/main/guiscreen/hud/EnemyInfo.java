@@ -192,8 +192,6 @@ public class EnemyInfo extends Pinnable implements Listenable {
 
             if (player.isDead || player.getHealth() <= 0) {
 
-                int count = totem_pop_counter.get(player.getName());
-
                 totem_pop_counter.remove(player.getName());
             }
         }

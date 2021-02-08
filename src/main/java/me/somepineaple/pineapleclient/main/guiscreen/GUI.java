@@ -19,9 +19,6 @@ public class GUI extends GuiScreen {
 
 	private Frame current;
 
-	private boolean event_start;
-	private boolean event_finish;
-
 	// Frame.
 	public int theme_frame_name_r = 0;
 	public int theme_frame_name_g = 0;
@@ -58,9 +55,6 @@ public class GUI extends GuiScreen {
 	public GUI() {
 		this.frame   = new ArrayList<>();
 		this.frame_x = 10;
-
-		this.event_start  = true;
-		this.event_finish = false;
 
 		for (Category categorys : Category.values()) {
 			if (categorys.is_hidden()) {

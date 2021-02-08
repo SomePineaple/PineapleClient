@@ -3,6 +3,7 @@ package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
+import net.minecraft.client.Minecraft;
 
 public class FPS extends Pinnable {
     
@@ -26,7 +27,7 @@ public class FPS extends Pinnable {
 	}
 	
     public String get_fps() {
-		int fps = mc.getDebugFPS();
+		int fps = Minecraft.getDebugFPS();
 		if (fps >= 60) {
 			return "\u00A7a"+Integer.toString(fps);
 		} else if (fps >= 30) {

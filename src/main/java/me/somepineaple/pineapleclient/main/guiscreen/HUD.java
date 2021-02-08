@@ -9,8 +9,6 @@ import net.minecraft.client.gui.GuiScreen;
 public class HUD extends GuiScreen {
 	private final Frame frame;
 
-	private int frame_height;
-
 	public boolean on_gui;
 	public boolean back;
 

@@ -1,4 +1,4 @@
-package me.somepineaple.pineapleclient.main.hacks.dev;
+package me.somepineaple.pineapleclient.main.hacks.render;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.somepineaple.pineapleclient.PineapleClient;
@@ -24,7 +24,6 @@ import static me.somepineaple.pineapleclient.main.util.MessageUtil.client_messag
 public class BreakHighlight extends Hack {
 
     private final ArrayList<BlockPos> BlocksBeingBroken = new ArrayList<>();
-    private final HashMap<BlockPos, Integer> BlocksHashMap = new HashMap<>();
 
     public BreakHighlight() {
         super(Category.RENDER);
@@ -129,8 +128,6 @@ public class BreakHighlight extends Hack {
                     RenderHelp.draw_cube_line(block, color_r, color_g, color_b, l_a.get_value(1), "all");
                     RenderHelp.release();
                 }
-
-                RenderUtil.drawText(block, String.valueOf(BlocksHashMap.get(block)));
             }
         }
     }
@@ -161,11 +158,8 @@ public class BreakHighlight extends Hack {
             try {
                 if (!BlocksBeingBroken.contains(l_Packet.getPosition()) && (l_Packet.getProgress() > 0 && l_Packet.getProgress() <= 10)) {
                     BlocksBeingBroken.add(l_Packet.getPosition());
-                    BlocksHashMap.remove(l_Packet.getPosition());
-                    BlocksHashMap.put(l_Packet.getPosition(), l_Packet.getProgress());
                 } else if (l_Packet.getProgress() <= 0 || l_Packet.getProgress() > 10) {
                     BlocksBeingBroken.remove(l_Packet.getPosition());
-                    BlocksHashMap.remove(l_Packet.getPosition());
                 }
             } catch (Exception ignored){}
         }

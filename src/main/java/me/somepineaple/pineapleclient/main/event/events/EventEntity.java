@@ -36,7 +36,7 @@ public class EventEntity extends EventCancellable {
 			this.y = y;
 		}
 
-		public void set_z(double x) {
+		public void set_z(double z) {
 			this.z = z;
 		}
 

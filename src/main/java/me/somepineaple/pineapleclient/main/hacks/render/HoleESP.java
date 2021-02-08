@@ -1,5 +1,6 @@
 package me.somepineaple.pineapleclient.main.hacks.render;
 
+import java.awt.Color;
 import me.somepineaple.pineapleclient.main.event.events.EventRender;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.turok.draw.RenderHelp;
@@ -10,7 +11,6 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class HoleESP extends Hack {
 		this.description = "lets you know where holes are";
 	}
 
-	Setting mode 				= create("Mode", "HoleESPMode", "Pretty", combobox("Pretty", "Solid", "Outline", "Glow"));
+	Setting mode 				= create("Mode", "HoleESPMode", "Pretty", combobox("Pretty", "Solid", "Outline", "Glow", "Glow 2"));
 	Setting off_set 			= create("Height", "HoleESPOffSetSide", 0.2, 0.0, 1.0);
 	Setting range   			= create("Range", "HoleESPRange", 6, 1, 12);
 	Setting hide_own         	= create("Hide Own", "HoleESPHideOwn", true);
@@ -50,6 +50,7 @@ public class HoleESP extends Hack {
 	boolean outline = false;
 	boolean solid   = false;
 	boolean glow = false;
+	boolean glowOutline = false;
 
 	int color_r_o;
 	int color_g_o;
@@ -83,24 +84,35 @@ public class HoleESP extends Hack {
 				outline = true;
 				solid   = true;
 				glow = false;
+				glowOutline = false;
 			}
 
 			if (mode.in("Solid")) {
 				outline = false;
 				solid   = true;
 				glow = false;
+				glowOutline = false;
 			}
 
 			if (mode.in("Outline")) {
 				outline = true;
 				solid   = false;
 				glow = false;
+				glowOutline = false;
 			}
 
 			if (mode.in("Glow")) {
 				outline = false;
 				solid = false;
 				glow = true;
+				glowOutline = false;
+			}
+
+			if (mode.in("Glow 2")) {
+				outline = false;
+				solid = false;
+				glow = true;
+				glowOutline = true;
 			}
 
 			int colapso_range = (int) Math.ceil(range.get_value(1));
@@ -216,13 +228,22 @@ public class HoleESP extends Hack {
 
 					RenderHelp.release();
 
-					RenderHelp.prepare("triangles");
-					RenderHelp.draw_gradiant_rect(RenderHelp.get_buffer_build(),
+					RenderHelp.prepare("quads");
+					RenderHelp.draw_gradiant_cube(RenderHelp.get_buffer_build(),
 						hole.getKey().getX(), hole.getKey().getY(), hole.getKey().getZ(),
-						(double)hole.getKey().getX() + 1, (double)hole.getKey().getY() + (double)off_set_h,
-						hole.getKey().getZ() + 1, new Color(color_r, color_g, color_b, color_a),
-						new Color(0, 0, 0, 0));
+						1, off_set_h * 2, 1, 
+						new Color(color_r, color_g, color_b, color_a), new Color(0, 0, 0, 0), 
+						"all");
 
+					RenderHelp.release();
+				}
+
+				if (glowOutline) {
+					RenderHelp.prepare("lines");
+					RenderHelp.draw_gradiant_outline(RenderHelp.get_buffer_build(), hole.getKey().getX(),
+						hole.getKey().getY(), hole.getKey().getZ(), off_set_h,
+						new Color(color_r, color_g, color_b, line_a.get_value(1)),
+						new Color(0, 0, 0, 0));
 					RenderHelp.release();
 				}
 			}

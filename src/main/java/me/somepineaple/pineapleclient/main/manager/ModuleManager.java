@@ -5,7 +5,7 @@ import me.somepineaple.pineapleclient.main.util.Notification;
 import me.somepineaple.pineapleclient.main.util.NotificationUtil;
 import me.somepineaple.turok.draw.RenderHelp;
 import me.somepineaple.pineapleclient.main.event.events.EventRender;
-import me.somepineaple.pineapleclient.main.hacks.dev.BreakHighlight;
+import me.somepineaple.pineapleclient.main.hacks.render.BreakHighlight;
 import me.somepineaple.pineapleclient.main.hacks.*;
 import me.somepineaple.pineapleclient.main.hacks.chat.*;
 import me.somepineaple.pineapleclient.main.hacks.combat.*;

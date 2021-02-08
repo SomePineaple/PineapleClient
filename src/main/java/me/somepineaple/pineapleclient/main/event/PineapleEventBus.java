@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.event;
 
-import me.zero.alpine.fork.bus.EventBus;
 import me.zero.alpine.fork.bus.EventManager;
 
 public class PineapleEventBus {
