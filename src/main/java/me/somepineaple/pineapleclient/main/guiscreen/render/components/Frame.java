@@ -6,7 +6,6 @@ import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
 import net.minecraft.client.Minecraft;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -21,15 +20,11 @@ public class Frame {
 	private int width;
 	private int height;
 
-	private int width_name;
-	private int width_abs;
-
 	private String frame_name;
 	private final String frame_tag;
 
 	private final Draw font = new Draw(1);
 
-	private final boolean first = false;
 	private boolean move;
 
 	private int move_x;
@@ -49,9 +44,6 @@ public class Frame {
 		this.category = category;
 
 		this.module_button = new ArrayList<>();
-
-		this.width_name = font.get_string_width(this.category.get_name());
-		this.width_abs  = this.width_name;
 
 		this.frame_name = category.get_name();
 		this.frame_tag  = category.get_tag();
@@ -259,8 +251,6 @@ public class Frame {
 			(System.currentTimeMillis() % (360 * 32)) / (360f * 32)
 		};
 
-		int color_a = Color.HSBtoRGB(tick_color[0], 1, 1);
-
 		int nc_r = PineapleClient.click_gui.theme_frame_name_r;
 		int nc_g = PineapleClient.click_gui.theme_frame_name_g;
 		int nc_b = PineapleClient.click_gui.theme_frame_name_b;
@@ -277,7 +267,6 @@ public class Frame {
 		int bd_a = PineapleClient.click_gui.theme_frame_border_a;
 
 		this.frame_name = this.category.get_name();
-		this.width_name = font.get_string_width(this.category.get_name());
 
 		Draw.draw_rect(this.x, this.y, this.x + this.width, this.y + this.height, bg_r, bg_g, bg_b, bg_a);
 		int border_size = 1;

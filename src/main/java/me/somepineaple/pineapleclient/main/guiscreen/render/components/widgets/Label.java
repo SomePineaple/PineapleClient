@@ -33,8 +33,6 @@ public class Label extends AbstractWidget {
 
 	private final Draw font = new Draw(1);
 
-	private int border_size = 0;
-
 	public Label(Frame frame, ModuleButton master, String tag, int update_postion) {
 		this.frame   = frame;
 		this.master  = master;
@@ -148,16 +146,6 @@ public class Label extends AbstractWidget {
 		int ns_g = PineapleClient.click_gui.theme_widget_name_g;
 		int ns_b = PineapleClient.click_gui.theme_widget_name_b;
 		int ns_a = PineapleClient.click_gui.theme_widget_name_a;
-
-		int bg_r = PineapleClient.click_gui.theme_widget_background_r;
-		int bg_g = PineapleClient.click_gui.theme_widget_background_g;
-		int bg_b = PineapleClient.click_gui.theme_widget_background_b;
-		int bg_a = PineapleClient.click_gui.theme_widget_background_a;
-
-		int bd_r = PineapleClient.click_gui.theme_widget_border_r;
-		int bd_g = PineapleClient.click_gui.theme_widget_border_g;
-		int bd_b = PineapleClient.click_gui.theme_widget_border_b;
-		int bd_a = 100;
 
 		if (motion(absolute_x, absolute_y)) {
 			if (this.setting.get_master().using_widget()) {

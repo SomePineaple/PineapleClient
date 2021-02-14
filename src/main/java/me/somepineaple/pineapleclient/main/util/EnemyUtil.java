@@ -91,6 +91,7 @@ public class EnemyUtil {
     private static String convertStreamToString(InputStream is) {
         java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
         String r = s.hasNext() ? s.next() : "/";
+        s.close();
         return r;
     }
 

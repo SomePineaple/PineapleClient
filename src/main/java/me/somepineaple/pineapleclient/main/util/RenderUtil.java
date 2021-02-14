@@ -186,40 +186,6 @@ public class RenderUtil {
         GlStateManager.scale(scaleDistance, scaleDistance, scaleDistance);
     }
 
-    private static void GLPre(final boolean depth, final boolean texture, final boolean clean, final boolean bind, final boolean override, final float lineWidth) {
-        if (depth) {
-            GL11.glDisable(2896);
-        }
-        if (!texture) {
-            glEnable(3042);
-        }
-        GL11.glLineWidth(lineWidth);
-        if (clean) {
-            GL11.glDisable(3553);
-        }
-        if (bind) {
-            GL11.glDisable(2929);
-        }
-        if (!override) {
-            glEnable(2848);
-        }
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        glHint(3154, 4354);
-        GlStateManager.depthMask(false);
-    }
-
-    public static void drawArc(final float cx, final float cy, final float r, final float start_angle, final float end_angle, final int num_segments) {
-        GL11.glBegin(4);
-        for (int i = (int)(num_segments / (360.0f / start_angle)) + 1; i <= num_segments / (360.0f / end_angle); ++i) {
-            final double previousangle = 6.283185307179586 * (i - 1) / num_segments;
-            final double angle = 6.283185307179586 * i / num_segments;
-            GL11.glVertex2d(cx, cy);
-            GL11.glVertex2d(cx + Math.cos(angle) * r, cy + Math.sin(angle) * r);
-            GL11.glVertex2d(cx + Math.cos(previousangle) * r, cy + Math.sin(previousangle) * r);
-        }
-        glEnd();
-    }
-
     public static void drawArcOutline(final float cx, final float cy, final float r, final float start_angle, final float end_angle, final int num_segments) {
         GL11.glBegin(2);
         for (int i = (int)(num_segments / (360.0f / start_angle)) + 1; i <= num_segments / (360.0f / end_angle); ++i) {

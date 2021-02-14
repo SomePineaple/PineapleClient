@@ -14,7 +14,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -146,8 +145,6 @@ public class AutoNomadHut extends Hack {
 		}
 		
         for (EnumFacing side : EnumFacing.values()) {
-
-            Block neighborPos;
 			BlockPos neighbor = pos.offset(side);
 			
 			EnumFacing side2 = side.getOpposite();
@@ -156,8 +153,8 @@ public class AutoNomadHut extends Hack {
 			
 			mc.player.inventory.currentItem = new_slot;
 
-            if (BlockInteractHelper.blackList.contains((Object)(neighborPos = mc.world.getBlockState(neighbor).getBlock()))) {
-                mc.player.connection.sendPacket((Packet)new CPacketEntityAction((Entity)mc.player, CPacketEntityAction.Action.START_SNEAKING));
+            if (BlockInteractHelper.blackList.contains((Object)(mc.world.getBlockState(neighbor).getBlock()))) {
+                mc.player.connection.sendPacket(new CPacketEntityAction((Entity)mc.player, CPacketEntityAction.Action.START_SNEAKING));
                 this.sneak = true;
 			}
 			

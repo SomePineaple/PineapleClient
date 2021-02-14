@@ -12,7 +12,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -37,8 +36,6 @@ public class Webfill extends Hack {
     Setting web_range = create("Range", "WebFillRange", 4, 1, 6);
 
     private final ArrayList<BlockPos> holes = new ArrayList<BlockPos>();
-
-    private boolean sneak;
 
     @Override
     public void enable() {
@@ -175,17 +172,14 @@ public class Webfill extends Hack {
         }
 
         for (EnumFacing side : EnumFacing.values()) {
-
-            Block neighborPos;
             BlockPos neighbor = pos.offset(side);
 
             EnumFacing side2 = side.getOpposite();
 
             if (!BlockInteractHelper.canBeClicked(neighbor)) continue;
 
-            if (BlockInteractHelper.blackList.contains((Object)(neighborPos = mc.world.getBlockState(neighbor).getBlock()))) {
-                mc.player.connection.sendPacket((Packet)new CPacketEntityAction((Entity)mc.player, CPacketEntityAction.Action.START_SNEAKING));
-                sneak = true;
+            if (BlockInteractHelper.blackList.contains((Object)(mc.world.getBlockState(neighbor).getBlock()))) {
+                mc.player.connection.sendPacket(new CPacketEntityAction((Entity)mc.player, CPacketEntityAction.Action.START_SNEAKING));
             }
 
             Vec3d hitVec = new Vec3d((Vec3i)neighbor).add(0.5, 0.5, 0.5).add(new Vec3d(side2.getDirectionVec()).scale(0.5));

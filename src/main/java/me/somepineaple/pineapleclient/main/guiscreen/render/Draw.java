@@ -17,7 +17,6 @@ import java.util.Arrays;
 
 public class Draw {
 	private static FontRenderer font_renderer = Minecraft.getMinecraft().fontRenderer;
-	private static FontRenderer custom_font   = Minecraft.getMinecraft().fontRenderer; 
 
 	private float size;
 
@@ -89,6 +88,8 @@ public class Draw {
 	}
 
 	public static class TravisColor extends Color {
+		private static final long serialVersionUID = -5058283436444578534L;
+
 		public TravisColor(int r, int g, int b, int a) {
 			super(r, g, b, a);
 		}

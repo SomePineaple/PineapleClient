@@ -28,8 +28,6 @@ public class Frame {
 
 	private int border_size = 2;
 
-	private Draw font = new Draw(1);
-
 	public static int nc_r = 0;
 	public static int nc_g = 0;
 	public static int nc_b = 0;
@@ -219,10 +217,10 @@ public class Frame {
 		bd_a  = color;
 		bdw_a = 255;
 
-		Draw.draw_rect(this.x, this.y, this.x + this.width, this.y + this.height, this.bg_r, this.bg_g, this.bg_b, this.bg_a);
-		Draw.draw_rect(this.x - 1, this.y, this.width + 1, this.height, this.bd_r, this.bd_g, this.bd_b, this.bd_a, this.border_size, "left-right");
+		Draw.draw_rect(this.x, this.y, this.x + this.width, this.y + this.height, Frame.bg_r, Frame.bg_g, Frame.bg_b, Frame.bg_a);
+		Draw.draw_rect(this.x - 1, this.y, this.width + 1, this.height, Frame.bd_r, Frame.bd_g, Frame.bd_b, Frame.bd_a, this.border_size, "left-right");
 
-		Draw.draw_string(this.name, this.x + 4, this.y + 4, this.nc_r, this.nc_g, this.nc_b, this.nc_a);
+		Draw.draw_string(this.name, this.x + 4, this.y + 4, Frame.nc_r, Frame.nc_g, Frame.nc_b, Frame.nc_a);
 
 		if (is_moving()) {
 			crush(mx, my);
@@ -234,7 +232,7 @@ public class Frame {
 			pinnables_buttons.render(mx, my, separate);
 
 			if (pinnables_buttons.motion(mx, my)) {
-				Draw.draw_rect(get_x() - 1, pinnables_buttons.get_save_y(), get_width() + 1, pinnables_buttons.get_height(), this.bdw_r, this.bdw_g, this.bdw_b, this.bdw_a, this.border_size, "right-left");
+				Draw.draw_rect(get_x() - 1, pinnables_buttons.get_save_y(), get_width() + 1, pinnables_buttons.get_height(), Frame.bdw_r, Frame.bdw_g, Frame.bdw_b, Frame.bdw_a, this.border_size, "right-left");
 			}
 		}
 	}

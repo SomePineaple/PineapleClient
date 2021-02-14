@@ -51,7 +51,7 @@ public class ModuleButton {
 		this.module = module;
 		this.master = master;
 
-		this.widget = new ArrayList();
+		this.widget = new ArrayList<>();
 
 		this.module_name = module.get_name();
 
@@ -270,9 +270,9 @@ public class ModuleButton {
 		if (this.module.is_active()) {
 			Draw.draw_rect(this.x, this.save_y, this.x + this.width - separe, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 
-			font.draw_string(this.module_name, this.x + separe, this.save_y, nm_r, nm_g, nm_b, nm_a);
+			Draw.draw_string(this.module_name, this.x + separe, this.save_y, nm_r, nm_g, nm_b, nm_a);
 		} else {
-			font.draw_string(this.module_name, this.x + separe, this.save_y, nm_r, nm_g, nm_b, nm_a);
+			Draw.draw_string(this.module_name, this.x + separe, this.save_y, nm_r, nm_g, nm_b, nm_a);
 		}
 
 		for (AbstractWidget widgets : this.widget) {

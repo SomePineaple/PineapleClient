@@ -31,25 +31,19 @@ public class ConfigManager {
 
     // STATIC FILES
     private final String CLIENT_FILE = "client.json";
-    private final String CONFIG_FILE = "config.txt";
     private final String DRAWN_FILE = "drawn.txt";
     private final String EZ_FILE = "ez.txt";
     private final String ENEMIES_FILE = "enemies.json";
     private final String FRIENDS_FILE = "friends.json";
     private final String HUD_FILE = "hud.json";
-    private final String BINDS_FILE = "binds.txt";
 
     // DIRS
     private final String CLIENT_DIR = MAIN_FOLDER + CLIENT_FILE;
-    private final String CONFIG_DIR = MAIN_FOLDER + CONFIG_FILE;
     private final String DRAWN_DIR = MAIN_FOLDER + DRAWN_FILE;
     private final String EZ_DIR = MAIN_FOLDER + EZ_FILE;
     private final String ENEMIES_DIR = MAIN_FOLDER + ENEMIES_FILE;
     private final String FRIENDS_DIR = MAIN_FOLDER + FRIENDS_FILE;
     private final String HUD_DIR = MAIN_FOLDER + HUD_FILE;
-
-    private String CURRENT_CONFIG_DIR = MAIN_FOLDER + CONFIGS_FOLDER + ACTIVE_CONFIG_FOLDER;
-    private String BINDS_DIR = CURRENT_CONFIG_DIR + BINDS_FILE;
 
     // FOLDER PATHS
     private final Path MAIN_FOLDER_PATH = Paths.get(MAIN_FOLDER);
@@ -58,15 +52,9 @@ public class ConfigManager {
 
     // FILE PATHS
     private final Path CLIENT_PATH = Paths.get(CLIENT_DIR);
-    private final Path CONFIG_PATH = Paths.get(CONFIG_DIR);
     private final Path DRAWN_PATH = Paths.get(DRAWN_DIR);
     private final Path EZ_PATH = Paths.get(EZ_DIR);
-    private final Path ENEMIES_PATH = Paths.get(ENEMIES_DIR);
-    private final Path FRIENDS_PATH = Paths.get(FRIENDS_DIR);
     private final Path HUD_PATH = Paths.get(HUD_DIR);
-
-    private Path BINDS_PATH = Paths.get(BINDS_DIR);
-    private Path CURRENT_CONFIG_PATH = Paths.get(CURRENT_CONFIG_DIR);
 
     public boolean set_active_config_folder(String folder) {
         if (folder.equals(this.ACTIVE_CONFIG_FOLDER)) {
@@ -75,12 +63,6 @@ public class ConfigManager {
 
         this.ACTIVE_CONFIG_FOLDER = CONFIGS_FOLDER + folder;
         this.ACTIVE_CONFIG_FOLDER_PATH = Paths.get(ACTIVE_CONFIG_FOLDER);
-
-        this.CURRENT_CONFIG_DIR = MAIN_FOLDER + CONFIGS_FOLDER + ACTIVE_CONFIG_FOLDER;
-        this.CURRENT_CONFIG_PATH = Paths.get(CURRENT_CONFIG_DIR);
-
-        this.BINDS_DIR = CURRENT_CONFIG_DIR + BINDS_FILE;
-        this.BINDS_PATH = Paths.get(BINDS_DIR);
 
         load_settings();
         return true;
@@ -142,7 +124,9 @@ public class ConfigManager {
         Gson gson = new Gson();
         Reader reader = Files.newBufferedReader(Paths.get(FRIENDS_DIR));
 
-        FriendUtil.friends = gson.fromJson(reader, new TypeToken<ArrayList<FriendUtil.Friend>>(){}.getType());
+        FriendUtil.friends = gson.fromJson(reader, new TypeToken<ArrayList<FriendUtil.Friend>>(){
+            private static final long serialVersionUID = -5732545611332038008L;
+        }.getType());
 
         reader.close();
     }
@@ -164,7 +148,9 @@ public class ConfigManager {
         Gson gson = new Gson();
         Reader reader = Files.newBufferedReader(Paths.get(ENEMIES_DIR));
 
-        EnemyUtil.enemies = gson.fromJson(reader, new TypeToken<ArrayList<EnemyUtil.Enemy>>(){}.getType());
+        EnemyUtil.enemies = gson.fromJson(reader, new TypeToken<ArrayList<EnemyUtil.Enemy>>(){
+            private static final long serialVersionUID = -3166080551425623602L;
+        }.getType());
 
         reader.close();
     }

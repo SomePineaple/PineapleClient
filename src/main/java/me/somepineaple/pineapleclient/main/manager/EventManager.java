@@ -100,7 +100,6 @@ public class EventManager {
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public void onChat(ClientChatEvent event) {
-		String   message      = event.getMessage();
 		String[] message_args = CommandManager.command_list.get_message(event.getMessage());
 
 		boolean true_command = false;

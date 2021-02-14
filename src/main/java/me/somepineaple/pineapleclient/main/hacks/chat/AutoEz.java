@@ -32,7 +32,7 @@ public class AutoEz extends Hack {
     Setting discord = create("Discord", "EzDiscord", false);
     Setting custom = create("Custom", "EzCustom", false);
 
-    private static final ConcurrentHashMap targeted_players = new ConcurrentHashMap();
+    private static final ConcurrentHashMap<String, Integer> targeted_players = new ConcurrentHashMap<>();
 
     @EventHandler
     private Listener<EventPacket.SendPacket> send_listener = new Listener<>(event -> {

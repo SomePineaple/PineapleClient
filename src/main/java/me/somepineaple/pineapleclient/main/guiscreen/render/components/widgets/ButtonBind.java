@@ -6,14 +6,10 @@ import me.somepineaple.pineapleclient.main.guiscreen.render.components.AbstractW
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.Frame;
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.ModuleButton;
 
-import java.awt.*;
-
-
 public class ButtonBind extends AbstractWidget {
 	private Frame frame;
 	private ModuleButton master;
 
-	private String button_name;
 	private String points;
 
 	private int x;
@@ -31,8 +27,6 @@ public class ButtonBind extends AbstractWidget {
 
 	private Draw font = new Draw(1);
 
-	private int border_size = 0;
-
 	public ButtonBind(Frame frame, ModuleButton master, String tag, int update_postion) {
 		this.frame   = frame;
 		this.master  = master;
@@ -44,8 +38,6 @@ public class ButtonBind extends AbstractWidget {
 
 		this.width  = master.get_width();
 		this.height = font.get_string_height();
-
-		this.button_name = tag;
 
 		this.can    = true;
 		this.points = ".";
@@ -171,18 +163,6 @@ public class ButtonBind extends AbstractWidget {
 			(System.currentTimeMillis() % (360 * 32)) / (360f * 32)
 		};
 
-		int color_a = Color.HSBtoRGB(tick_color[0], 1, 1);
-
-		int bd_a = (color_a);
-
-		if ((color_a) <= 100) {
-			bd_a = 100;
-		} else if ((color_a) >= 200) {
-			bd_a = 200;
-		} else {
-			bd_a = (color_a);
-		}
-
 		if (this.waiting) {
 			if (this.tick >= 15) {
 				this.points = "..";
@@ -198,8 +178,6 @@ public class ButtonBind extends AbstractWidget {
 			}
 		}
 
-		boolean zbob = true;
-
 		this.save_y = this.y + master_y;
 
 		int ns_r = PineapleClient.click_gui.theme_widget_name_r;
@@ -211,10 +189,6 @@ public class ButtonBind extends AbstractWidget {
 		int bg_g = PineapleClient.click_gui.theme_widget_background_g;
 		int bg_b = PineapleClient.click_gui.theme_widget_background_b;
 		int bg_a = PineapleClient.click_gui.theme_widget_background_a;
-
-		int bd_r = PineapleClient.click_gui.theme_widget_border_r;
-		int bd_g = PineapleClient.click_gui.theme_widget_border_g;
-		int bd_b = PineapleClient.click_gui.theme_widget_border_b;
 
 		if (this.waiting) {
 			Draw.draw_rect(get_x(), this.save_y, get_x() + this.width, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);

@@ -131,7 +131,7 @@ public class BlockUtil {
         try {
             if (emptyBlocks.contains(mc.world.getBlockState(pos).getBlock())) {
                 AxisAlignedBB box = new AxisAlignedBB(pos);
-                Iterator entityIter = mc.world.loadedEntityList.iterator();
+                Iterator<Entity> entityIter = mc.world.loadedEntityList.iterator();
 
                 Entity e;
 

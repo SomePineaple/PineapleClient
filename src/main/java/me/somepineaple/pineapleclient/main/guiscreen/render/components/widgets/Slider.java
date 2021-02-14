@@ -36,8 +36,6 @@ public class Slider extends AbstractWidget {
 
 	private Draw font = new Draw(1);
 
-	private int border_size = 0;
-
 	public Slider(Frame frame, ModuleButton master, String tag, int update_postion) {
 		this.frame   = frame;
 		this.master  = master;
@@ -166,11 +164,6 @@ public class Slider extends AbstractWidget {
 		int bg_g = PineapleClient.click_gui.theme_widget_background_g;
 		int bg_b = PineapleClient.click_gui.theme_widget_background_b;
 		int bg_a = PineapleClient.click_gui.theme_widget_background_a;
-
-		int bd_r = PineapleClient.click_gui.theme_widget_border_r;
-		int bd_g = PineapleClient.click_gui.theme_widget_border_g;
-		int bd_b = PineapleClient.click_gui.theme_widget_border_b;
-		int bd_a = 100;
 
 		if (this.double_ != 8192 && this.intenger == 8192) {
 			this.compare = false;

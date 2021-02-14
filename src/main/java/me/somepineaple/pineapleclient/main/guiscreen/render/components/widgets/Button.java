@@ -28,8 +28,6 @@ public class Button extends AbstractWidget {
 
 	private Draw font = new Draw(1);
 
-	private int border_size = 0;
-
 	public Button(Frame frame, ModuleButton master, String tag, int update_postion) {
 		this.frame   = frame;
 		this.master  = master;
@@ -144,10 +142,6 @@ public class Button extends AbstractWidget {
 		int bg_g = PineapleClient.click_gui.theme_widget_background_g;
 		int bg_b = PineapleClient.click_gui.theme_widget_background_b;
 		int bg_a = PineapleClient.click_gui.theme_widget_background_a;
-
-		int bd_r = PineapleClient.click_gui.theme_widget_border_r;
-		int bd_g = PineapleClient.click_gui.theme_widget_border_g;
-		int bd_b = PineapleClient.click_gui.theme_widget_border_b;
 
 		if (this.setting.get_value(true)) { // filling in the button box if button is enabled
 			Draw.draw_rect(get_x(), this.save_y, get_x() + this.width, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);

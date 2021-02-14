@@ -18,7 +18,7 @@ public class TurokBoolean {
 	public TurokBoolean(TurokString name, TurokString tag, boolean _bool) {
 		this.name  = name;
 		this.tag   = tag;
-		this.value = new TurokGeneric(_bool);
+		this.value = new TurokGeneric<>(_bool);
 	}
 
 	public void set_value(boolean _bool) {

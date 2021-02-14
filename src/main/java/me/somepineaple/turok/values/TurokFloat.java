@@ -18,7 +18,6 @@ public class TurokFloat {
 	public TurokFloat(TurokString name, TurokString tag, float _float, float min, float max) {
 		this.name  = name;
 		this.tag   = tag;
-		this.value = value;
 		this.max   = max;
 		this.min   = min;
 	}

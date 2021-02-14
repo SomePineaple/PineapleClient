@@ -15,12 +15,10 @@ import me.somepineaple.turok.task.Font;
 *
 */
 public class Turok {
-	private String tag;
-
 	private Font font_manager;
 
 	public Turok(String tag) {
-		this.tag = tag;
+		
 	}
 
 	public void resize(int x, int y, float size) {

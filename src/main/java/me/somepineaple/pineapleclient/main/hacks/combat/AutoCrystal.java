@@ -75,6 +75,7 @@ public class AutoCrystal extends Hack {
     Setting fast_mode = create("Fast Mode", "CaSpeed", true);
     Setting client_side = create("Client Side", "CaClientSide", false);
     Setting jumpy_mode = create("Jumpy Mode", "CaJumpyMode", false);
+    Setting attempt_chain = create("Attemp Chain", "CaAttemptChain", false);
 
     Setting anti_stuck = create("Anti Stuck", "CaAntiStuck", false);
     Setting endcrystal = create("1.13 Mode", "CaThirteen", false);
@@ -432,24 +433,24 @@ public class AutoCrystal extends Hack {
             current_chain_index = chain_length.get_value(1);
         } else if (chain_step > 1) {
             current_chain_index--;
-        }
+        } 
 
         render_damage_value = best_damage;
         render_block_init = best_block;
 
         damage_blocks = sort_best_blocks(damage_blocks);
 
-        //if (!attempt_chain.get_value(true)) {
+        if (!attempt_chain.get_value(true)) {
             return best_block;
-//        } else {
-//            if (damage_blocks.size() == 0) {
-//                return null;
-//            }
-//            if (damage_blocks.size() < current_chain_index) {
-//                return damage_blocks.get(0).getValue();
-//            }
-//            return damage_blocks.get(current_chain_index).getValue();
-//        }
+        } else {
+            if (damage_blocks.size() == 0) {
+                return null;
+            }
+            if (damage_blocks.size() < current_chain_index) {
+                return damage_blocks.get(0).getValue();
+            }
+            return damage_blocks.get(current_chain_index).getValue();
+        }
 
     }
 

@@ -33,8 +33,6 @@ public class Combobox extends AbstractWidget {
 
 	private Draw font = new Draw(1);
 
-	private int border_size = 0;
-
 	public Combobox(Frame frame, ModuleButton master, String tag, int update_postion) {
 		this.values  = new ArrayList<>();
 		this.frame   = frame;
@@ -53,12 +51,8 @@ public class Combobox extends AbstractWidget {
 
 		this.can = true;
 
-		int count = 0;
-
 		for (String values : this.setting.get_values()) {
 			this.values.add(values);
-
-			count++;
 		}
 
 		for (int i = 0; i >= this.values.size(); i++) {
@@ -157,24 +151,12 @@ public class Combobox extends AbstractWidget {
 	public void render(int master_y, int separe, int absolute_x, int absolute_y) {
 		set_width(this.master.get_width() - separe);
 
-		String zbob = "me";
-
 		this.save_y = this.y + master_y;
 
 		int ns_r = PineapleClient.click_gui.theme_widget_name_r;
 		int ns_g = PineapleClient.click_gui.theme_widget_name_g;
 		int ns_b = PineapleClient.click_gui.theme_widget_name_b;
 		int ns_a = PineapleClient.click_gui.theme_widget_name_b;
-
-		int bg_r = PineapleClient.click_gui.theme_widget_background_r;
-		int bg_g = PineapleClient.click_gui.theme_widget_background_g;
-		int bg_b = PineapleClient.click_gui.theme_widget_background_b;
-		int bg_a = PineapleClient.click_gui.theme_widget_background_a;
-
-		int bd_r = PineapleClient.click_gui.theme_widget_border_r;
-		int bd_g = PineapleClient.click_gui.theme_widget_border_g;
-		int bd_b = PineapleClient.click_gui.theme_widget_border_b;
-		int bd_a = 100;
 
 		Draw.draw_string(this.combobox_name + " " + this.setting.get_current_value(), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 

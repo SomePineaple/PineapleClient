@@ -9,9 +9,6 @@ public class PinnableButton {
 	private Pinnable pinnable;
 	private Frame master;
 
-	private String name;
-	private String tag;
-
 	private int x;
 	private int y;
 
@@ -19,8 +16,6 @@ public class PinnableButton {
 
 	private int width;
 	private int height;
-
-	private boolean first;
 
 	private Draw font = new Draw(1);
 
@@ -41,9 +36,6 @@ public class PinnableButton {
 	public PinnableButton(Frame master, String name, String tag) {
 		this.master = master;
 
-		this.name = name;
-		this.tag  = tag;
-
 		this.pinnable = PineapleClient.get_hud_manager().get_pinnable_with_tag(tag);
 
 		this.x = master.get_x();
@@ -53,8 +45,6 @@ public class PinnableButton {
 
 		this.width  = this.master.get_width();
 		this.height = font.get_string_height();
-
-		this.first = true;
 	}
 
 	public void set_x(int x) {
@@ -137,11 +127,11 @@ public class PinnableButton {
 		this.save_y = this.y + this.master.get_y() - 10;
 
 		if (this.pinnable.is_active()) {
-			Draw.draw_rect(this.x, this.save_y, this.x + this.width - separate, this.save_y + this.height, this.bg_r, this.bg_g, this.bg_b, this.bg_a);
+			Draw.draw_rect(this.x, this.save_y, this.x + this.width - separate, this.save_y + this.height, PinnableButton.bg_r, PinnableButton.bg_g, PinnableButton.bg_b, PinnableButton.bg_a);
 		
-			Draw.draw_string(this.pinnable.get_title(), this.x + separate, this.save_y, this.nc_r, this.nc_g, this.nc_b, this.nc_a);
+			Draw.draw_string(this.pinnable.get_title(), this.x + separate, this.save_y, PinnableButton.nc_r, PinnableButton.nc_g, PinnableButton.nc_b, PinnableButton.nc_a);
 		} else {
-			Draw.draw_string(this.pinnable.get_title(), this.x + separate, this.save_y, this.nc_r, this.nc_g, this.nc_b, this.nc_a);
+			Draw.draw_string(this.pinnable.get_title(), this.x + separate, this.save_y, PinnableButton.nc_r, PinnableButton.nc_g, PinnableButton.nc_b, PinnableButton.nc_a);
 		}
 
 		this.pinnable.render(mx, my, 0);
