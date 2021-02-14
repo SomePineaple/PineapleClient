@@ -4,7 +4,6 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
-import me.somepineaple.pineapleclient.main.util.RenderUtil;
 import me.somepineaple.turok.draw.RenderHelp;
 import me.somepineaple.pineapleclient.main.event.events.EventRender;
 import me.somepineaple.pineapleclient.main.hacks.Category;
@@ -17,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static me.somepineaple.pineapleclient.main.util.MessageUtil.client_message_simple;
 

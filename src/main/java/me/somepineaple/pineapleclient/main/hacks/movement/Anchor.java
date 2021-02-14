@@ -10,8 +10,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.ArrayList;
-
 public class Anchor extends Hack {
 
     // Written by NathanW, thanks to my friend Ian for some hole shit.
@@ -26,8 +24,6 @@ public class Anchor extends Hack {
 
     Setting Pitch = create("Pitch", "AnchorPitch", 60, 0, 90);
     Setting Pull = create("Pull", "AnchorPull", true);
-
-    private final ArrayList<BlockPos> holes = new ArrayList<BlockPos>();
     int holeblocks;
 
 

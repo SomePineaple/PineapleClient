@@ -13,8 +13,6 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.client.CPacketInput;
 import net.minecraft.network.play.client.CPacketPlayer;
-import net.minecraft.network.play.server.SPacketPlayerPosLook;
-import net.minecraft.util.MovementInput;
 import net.minecraft.world.World;
 
 public class Freecam extends Hack {
