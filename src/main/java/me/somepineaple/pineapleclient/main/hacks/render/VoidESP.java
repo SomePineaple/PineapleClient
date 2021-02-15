@@ -18,13 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VoidESP extends Hack {
-
     public VoidESP() {
         super(Category.RENDER);
 
         this.name        = "Void ESP";
         this.tag         = "VoidESP";
-        this.description = "OH FUCK A DEEP HOLE";
+        this.description = "OH FUCK, A DEEP HOLE";
     }
 
     Setting void_radius = create("Range", "VoidESPRange", 6, 1, 10);

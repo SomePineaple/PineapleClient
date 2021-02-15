@@ -75,6 +75,7 @@ public class ModuleManager {
 		add_hack(new BuildHeight());
 		add_hack(new CoordExploit());
 		add_hack(new NoHandshake());
+		add_hack(new NoRotate());
 
 		// Movement.
 		add_hack(new Strafe());
