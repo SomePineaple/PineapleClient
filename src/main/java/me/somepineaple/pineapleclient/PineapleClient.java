@@ -23,8 +23,8 @@ public class PineapleClient {
 	private static PineapleClient MASTER;
 
 	public static final String NAME = "PineapleClient";
-	public static final String VERSION = "1.5";
-	public static final String SIGN = " | ";
+	public static final String VERSION = "1.6";
+	public static final String SIGN = " - ";
 
 	public static final int KEY_GUI = Keyboard.KEY_RSHIFT;
 	public static final int KEY_DELETE = Keyboard.KEY_DELETE;

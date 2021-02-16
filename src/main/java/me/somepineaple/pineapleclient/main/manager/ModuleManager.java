@@ -1,8 +1,6 @@
 package me.somepineaple.pineapleclient.main.manager;
 
 import me.somepineaple.pineapleclient.main.util.MessageUtil;
-import me.somepineaple.pineapleclient.main.util.Notification;
-import me.somepineaple.pineapleclient.main.util.NotificationUtil;
 import me.somepineaple.turok.draw.RenderHelp;
 import me.somepineaple.pineapleclient.main.event.events.EventRender;
 import me.somepineaple.pineapleclient.main.hacks.render.BreakHighlight;
@@ -83,6 +81,7 @@ public class ModuleManager {
 		add_hack(new Sprint());
 		add_hack(new Anchor());
 		add_hack(new Freecam());
+		add_hack(new MCP());
 		
 		// Render.
 		add_hack(new Highlight());
@@ -176,7 +175,7 @@ public class ModuleManager {
 					modules.render(event_render);
 				} catch (Exception e) {
 					e.printStackTrace();
-					NotificationUtil.send_notification(new Notification("Error at: " + modules.get_name() + " render method: " + e.getCause().getLocalizedMessage(), 255, 0, 0));
+					// NotificationUtil.send_notification(new Notification("Error at: " + modules.get_name() + " render method: " + e.getCause().getLocalizedMessage(), 255, 0, 0));
 				}
 				mc.profiler.endSection();
 			}
@@ -205,8 +204,8 @@ public class ModuleManager {
 				try {
 					modules.update();
 				} catch (Exception e) {
-					MessageUtil.client_message("Error at " + modules.get_name() + " update method " + e.getMessage());
-					NotificationUtil.send_notification(new Notification("Error at " + modules.get_name() + " update method " + e.getCause().getLocalizedMessage(), 255, 0, 0));
+					// MessageUtil.client_message("Error at " + modules.get_name() + " update method " + e.getMessage());
+					// NotificationUtil.send_notification(new Notification("Error at " + modules.get_name() + " update method " + e.getCause().getLocalizedMessage(), 255, 0, 0));
 					e.printStackTrace();
 				}
 			}
@@ -221,7 +220,7 @@ public class ModuleManager {
 				} catch (Exception e) {
 					if (mc.world != null && mc.player != null) {
 						MessageUtil.client_message("Error at " + modules.get_name() + " render method " + e.getMessage());
-						NotificationUtil.send_notification(new Notification("Error at " + modules.get_name() + " render method " + e.getCause().getLocalizedMessage(), 255, 0, 0));
+						// NotificationUtil.send_notification(new Notification("Error at " + modules.get_name() + " render method " + e.getCause().getLocalizedMessage(), 255, 0, 0));
 					}
 				}
 			}

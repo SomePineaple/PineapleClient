@@ -91,7 +91,7 @@ public class AutoCrystal extends Hack {
 
     Setting swing = create("Swing", "CaSwing", "Mainhand", combobox("Mainhand", "Offhand", "Both", "None"));
 
-    Setting render_mode = create("Render", "CaRenderMode", "Pretty", combobox("Pretty", "Solid", "Outline", "None"));
+    Setting render_mode = create("Render", "CaRenderMode", "Pretty", combobox("Pretty", "Solid", "Outline", "Glow", "Glow 2", "None"));
     Setting old_render = create("Old Render", "CaOldRender", false);
     Setting future_render = create("Future Render", "CaFutureRender", false);
     Setting top_block = create("Top Block", "CaTopBlock", false);
@@ -134,6 +134,8 @@ public class AutoCrystal extends Hack {
     private boolean did_anything;
     private boolean outline;
     private boolean solid;
+    private boolean glow;
+    private boolean glowLines;
 
     private int chain_step = 0;
     private int current_chain_index = 0;
@@ -559,15 +561,12 @@ public class AutoCrystal extends Hack {
                         mc.playerController.updateController();
                         break;
                     }
-
                 }
 
                 if (new_slot != -1) {
                     mc.player.inventory.currentItem = new_slot;
                 }
-
             }
-
         }
 
         if (debug.get_value(true)) {
@@ -587,7 +586,6 @@ public class AutoCrystal extends Hack {
         }
 
         break_delay_counter = 0;
-
     }
 
     public boolean check_pause() {
@@ -644,8 +642,6 @@ public class AutoCrystal extends Hack {
         } else {
             attacked_crystals.put(crystal, 1);
         }
-
-
     }
 
     public void rotate_to_pos(final BlockPos pos) {
@@ -693,16 +689,36 @@ public class AutoCrystal extends Hack {
         if (render_mode.in("Pretty")) {
             outline = true;
             solid = true;
+            glow = false;
+            glowLines = false;
         }
 
         if (render_mode.in("Solid")) {
             outline = false;
             solid = true;
+            glow = false;
+            glowLines = false;
         }
 
         if (render_mode.in("Outline")) {
             outline = true;
             solid = false;
+            glow = false;
+            glowLines = false;
+        } 
+
+        if (render_mode.in("Glow")) {
+            outline = false;
+            solid = false;
+            glow = true;
+            glowLines = false;
+        }
+
+        if (render_mode.in("Glow 2")) {
+            outline = false;
+            solid = false;
+            glow = true;
+            glowLines = true;
         }
 
         render_block(render_block_init);
@@ -740,6 +756,35 @@ public class AutoCrystal extends Hack {
                     1, h, 1,
                     r.get_value(1), g.get_value(1), b.get_value(1), a_out.get_value(1),
                     "all"
+            );
+            RenderHelp.release();
+        }
+
+        if (glow) {
+            RenderHelp.prepare("lines");
+            RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
+                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    1, 0, 1,
+                    r.get_value(1), g.get_value(1), b.get_value(1), a_out.get_value(1),
+                    "all"
+            );
+            RenderHelp.release();
+            RenderHelp.prepare("quads");
+            RenderHelp.draw_gradiant_cube(RenderHelp.get_buffer_build(), 
+                    render_block.getX(), render_block.getY(), render_block.getZ(), 
+                    1, h, 1,  new Color(r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1)),
+                    new Color(0, 0, 0, 0), 
+                    "all"
+            );
+            RenderHelp.release();
+        }
+
+        if (glowLines) {
+            RenderHelp.prepare("lines");
+            RenderHelp.draw_gradiant_outline(RenderHelp.get_buffer_build(), 
+                    render_block.getX(), render_block.getY(), render_block.getZ(), 
+                    h, new Color(r.get_value(1), g.get_value(1), b.get_value(1), a_out.get_value(1)), 
+                    new Color(0, 0, 0, 0)
             );
             RenderHelp.release();
         }

@@ -185,7 +185,7 @@ public class Slider extends AbstractWidget {
 
 		String slider_value = !this.compare ? java.lang.Double.toString(this.setting.get_value(this.double_)) : Integer.toString(this.setting.get_value(this.intenger));
 
-		Draw.draw_rect(this.x, this.save_y, this.x + (this.width) * (this.setting.get_value(1) - this.setting.get_min(1)) / (this.setting.get_max(1) - this.setting.get_min(1)), this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
+		Draw.draw_rect(this.x, this.save_y, this.x + (int)((this.width) * (this.setting.get_value(1.0) - this.setting.get_min(1.0)) / (this.setting.get_max(1.0) - this.setting.get_min(1.0))), this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 
 		Draw.draw_string(this.slider_name, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		Draw.draw_string(slider_value, this.x + this.width - separe - font.get_string_width(slider_value) + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);

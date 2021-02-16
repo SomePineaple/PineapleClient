@@ -23,6 +23,7 @@ public class Strafe extends Hack {
 	}
 
 	Setting speed_mode = create("Mode", "StrafeMode", "Strafe", combobox("Strafe", "On Ground"));
+	Setting speed = create("Strafe Speed", "StrafeSpeed", 1.0d, 1.0d, 2.0d);
 	Setting auto_sprint = create("Auto Sprint", "StrafeSprint", true);
 	Setting on_water = create("On Water", "StrafeOnWater", true);
 	Setting auto_jump = create("Auto Jump", "StrafeAutoJump", true);
@@ -53,8 +54,8 @@ public class Strafe extends Hack {
 				}
 
 				final float yaw = get_rotation_yaw() * 0.017453292F;
-				mc.player.motionX -= MathHelper.sin(yaw) * 0.2f;
-				mc.player.motionZ += MathHelper.cos(yaw) * 0.2f;
+				mc.player.motionX -= MathHelper.sin(yaw) * 0.2f * speed.get_value(1.0d);
+				mc.player.motionZ += MathHelper.cos(yaw) * 0.2f * speed.get_value(1.0d);
 
 			} else if (mc.player.onGround && speed_mode.in("On Ground")) {
 
@@ -64,22 +65,18 @@ public class Strafe extends Hack {
 				mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY+0.4, mc.player.posZ, false));
 				
 			}
-
 		}
 
 		if (mc.gameSettings.keyBindJump.isKeyDown() && mc.player.onGround) {
 			mc.player.motionY = 0.405f;
 		}
-
 	}
 
 	@EventHandler
 	private Listener<EventPlayerJump> on_jump = new Listener<>(event -> {
-
 		if (speed_mode.in("Strafe")) {
 			event.cancel();
 		}
-
 	});
 
 	@EventHandler
@@ -93,7 +90,7 @@ public class Strafe extends Hack {
 
 		if (mc.player.isSneaking() || mc.player.isOnLadder() || mc.player.isInWeb || mc.player.isInLava() || mc.player.isInWater() || mc.player.capabilities.isFlying) return;
 
-		float player_speed = 0.2873f;
+		float player_speed = (float) (0.2873f * speed.get_value(1.0d));
 		float move_forward = mc.player.movementInput.moveForward;
 		float move_strafe = mc.player.movementInput.moveStrafe;
 		float rotation_yaw = mc.player.rotationYaw;
@@ -127,11 +124,9 @@ public class Strafe extends Hack {
 
             event.set_x((move_forward * player_speed) * Math.cos(Math.toRadians((rotation_yaw + 90.0f))) + (move_strafe * player_speed) * Math.sin(Math.toRadians((rotation_yaw + 90.0f))));
             event.set_z((move_forward * player_speed) * Math.sin(Math.toRadians((rotation_yaw + 90.0f))) - (move_strafe * player_speed) * Math.cos(Math.toRadians((rotation_yaw + 90.0f))));
-
 		}
 
 		event.cancel();
-
 	});
 
 	private float get_rotation_yaw() {
@@ -154,5 +149,4 @@ public class Strafe extends Hack {
         }
         return rotation_yaw * 0.017453292f;
 	}
-
 }
