@@ -22,7 +22,5 @@ public class MixinEntityRenderer {
         if (event.isCancelled()) {
 			return;
         }
-        
     }
-
 }

@@ -10,5 +10,4 @@ public class EventMotionUpdate extends EventCancellable {
         super();
         this.stage = stage;
     }
-    
 }

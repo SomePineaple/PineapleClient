@@ -32,12 +32,10 @@ public class MixinEntitySP extends MixinEntity {
 
 	@Inject(method = "onUpdateWalkingPlayer", at = @At("HEAD"), cancellable = true)
     public void OnPreUpdateWalkingPlayer(CallbackInfo p_Info) {
-
         EventMotionUpdate l_Event = new EventMotionUpdate(0);
         PineapleEventBus.EVENT_BUS.post(l_Event);
         if (l_Event.isCancelled())
             p_Info.cancel();
-
     }
 
     @Inject(method = "onUpdateWalkingPlayer", at = @At("RETURN"), cancellable = true)
@@ -47,17 +45,14 @@ public class MixinEntitySP extends MixinEntity {
         PineapleEventBus.EVENT_BUS.post(l_Event);
         if (l_Event.isCancelled())
             p_Info.cancel();
-
     }
 
     @Inject(method = "swingArm", at = @At("RETURN"), cancellable = true)
     public void swingArm(EnumHand p_Hand, CallbackInfo p_Info) {
-
         EventSwing l_Event = new EventSwing(p_Hand);
         PineapleEventBus.EVENT_BUS.post(l_Event);
         if (l_Event.isCancelled())
             p_Info.cancel();
 
     }
-
 }

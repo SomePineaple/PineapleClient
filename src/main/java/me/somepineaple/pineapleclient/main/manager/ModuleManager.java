@@ -101,6 +101,7 @@ public class ModuleManager {
 		add_hack(new CityEsp());
 		add_hack(new FullBright());
 		add_hack(new BreakHighlight());
+		add_hack(new NoFire());
 
 		// Misc.
 		add_hack(new MiddleClickFriends());
@@ -171,9 +172,12 @@ public class ModuleManager {
 		for (Hack modules : get_array_hacks()) {
 			if (modules.is_active()) {
 				mc.profiler.startSection(modules.get_tag());
-
-				modules.render(event_render);
-
+				try {
+					modules.render(event_render);
+				} catch (Exception e) {
+					e.printStackTrace();
+					NotificationUtil.send_notification(new Notification("Error at: " + modules.get_name() + " render method: " + e.getCause().getLocalizedMessage(), 255, 0, 0));
+				}
 				mc.profiler.endSection();
 			}
 		}
@@ -202,7 +206,8 @@ public class ModuleManager {
 					modules.update();
 				} catch (Exception e) {
 					MessageUtil.client_message("Error at " + modules.get_name() + " update method " + e.getMessage());
-					NotificationUtil.send_notification(new Notification("Error at " + modules.get_name() + " update method " + e.getMessage(), 255, 0, 0));
+					NotificationUtil.send_notification(new Notification("Error at " + modules.get_name() + " update method " + e.getCause().getLocalizedMessage(), 255, 0, 0));
+					e.printStackTrace();
 				}
 			}
 		}
@@ -216,7 +221,7 @@ public class ModuleManager {
 				} catch (Exception e) {
 					if (mc.world != null && mc.player != null) {
 						MessageUtil.client_message("Error at " + modules.get_name() + " render method " + e.getMessage());
-						NotificationUtil.send_notification(new Notification("Error at " + modules.get_name() + " render method " + e.getMessage(), 255, 0, 0));
+						NotificationUtil.send_notification(new Notification("Error at " + modules.get_name() + " render method " + e.getCause().getLocalizedMessage(), 255, 0, 0));
 					}
 				}
 			}

@@ -18,7 +18,6 @@ public class MixinMinecraft {
 	@Inject(method = "displayGuiScreen", at = @At("HEAD"))
 	private void displayGuiScreen(GuiScreen guiScreenIn, CallbackInfo info) {
 		EventGUIScreen guiscreen = new EventGUIScreen(guiScreenIn);
-
 		PineapleEventBus.EVENT_BUS.post(guiscreen);
 	}
 
