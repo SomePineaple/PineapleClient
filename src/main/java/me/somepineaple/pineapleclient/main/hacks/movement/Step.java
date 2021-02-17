@@ -10,27 +10,27 @@ public class Step extends Hack {
     
     public Step() {
         super(Category.MOVEMENT);
-
 		this.name        = "Step";
 		this.tag         = "Step";
 		this.description = "Move up / down block big";
     }
 
-    Setting mode = create("Mode", "StepMode", "Normal", combobox("Normal", "Reverse"));
+    Setting mode = create("Mode", "StepMode", "Normal", combobox("Normal", "Vanilla"));
 
     @Override
     public void update() {
+        if (mode.in("Vanilla")) mc.player.stepHeight = 2f;
+        else mc.player.stepHeight = 0.5f;
 
-        if (!mc.player.collidedHorizontally && mode.in("Normal")) return;
+        if (!mc.player.collidedHorizontally) return;
         if (!mc.player.onGround || mc.player.isOnLadder() || mc.player.isInWater() || mc.player.isInLava() || mc.player.movementInput.jump || mc.player.noClip) return;
         if (mc.player.moveForward == 0 && mc.player.moveStrafing == 0) return;
 
         final double n = get_n_normal();
 
+        if (n < 0 || n > 2) return;
+
         if (mode.in("Normal")) {
-
-            if (n < 0 || n > 2) return;
-
             if (n == 2.0) {
                 mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.42, mc.player.posZ, mc.player.onGround));
                 mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.78, mc.player.posZ, mc.player.onGround));
@@ -56,15 +56,12 @@ public class Step extends Hack {
                 mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 0.7531999805212, mc.player.posZ, mc.player.onGround));
                 mc.player.setPosition(mc.player.posX, mc.player.posY + 1.0, mc.player.posZ);
             }
-
         }
+    }
 
-        if (mode.in("Reverse")) {
-
-            mc.player.motionY = -1;
-
-        }
-
+    @Override
+    protected void disable() {
+        mc.player.stepHeight = 0.5f;
     }
 
     public double get_n_normal() {
@@ -82,13 +79,9 @@ public class Step extends Hack {
             if (aabb.maxY > max_y) {
                 max_y = aabb.maxY;
             }
-
         }
 
         return max_y - mc.player.posY;
 
     }
-
-    
-
 }

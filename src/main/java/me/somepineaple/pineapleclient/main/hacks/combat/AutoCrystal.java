@@ -23,6 +23,7 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
+import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.network.play.server.SPacketSoundEffect;
@@ -69,7 +70,7 @@ public class AutoCrystal extends Hack {
     Setting rotate_mode = create("Rotate", "CaRotateMode", "Good", combobox("Off", "Old", "Const", "Good"));
     Setting raytrace = create("Raytrace", "CaRaytrace", false);
 
-    Setting auto_switch = create("Auto Switch", "CaAutoSwitch", true);
+    Setting switch_mode = create("Switch: ", "CaSwitchMode", "Silent", combobox("Swap", "Silent", "Off"));
     Setting anti_suicide = create("Anti Suicide", "CaAntiSuicide", true);
 
     Setting fast_mode = create("Fast Mode", "CaSpeed", true);
@@ -143,6 +144,7 @@ public class AutoCrystal extends Hack {
     private int break_timeout;
     private int break_delay_counter;
     private int place_delay_counter;
+    private int prev_slot;
 
     @EventHandler
     private final Listener<EventEntityRemoved> on_entity_removed = new Listener<>(event -> {
@@ -354,7 +356,6 @@ public class AutoCrystal extends Hack {
         }
 
         return best_crystal;
-
     }
 
     public BlockPos get_best_block() {
@@ -487,11 +488,17 @@ public class AutoCrystal extends Hack {
         already_attacking = false;
 
         boolean offhand_check = false;
+        prev_slot = mc.player.inventory.currentItem;
+        int crystal_slot = find_crystals_hotbar();
         if (mc.player.getHeldItemOffhand().getItem() != Items.END_CRYSTAL) {
-            if (mc.player.getHeldItemMainhand().getItem() != Items.END_CRYSTAL && auto_switch.get_value(true)) {
-                if (find_crystals_hotbar() == -1) return;
-                mc.player.inventory.currentItem = find_crystals_hotbar();
-                return;
+            if (mc.player.getHeldItemMainhand().getItem() != Items.END_CRYSTAL) {
+                if (crystal_slot == -1) return;
+                if (switch_mode.in("Swap")) {
+                    mc.player.inventory.currentItem = crystal_slot;
+                    return;
+                } else if (switch_mode.in("Silent")) {
+                    mc.player.connection.sendPacket(new CPacketHeldItemChange(crystal_slot));
+                }
             }
         } else {
             offhand_check = true;
@@ -506,7 +513,9 @@ public class AutoCrystal extends Hack {
         rotate_to_pos(target_block);
         chain_timer.reset();
         BlockUtil.placeCrystalOnBlock(target_block, offhand_check ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND);
-
+        if (switch_mode.in("Silent")) {
+            mc.player.connection.sendPacket(new CPacketHeldItemChange(prev_slot));
+        }
     }
 
     public boolean get_armor_fucker(EntityPlayer p) {
@@ -784,7 +793,8 @@ public class AutoCrystal extends Hack {
             RenderHelp.draw_gradiant_outline(RenderHelp.get_buffer_build(), 
                     render_block.getX(), render_block.getY(), render_block.getZ(), 
                     h, new Color(r.get_value(1), g.get_value(1), b.get_value(1), a_out.get_value(1)), 
-                    new Color(0, 0, 0, 0)
+                    new Color(0, 0, 0, 0),
+                    "all"
             );
             RenderHelp.release();
         }

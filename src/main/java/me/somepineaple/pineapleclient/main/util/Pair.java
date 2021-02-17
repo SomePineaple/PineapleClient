@@ -24,4 +24,13 @@ public class Pair<T, S> {
     public void setValue(S value) {
         this.value = value;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Pair)) {
+            return false;
+        }
+        Pair<?, ?> otherPair = (Pair<?, ?>) obj;
+        return this.key.equals(otherPair.key) && this.value.equals(otherPair.value);
+    }
 }
