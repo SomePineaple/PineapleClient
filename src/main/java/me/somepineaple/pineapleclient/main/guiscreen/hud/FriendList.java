@@ -39,5 +39,4 @@ public class FriendList extends Pinnable {
 		this.set_width(this.get(line1, "width") + 2);
 		this.set_height(this.get(line1, "height") + 2);
 	}
-
 }

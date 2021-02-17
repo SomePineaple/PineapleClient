@@ -8,7 +8,6 @@ import net.minecraft.client.Minecraft;
 
 import java.util.ArrayList;
 
-
 public class Frame {
 	private final Category category;
 

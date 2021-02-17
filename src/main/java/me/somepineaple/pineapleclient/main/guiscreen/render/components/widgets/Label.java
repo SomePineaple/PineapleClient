@@ -12,7 +12,6 @@ import org.lwjgl.opengl.GL11;
 
 // Travis.
 
-
 public class Label extends AbstractWidget {
 	private Frame frame;
 	private ModuleButton master;

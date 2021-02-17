@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.hacks.combat;
 
-
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
@@ -21,7 +20,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.stream.Collectors;
-
 
 public class KillAura extends Hack {
 
@@ -215,6 +213,5 @@ public class KillAura extends Hack {
 		}
 
 		return false;
-
 	}
 }

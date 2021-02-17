@@ -5,7 +5,6 @@ import me.somepineaple.pineapleclient.main.hacks.Hack;
 
 import java.util.ArrayList;
 
-
 public class SettingManager {
 
 	public ArrayList<Setting> array_setting;

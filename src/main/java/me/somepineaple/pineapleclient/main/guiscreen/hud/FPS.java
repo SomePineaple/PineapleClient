@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
-
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import net.minecraft.client.Minecraft;
@@ -36,5 +35,4 @@ public class FPS extends Pinnable {
 			return "\u00A74"+Integer.toString(fps);
 		}
     }
-
 }

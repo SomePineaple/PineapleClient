@@ -37,8 +37,6 @@ public class Ping extends Pinnable {
 		}
         } catch (Exception e) {
             return "oh no";
-        }
-		
+        }	
 	}
-
 }

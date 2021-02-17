@@ -36,7 +36,5 @@ public class EzMessage extends PineapleclientCommand {
         }
 
         return false;
-
     }
-
 }

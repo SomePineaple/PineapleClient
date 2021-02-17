@@ -263,5 +263,4 @@ public class ModuleManager {
 
 		return module_requesteds;
 	}
-
 }

@@ -4,7 +4,6 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 
-
 public class Coordinates extends Pinnable {
 	ChatFormatting dg = ChatFormatting.DARK_GRAY;
 	ChatFormatting db = ChatFormatting.DARK_BLUE;

@@ -170,5 +170,4 @@ public class CrystalUtil {
     {
         return calculateDamage(crystal.posX, crystal.posY, crystal.posZ, entity);
     }
-
 }

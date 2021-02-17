@@ -396,5 +396,4 @@ public class NameTags extends Hack {
     public String section_sign() {
         return "\u00A7";
     }
-
 }

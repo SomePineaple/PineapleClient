@@ -1,10 +1,8 @@
 package me.somepineaple.pineapleclient.main.command.commands;
 
-
 import me.somepineaple.pineapleclient.main.command.PineapleclientCommand;
 import me.somepineaple.pineapleclient.main.command.PineapleclientCommands;
 import me.somepineaple.pineapleclient.main.util.MessageUtil;
-
 
 public class Help extends PineapleclientCommand {
 	public Help() {

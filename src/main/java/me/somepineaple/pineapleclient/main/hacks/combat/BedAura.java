@@ -207,7 +207,6 @@ public class BedAura extends Hack {
         }
 
         return null;
-
     }
 
     public static BlockPos get_pos_floor(EntityPlayer player) {
@@ -232,8 +231,6 @@ public class BedAura extends Hack {
             "all"
         );
         RenderHelp.release();
-
-
     }
 
     enum spoof_face {
@@ -242,5 +239,4 @@ public class BedAura extends Hack {
         NORTH,
         SOUTH
     }
-
 }

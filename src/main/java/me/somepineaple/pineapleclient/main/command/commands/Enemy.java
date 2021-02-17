@@ -76,7 +76,5 @@ public class Enemy extends PineapleclientCommand {
         }
 
         return true;
-
     }
-
 }

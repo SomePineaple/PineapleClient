@@ -125,5 +125,4 @@ public class MixinGuiScreen {
         GlStateManager.enableAlpha();
         GlStateManager.enableTexture2D();
     }
-
 }

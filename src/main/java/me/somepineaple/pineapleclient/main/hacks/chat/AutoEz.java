@@ -118,5 +118,4 @@ public class AutoEz extends Hack {
             targeted_players.put(name, 20);
         }
     }
-
 }

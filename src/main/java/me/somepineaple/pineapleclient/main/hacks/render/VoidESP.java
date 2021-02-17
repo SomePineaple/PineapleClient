@@ -60,9 +60,7 @@ public class VoidESP extends Hack {
 
         if (mc.world.getBlockState(blockPos).getBlock() != Blocks.AIR)
             return false;
-
         return true;
-
     }
 
     @Override
@@ -99,7 +97,5 @@ public class VoidESP extends Hack {
                 GlStateManager.popMatrix();
             }
         });
-
     }
-    
 }

@@ -122,5 +122,4 @@ public class SelfTrap extends Hack {
         }
         return -1;
     }
-
 }

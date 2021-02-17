@@ -19,5 +19,4 @@ public class Timer {
     public long getTime(final long time) {
         return time / 1000000L;
     }
-
 }

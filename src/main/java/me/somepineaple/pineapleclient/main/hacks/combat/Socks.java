@@ -118,5 +118,4 @@ public class Socks extends Hack {
         }
         return -1;
     }
-
 }

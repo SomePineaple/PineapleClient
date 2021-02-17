@@ -71,5 +71,4 @@ public class AutoGapple extends Hack {
 
         mc.playerController.updateController();
     }
-
 }

@@ -13,5 +13,4 @@ public class EventPlayerTravel extends EventCancellable {
         Vertical = p_Vertical;
         Forward = p_Forward;
     }
-
 }

@@ -35,5 +35,4 @@ public class EventDamageBlock extends EventCancellable {
     {
         Direction = direction;
     }
-    
 }

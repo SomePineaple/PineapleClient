@@ -1,11 +1,9 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
-
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
-
 
 public class InventoryPreview extends Pinnable {
 	public InventoryPreview() {

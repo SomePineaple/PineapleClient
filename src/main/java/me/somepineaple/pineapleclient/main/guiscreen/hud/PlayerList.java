@@ -95,5 +95,4 @@ public class PlayerList extends Pinnable {
         }
         return result;
     }
-
 }

@@ -211,5 +211,4 @@ public class AutoArmour extends Hack {
             return percent >= chest_percent.get_value(1);
         }
     }
-
 }

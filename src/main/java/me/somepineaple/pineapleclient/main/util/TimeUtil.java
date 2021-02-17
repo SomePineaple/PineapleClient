@@ -23,5 +23,4 @@ public class TimeUtil {
     public static int get_second() {
         return Calendar.getInstance().get(Calendar.SECOND);
     }
-
 }

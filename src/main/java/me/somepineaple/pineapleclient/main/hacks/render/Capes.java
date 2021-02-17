@@ -15,5 +15,4 @@ public class Capes extends Hack {
     }
 
     Setting cape = create("Cape", "CapeCape", "New", combobox("New", "OG"));
-
 }

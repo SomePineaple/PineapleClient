@@ -13,5 +13,4 @@ public class EventPlayerJump extends EventCancellable {
         this.motion_x = motion_x;
         this.motion_y = motion_y;
     }
-
 }

@@ -248,5 +248,4 @@ public class RenderUtil {
         itemRender = mc.getRenderItem();
         camera = new Frustum();
     }
-
 }

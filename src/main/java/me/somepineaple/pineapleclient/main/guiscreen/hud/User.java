@@ -7,7 +7,6 @@ import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import me.somepineaple.pineapleclient.main.util.TimeUtil;
 import net.minecraft.util.math.MathHelper;
 
-
 public class User extends Pinnable {
 	public User() {
 		super("User", "User", 1, 0, 0);
@@ -64,5 +63,4 @@ public class User extends Pinnable {
 		this.scaled_width = MathHelper.ceil(scaledWidthD);
 		this.scaled_height = MathHelper.ceil(scaledHeightD);
 	}
-
 }

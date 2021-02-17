@@ -31,11 +31,9 @@ public class Drawn extends PineapleclientCommand {
                 MessageUtil.send_client_error_message("cannot find module by name: " + message[1]);
             }
             return true;
-
         }
 
         return false;
-    
     }
 
     public boolean is_module(String s) {
@@ -51,5 +49,4 @@ public class Drawn extends PineapleclientCommand {
         return false;
 
     }
-
 }

@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-
 public class GappleCount extends Pinnable {
 	int gapples = 0;
 

@@ -73,5 +73,4 @@ public class Direction extends Pinnable {
         }
         return "Invalid";
     }
-
 }

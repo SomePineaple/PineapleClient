@@ -14,7 +14,6 @@ import java.util.Arrays;
 
 // Travis
 
-
 public class Draw {
 	private static FontRenderer font_renderer = Minecraft.getMinecraft().fontRenderer;
 

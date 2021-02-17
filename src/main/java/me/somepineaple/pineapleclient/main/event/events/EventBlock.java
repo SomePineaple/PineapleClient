@@ -24,5 +24,4 @@ public class EventBlock extends EventCancellable {
     public int get_stage() {
         return this.stage;
     }
-
 }

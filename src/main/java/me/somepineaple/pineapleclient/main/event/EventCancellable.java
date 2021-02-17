@@ -3,7 +3,6 @@ package me.somepineaple.pineapleclient.main.event;
 import me.zero.alpine.fork.event.type.Cancellable;
 import net.minecraft.client.Minecraft;
 
-
 public class EventCancellable extends Cancellable {
 	private final Era era_switch = Era.EVENT_PRE;
 	private final float partial_ticks;

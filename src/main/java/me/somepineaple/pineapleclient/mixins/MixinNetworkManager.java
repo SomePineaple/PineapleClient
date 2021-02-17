@@ -12,7 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 // External.
 
-
 @Mixin(value = NetworkManager.class)
 public class MixinNetworkManager {
 	// Receive packet.

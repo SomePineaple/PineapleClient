@@ -1,9 +1,7 @@
 package me.somepineaple.pineapleclient.main.guiscreen.render.pinnables;
 
-
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
-
 
 public class PinnableButton {
 	private Pinnable pinnable;

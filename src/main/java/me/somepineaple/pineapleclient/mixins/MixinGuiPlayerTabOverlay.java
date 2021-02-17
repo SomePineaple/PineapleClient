@@ -26,5 +26,4 @@ public class MixinGuiPlayerTabOverlay {
     public void getPlayerNameHook(final NetworkPlayerInfo networkPlayerInfoIn, final CallbackInfoReturnable<String> info) {
         info.setReturnValue(TabUtil.get_player_name(networkPlayerInfoIn));
     }
-
 }

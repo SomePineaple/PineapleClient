@@ -37,8 +37,5 @@ public abstract class MixinAbstractClientPlayer {
 
             callbackInfoReturnable.setReturnValue(r);
         }
-
-
     }
-
 }

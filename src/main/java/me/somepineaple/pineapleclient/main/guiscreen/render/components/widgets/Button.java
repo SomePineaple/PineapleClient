@@ -1,13 +1,11 @@
 package me.somepineaple.pineapleclient.main.guiscreen.render.components.widgets;
 
-
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.AbstractWidget;
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.Frame;
 import me.somepineaple.pineapleclient.main.guiscreen.render.components.ModuleButton;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
-
 
 public class Button extends AbstractWidget {
 	private Frame frame;

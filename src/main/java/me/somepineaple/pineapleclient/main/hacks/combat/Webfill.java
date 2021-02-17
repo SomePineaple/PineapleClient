@@ -81,7 +81,6 @@ public class Webfill extends Hack {
 
             pos_to_fill = pos;
             break;
-
         }
 
         int obi_slot = find_in_hotbar();
@@ -97,9 +96,7 @@ public class Webfill extends Hack {
             }
 
             mc.player.inventory.currentItem = last_slot;
-
         }
-
     }
 
     public void find_new_holes() {
@@ -136,15 +133,12 @@ public class Webfill extends Hack {
 
                     break;
                 }
-
             }
 
             if (possible) {
                 holes.add(pos);
             }
-
         }
-
     }
 
     private int find_in_hotbar() {
@@ -156,8 +150,8 @@ public class Webfill extends Hack {
             if (stack.getItem() == Item.getItemById(30)) {
                 return i;
             }
-
         }
+
         return -1;
     }
 
@@ -195,7 +189,5 @@ public class Webfill extends Hack {
         }
 
         return false;
-
     }
-
 }

@@ -11,5 +11,4 @@ public class EventSwing extends EventCancellable {
         super();
         this.hand = hand;
     }
-
 }

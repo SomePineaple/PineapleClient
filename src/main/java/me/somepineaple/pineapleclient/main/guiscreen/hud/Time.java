@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
-
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import me.somepineaple.pineapleclient.main.util.TimeUtil;
@@ -31,5 +30,4 @@ public class Time extends Pinnable {
 		this.set_width(this.get(line, "width") + 2);
 		this.set_height(this.get(line, "height") + 2);
 	}
-
 }

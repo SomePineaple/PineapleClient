@@ -23,5 +23,4 @@ public class MixinPlayer extends MixinEntity {
 			info.cancel();
 		}
 	}
-
 }

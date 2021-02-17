@@ -73,10 +73,8 @@ public class StopEXP extends Hack {
 				} else {
 					should_cancel = false;
 				}
-			} 
-
+			}
 		}
-
 	}
 
 	private Map<Integer, ItemStack> get_armor() {
@@ -98,7 +96,5 @@ public class StopEXP extends Hack {
 			return true;
 		}
 		return false;
-
 	}
-
 }

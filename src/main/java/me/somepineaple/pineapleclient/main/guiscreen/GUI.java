@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 // Hacks.
 
-
 public class GUI extends GuiScreen {
 	private final ArrayList<Frame> frame;
 
@@ -171,5 +170,4 @@ public class GUI extends GuiScreen {
 
 		return frame_requested;
 	}
-
 }

@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.hacks.combat;
 
-
 import me.somepineaple.pineapleclient.main.event.EventCancellable;
 import me.somepineaple.pineapleclient.main.event.events.EventEntity;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
@@ -10,7 +9,6 @@ import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.network.play.server.SPacketExplosion;
-
 
 public class Velocity extends Hack {
 	public Velocity() {
@@ -50,7 +48,6 @@ public class Velocity extends Hack {
 	private Listener<EventEntity.EventColision> explosion = new Listener<>(event -> {
 		if (event.get_entity() == mc.player) {
 			event.cancel();
-
 		}
 	});
 }

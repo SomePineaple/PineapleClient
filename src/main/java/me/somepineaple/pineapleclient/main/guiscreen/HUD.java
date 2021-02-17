@@ -5,7 +5,6 @@ import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Frame;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.PinnableButton;
 import net.minecraft.client.gui.GuiScreen;
 
-
 public class HUD extends GuiScreen {
 	private final Frame frame;
 

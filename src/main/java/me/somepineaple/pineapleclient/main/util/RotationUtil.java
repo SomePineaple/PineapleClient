@@ -81,5 +81,4 @@ public class RotationUtil {
    public String getDirection4D(final boolean northRed) {
       return getDirection4D(northRed);
    }
-    
 }

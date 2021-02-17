@@ -1,9 +1,7 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
-
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
-
 
 public class Watermark extends Pinnable {
 	public Watermark() {

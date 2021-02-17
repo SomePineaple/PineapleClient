@@ -96,5 +96,4 @@ public class ArmorDurabilityWarner extends Pinnable { // STILL BROKEN
         }
         return full_inv_slots;
     }
-
 }

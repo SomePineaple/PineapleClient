@@ -35,5 +35,4 @@ public class FakePlayer extends Hack {
             mc.world.removeEntity(fake_player);
         } catch (Exception ignored) {}
     }
-
 }

@@ -64,9 +64,6 @@ public class MiddleClickFriends extends Hack {
                 FriendUtil.friends.add(f);
                 MessageUtil.send_client_message("Player " + green + bold + player.getName() + reset + " is now your friend :D");
             }
-
         }
-
 	}
-
 }

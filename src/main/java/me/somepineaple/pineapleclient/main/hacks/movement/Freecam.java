@@ -6,6 +6,7 @@ import me.somepineaple.pineapleclient.main.event.events.EventPlayerTravel;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
+import me.somepineaple.pineapleclient.main.util.MathUtil;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
@@ -30,34 +31,33 @@ public class Freecam extends Hack {
         super(Category.MOVEMENT);
 
         this.name = "Free Cam";
-        this.tag = "FreeCam";
+        this.tag = "Freecam";
         this.description = "Move around out of your body, copied from Xulu";
     }
 
     Setting cancelpackets = create("Cancel Packets", "freecamcancelpackets", true);
-    Setting hspeed = create("Horizontal Speed", "freecamhspeed", 11, 1, 20);
-    Setting vspeed = create("Vertical Speed", "freecamvspeed", 7, 1, 20);
+    Setting speed = create("Speed", "freecamspeed", 0.5, 0.1, 5.0);
 
     @Override
     public void update() {
-        if (!mc.player.onGround) mc.player.motionY = -0.2;
-
-        mc.player.onGround = true;
-        mc.player.motionY = 0d;
         mc.player.noClip = true;
-        mc.player.capabilities.isFlying = true;
-        mc.player.capabilities.setFlySpeed(hspeed.get_value(1) / 100f);
-        if (!mc.player.isSwingInProgress) {
-            mc.player.onGround = false;
-            mc.player.fallDistance = 0f;
+        mc.player.setVelocity(0, 0, 0);
+        mc.player.jumpMovementFactor = (float) speed.get_value(1.0);
+        double[] dir = MathUtil.directionSpeed(speed.get_value(1.0));
+        if (mc.player.movementInput.moveStrafe != 0 || mc.player.movementInput.moveForward != 0) {
+            mc.player.motionX = dir[0];
+            mc.player.motionZ = dir[1];
+        } else {
+            mc.player.motionX = 0;
+            mc.player.motionZ = 0;
         }
 
+        mc.player.setSprinting(false);
+
         if (mc.gameSettings.keyBindJump.isKeyDown()) {
-            final EntityPlayerSP player = mc.player;
-            player.motionY += vspeed.get_value(1) / 10f;
+            mc.player.motionY += speed.get_value(1.0);
         } else if (mc.gameSettings.keyBindSneak.isKeyDown()) {
-            final EntityPlayerSP player2 = mc.player;
-            player2.motionY += -vspeed.get_value(1) / 10f;
+            mc.player.motionY -= speed.get_value(1.0);
         }
     }
 

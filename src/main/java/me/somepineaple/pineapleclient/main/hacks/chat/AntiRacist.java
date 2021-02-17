@@ -130,6 +130,4 @@ public class AntiRacist extends Hack {
             ((CPacketChatMessage) event.get_packet()).message = message;
         }
     });
-
-
 }

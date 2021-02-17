@@ -10,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-
 public class HUDManager {
 
 	public static ArrayList<Pinnable> array_hud = new ArrayList<>();
@@ -84,5 +83,4 @@ public class HUDManager {
 
 		return pinnable_requested;
 	}
-
 }

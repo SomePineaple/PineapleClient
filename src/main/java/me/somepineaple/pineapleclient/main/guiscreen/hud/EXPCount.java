@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-
 public class EXPCount extends Pinnable {
 	ChatFormatting dg = ChatFormatting.DARK_GRAY;
 	ChatFormatting db = ChatFormatting.DARK_BLUE;
@@ -40,6 +39,7 @@ public class EXPCount extends Pinnable {
 
 			for (int i = 0; i < 45; i++) {
 				ItemStack stack = mc.player.inventory.getStackInSlot(i);
+				
 				ItemStack off_h = mc.player.getHeldItemOffhand();
 
 				if (off_h.getItem() == Items.EXPERIENCE_BOTTLE) {

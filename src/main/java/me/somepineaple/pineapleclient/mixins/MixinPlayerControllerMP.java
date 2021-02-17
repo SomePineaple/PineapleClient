@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-
 @Mixin(value = PlayerControllerMP.class)
 public class MixinPlayerControllerMP {
 
@@ -47,7 +46,4 @@ public class MixinPlayerControllerMP {
 		final EventBlock event = new EventBlock(3, pos, face);
 		PineapleEventBus.EVENT_BUS.post(event);
 	}
-
-
-
 }

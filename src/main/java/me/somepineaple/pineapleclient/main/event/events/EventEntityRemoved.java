@@ -14,5 +14,4 @@ public class EventEntityRemoved extends EventCancellable {
     public Entity get_entity() {
         return this.entity;
     }
-
 }

@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.guiscreen.render.components;
 
-
 public abstract class AbstractWidget {
 	// Setters.
 	public void set_x(int x) {}

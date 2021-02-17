@@ -1,5 +1,6 @@
 package me.somepineaple.pineapleclient.mixins;
 
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.PineapleEventBus;
 import me.somepineaple.pineapleclient.main.event.events.EventMotionUpdate;
 import me.somepineaple.pineapleclient.main.event.events.EventMove;
@@ -11,9 +12,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 // External.
-
 
 @Mixin(value = EntityPlayerSP.class)
 public class MixinEntitySP extends MixinEntity {
@@ -54,5 +55,12 @@ public class MixinEntitySP extends MixinEntity {
         if (l_Event.isCancelled())
             p_Info.cancel();
 
+    }
+
+    @Inject(method={"pushOutOfBlocks"}, at={@At(value="HEAD")}, cancellable=true)
+    private void pushOutOfBlocksHook(double x, double y, double z, CallbackInfoReturnable<Boolean> info) {
+        if (PineapleClient.get_hack_manager().get_module_with_tag("Freecam").is_active()) {
+            info.setReturnValue(false);
+        }
     }
 }

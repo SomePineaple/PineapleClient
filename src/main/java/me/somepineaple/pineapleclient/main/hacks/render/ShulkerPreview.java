@@ -12,7 +12,5 @@ public class ShulkerPreview extends Hack {
         this.tag         = "ShulkerPreview";
         this.description = "See what's inside a shulker via hovering over it";
     }
-
     // STOLEN FROM KAMI :DDDDDDDDD
-
 }

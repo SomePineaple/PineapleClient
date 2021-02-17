@@ -65,7 +65,5 @@ public class SkyColour extends Hack {
         r.set_value((color_rgb_o >> 16) & 0xFF);
         g.set_value((color_rgb_o >> 8) & 0xFF);
         b.set_value(color_rgb_o & 0xFF);
-
     }
-
 }

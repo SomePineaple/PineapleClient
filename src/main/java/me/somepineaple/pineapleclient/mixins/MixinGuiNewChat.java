@@ -23,7 +23,5 @@ public class MixinGuiNewChat {
             Gui.drawRect(left, top, right, bottom, color);
 
         }
-
     }
-
 }

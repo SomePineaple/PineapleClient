@@ -16,7 +16,5 @@ public class DrawnUtil {
             MessageUtil.send_client_message("Removed " + s);
             hidden_tags.add(s);
         }
-
     }
-
 }

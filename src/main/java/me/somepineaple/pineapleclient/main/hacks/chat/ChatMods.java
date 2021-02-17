@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.hacks.chat;
 
-
 import com.mojang.realmsclient.gui.ChatFormatting;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
@@ -79,5 +78,4 @@ public final class ChatMods extends Hack {
             }
         }
     });
-
 }

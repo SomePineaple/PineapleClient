@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.UUID;
 
 public class FriendUtil {
@@ -93,10 +94,9 @@ public class FriendUtil {
     }
 
     private static String convertStreamToString(java.io.InputStream is) {
-        java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+        Scanner s = new Scanner(is).useDelimiter("\\A");
         String r = s.hasNext() ? s.next() : "/";
         s.close();
         return r;
     }
-
 }

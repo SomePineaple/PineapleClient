@@ -26,7 +26,6 @@ import org.lwjgl.opengl.GL11;
 // External.
 // Travis.
 
-
 public class EventManager {
 
 	private final Minecraft mc = Minecraft.getMinecraft();
@@ -130,6 +129,4 @@ public class EventManager {
 	public void onInputUpdate(InputUpdateEvent event) {
 		PineapleEventBus.EVENT_BUS.post(event);
 	}
-
-
 }

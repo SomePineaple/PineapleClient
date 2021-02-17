@@ -30,7 +30,5 @@ public class Speedometer extends Pinnable {
 
         this.set_width(this.get(bps, "width") + 2);
         this.set_height(this.get(bps, "height")  + 2);
-
     }
-
 }

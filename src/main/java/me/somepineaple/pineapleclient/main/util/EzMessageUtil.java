@@ -11,5 +11,4 @@ public class EzMessageUtil {
     public static String get_message() {
         return message;
     }
-
 }

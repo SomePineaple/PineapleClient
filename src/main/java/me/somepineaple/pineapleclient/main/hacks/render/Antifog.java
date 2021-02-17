@@ -29,5 +29,4 @@ public class Antifog extends Hack {
         GlStateManager.colorMaterial(1028, 4608);
 
     });
-
 }

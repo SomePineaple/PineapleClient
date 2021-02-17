@@ -249,5 +249,4 @@ public class Chams extends Hack {
         catch (Exception ignore) {}
         event.cancel();
     }
-
 }

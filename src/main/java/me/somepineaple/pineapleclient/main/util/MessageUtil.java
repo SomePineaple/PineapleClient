@@ -13,7 +13,6 @@ import net.minecraft.util.text.event.HoverEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class MessageUtil {
 	public final static Minecraft mc = Minecraft.getMinecraft();
 
@@ -95,5 +94,4 @@ public class MessageUtil {
 			return new ChatMessage(this.message_input);
 		}
 	}
-
 }

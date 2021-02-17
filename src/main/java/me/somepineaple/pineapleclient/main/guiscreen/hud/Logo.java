@@ -24,6 +24,4 @@ public class Logo extends Pinnable {
 		this.set_width(100);
 		this.set_height(25);
 	}
-
-
 }

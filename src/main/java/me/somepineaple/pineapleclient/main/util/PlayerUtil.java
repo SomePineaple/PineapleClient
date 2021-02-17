@@ -37,5 +37,4 @@ public class PlayerUtil {
         }
         return FacingDirection.North;
     }
-
 }

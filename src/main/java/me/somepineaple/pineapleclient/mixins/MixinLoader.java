@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.Mixins;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-
 public class MixinLoader implements IFMLLoadingPlugin {
 	public MixinLoader() {
 		MixinBootstrap.init();

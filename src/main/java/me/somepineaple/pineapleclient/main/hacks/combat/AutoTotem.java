@@ -75,5 +75,4 @@ public class AutoTotem extends Hack {
 
         mc.playerController.updateController();
     }
-
 }

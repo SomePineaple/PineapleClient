@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.hacks.render;
 
-
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
@@ -52,5 +51,4 @@ public class ViewmodleChanger extends Hack {
         if (items.get_value(true))
             m.setFOV(viewmodle_fov.get_value(1));
     }
-
 }

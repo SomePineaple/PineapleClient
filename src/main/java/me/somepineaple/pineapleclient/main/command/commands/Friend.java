@@ -76,7 +76,5 @@ public class Friend extends PineapleclientCommand {
         }
 
         return true;
-
     }
-
 }

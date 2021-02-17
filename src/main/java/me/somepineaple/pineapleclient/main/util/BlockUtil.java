@@ -21,7 +21,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-
 public class BlockUtil {
     private static final Minecraft mc = Minecraft.getMinecraft();
     public static List<Block> emptyBlocks;

@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.hacks.misc;
 
-
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
@@ -62,9 +61,7 @@ public class AutoNomadHut extends Hack {
 			}
 
 			y_level = (int) Math.round(mc.player.posY);
-
 		}
-
 	}
 
 	@Override
@@ -85,7 +82,6 @@ public class AutoNomadHut extends Hack {
 			old_slot = - 1;
 			new_slot = - 1;
 		}
-
 	}
 
 	@Override
@@ -122,7 +118,6 @@ public class AutoNomadHut extends Hack {
 				}
 
 				++offset_step;
-
 			}
 
 			if (blocks_placed > 0 && this.new_slot != this.old_slot) {
@@ -171,7 +166,6 @@ public class AutoNomadHut extends Hack {
 		}
 		
 		return false;
-		
     }
 
 	private int find_in_hotbar() {
@@ -194,6 +188,4 @@ public class AutoNomadHut extends Hack {
         }
         return -1;
     }
-
-
 }

@@ -235,7 +235,5 @@ public class Auto32k extends Hack {
         }
 
         ticks_past++;
-
     }
-
 }

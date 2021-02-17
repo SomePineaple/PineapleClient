@@ -9,7 +9,6 @@ import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.network.play.client.CPacketUseEntity;
 
-
 public class Criticals extends Hack {
 
 	public Criticals() {

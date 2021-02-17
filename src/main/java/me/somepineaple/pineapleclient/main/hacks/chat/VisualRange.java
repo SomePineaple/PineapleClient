@@ -11,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class VisualRange extends Hack {
 
 	private List<String> people;
@@ -53,6 +52,5 @@ public class VisualRange extends Hack {
 				}
 			}
 		}
-
 	}
 }

@@ -20,5 +20,4 @@ public class DamageUtil {
         final Item item = stack.getItem();
         return item instanceof ItemArmor || item instanceof ItemSword || item instanceof ItemTool || item instanceof ItemShield;
     }
-
 }

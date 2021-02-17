@@ -139,10 +139,7 @@ public class FuckedDetector extends Hack {
                         "all"
                 );
                 RenderHelp.release();
-            }        
-
+            }
         }
-        
     }
-
 }

@@ -8,9 +8,9 @@ package me.somepineaple.turok.values;
 *
 */
 public class TurokEnum {
-	Class<? extends java.lang.Enum> value;
+	Enum<?> value;
 
-	public TurokEnum(Class<? extends java.lang.Enum> _enum) {
+	public TurokEnum(Enum<?> _enum) {
 		this.value = _enum;
 	}
 }

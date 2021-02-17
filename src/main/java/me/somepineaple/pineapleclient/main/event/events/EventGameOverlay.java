@@ -18,5 +18,4 @@ public class EventGameOverlay extends EventCancellable {
     public ScaledResolution get_scaled_resoltion() {
         return scaled_resolution;
     }
-    
 }

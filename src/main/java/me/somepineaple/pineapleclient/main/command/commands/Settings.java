@@ -5,7 +5,6 @@ import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.command.PineapleclientCommand;
 import me.somepineaple.pineapleclient.main.util.MessageUtil;
 
-
 public class Settings extends PineapleclientCommand {
 	public Settings() {
 		super("settings", "To save/load settings.");

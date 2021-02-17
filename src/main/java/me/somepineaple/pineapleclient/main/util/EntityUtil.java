@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.util;
 
-
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;

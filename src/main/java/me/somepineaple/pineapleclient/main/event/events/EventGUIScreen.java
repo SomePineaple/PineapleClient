@@ -11,7 +11,6 @@ public class EventGUIScreen extends EventCancellable {
 
 	public EventGUIScreen(GuiScreen screen) {
 		super();
-
 		guiscreen = screen;
 	}
 

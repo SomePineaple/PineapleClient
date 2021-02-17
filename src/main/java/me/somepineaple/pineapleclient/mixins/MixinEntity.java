@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 // External.
 
-
 @Mixin(value = Entity.class)
 public class MixinEntity {
 	// Inject.
@@ -30,7 +29,7 @@ public class MixinEntity {
 		entity.motionZ += z;
 
 		entity.isAirBorne = true;
-	}	
+	}
 
 	@Shadow
     public void move(MoverType type, double x, double y, double z)
@@ -46,5 +45,4 @@ public class MixinEntity {
 
     @Shadow
     public double motionZ;
-
 }

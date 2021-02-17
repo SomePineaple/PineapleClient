@@ -127,5 +127,4 @@ public class Offhand extends Hack {
         }
         return -1;
     }
-
 }

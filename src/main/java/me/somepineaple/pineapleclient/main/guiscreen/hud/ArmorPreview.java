@@ -72,6 +72,4 @@ public class ArmorPreview extends Pinnable {
 	}
 
 	public static int toHex(int r, int g, int b){ return  (0xff << 24) | ((r&0xff) << 16) | ((g&0xff) << 8) | (b&0xff); }
-
 }
-

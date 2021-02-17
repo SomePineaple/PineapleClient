@@ -346,5 +346,4 @@ public class MathUtil {
     static {
         random = new Random();
     }
-
 }

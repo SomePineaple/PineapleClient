@@ -17,7 +17,6 @@ import net.minecraft.network.play.server.SPacketEntityStatus;
 
 import java.util.HashMap;
 
-
 public class Totempop extends Hack {
     
     public Totempop() {

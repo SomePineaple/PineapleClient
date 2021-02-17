@@ -51,7 +51,6 @@ public class AutoReplenish extends Hack {
         mc.playerController.windowClick(0, hotbarSlot, 0, ClickType.PICKUP, mc.player);
         mc.playerController.windowClick(0, inventorySlot, 0, ClickType.PICKUP, mc.player);
         mc.playerController.updateController();
-
     }
 
     private Pair<Integer, Integer> findReplenishableHotbarSlot() {
@@ -134,5 +133,4 @@ public class AutoReplenish extends Hack {
         }
         return fullInventorySlots;
     }
-
 }

@@ -42,5 +42,4 @@ public class TextureHelper {
             GL11.glBindTexture(3553, texture.getGlTextureId());
         } catch (Exception ignored) {}
     }
-
 }

@@ -55,12 +55,10 @@ public class EntityList extends Pinnable {
             create_line(e, this.docking(1, e), 1 * counter, nl_r, nl_g, nl_b, nl_a);
 
             counter += 12;
-
         }
 
         this.set_width(this.get("aaaaaaaaaaaaaaa", "width") + 2);
         this.set_height(this.get("aaaaaaaaaaaaaaa", "height") * 5);
-		
     }
     
     private static String get_entity_name(@Nonnull Entity entity) {
@@ -91,6 +89,4 @@ public class EntityList extends Pinnable {
 
         return entity.getName();
     }
-	
-
 }

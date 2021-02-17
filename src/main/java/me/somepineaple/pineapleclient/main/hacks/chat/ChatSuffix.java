@@ -13,7 +13,6 @@ import java.util.Random;
 
 // Zero alpine manager.
 
-
 public class ChatSuffix extends Hack {
 	public ChatSuffix() {
 		super(Category.CHAT);

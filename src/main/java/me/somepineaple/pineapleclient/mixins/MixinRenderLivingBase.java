@@ -30,7 +30,4 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
         }
         modelBase.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
     }
-
-
 }
-

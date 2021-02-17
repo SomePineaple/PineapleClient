@@ -12,7 +12,6 @@ import java.awt.*;
 
 // Travis.
 
-
 public class Highlight extends Hack {
 
 	public Highlight() {

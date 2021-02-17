@@ -11,5 +11,4 @@ public class EventSetupFog extends EventCancellable {
         start_coords = coords;
         partial_ticks = ticks;        
     }
-
 }

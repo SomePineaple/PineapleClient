@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 // External.
 
-
 @Mixin(value = Minecraft.class)
 public class MixinMinecraft {
 	//@Inject(method = "displayGuiScreen", at = @At("HEAD"))
@@ -22,5 +21,4 @@ public class MixinMinecraft {
 	private void shutdown(CallbackInfo info) {
 		PineapleClient.get_config_manager().save_settings();
 	}
-
 }

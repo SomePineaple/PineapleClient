@@ -45,6 +45,7 @@ public class AutoMine extends Hack {
         if (target_block == null) {
             MessageUtil.send_client_message("cannot find block");
             this.set_active(false);
+            return;
         }
 
         int pickSlot = findPickaxe();

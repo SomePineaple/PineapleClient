@@ -1,8 +1,6 @@
 package me.somepineaple.pineapleclient.main.command;
 
-
 import me.somepineaple.pineapleclient.main.manager.CommandManager;
-
 
 public class PineapleclientCommand {
 	String name;

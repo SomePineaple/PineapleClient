@@ -58,7 +58,6 @@ public class PvpHud extends Pinnable {
         } catch (Exception e) {
             return "0";
         }
-        
     }
 
     public String aura_enabled() {
@@ -71,7 +70,6 @@ public class PvpHud extends Pinnable {
         } catch (Exception e) {
             return "0";
         }
-        
     }
 
     public String socks_enabled() {
@@ -83,7 +81,6 @@ public class PvpHud extends Pinnable {
         } catch (Exception e) {
             return "0";
         }
-
     }
 
     public String surround_enabled() {
@@ -96,7 +93,6 @@ public class PvpHud extends Pinnable {
         } catch (Exception e) {
             return "0";
         }
-        
     }
 
     public String holefill_enabled() {
@@ -109,7 +105,6 @@ public class PvpHud extends Pinnable {
         } catch (Exception e) {
             return "0";
         }
-        
     }
 
     public String get_totems() {
@@ -126,8 +121,7 @@ public class PvpHud extends Pinnable {
 
         } catch (Exception e) {
             return "0";
-        }        
-
+        }
     }
 
     public int offhand() {
@@ -136,5 +130,4 @@ public class PvpHud extends Pinnable {
         }
         return 0;
     }
-
 }

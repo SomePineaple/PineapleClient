@@ -12,7 +12,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 public class PineapleArrayList extends Pinnable {
 	public PineapleArrayList() {
 		super("Array List", "PineapleArrayList", 1, 0, 0);
@@ -94,8 +93,6 @@ public class PineapleArrayList extends Pinnable {
 						count++;
 					}
 				}
-
-
 			}			
 		}
 	}

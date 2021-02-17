@@ -12,7 +12,4 @@ public class Debug extends Hack {
 		this.tag         = "Debug";
 		this.description = "used for debugging";
     }
-
-    
-
 }

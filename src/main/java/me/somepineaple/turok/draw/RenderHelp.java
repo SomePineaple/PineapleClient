@@ -160,7 +160,6 @@ public class RenderHelp extends Tessellator {
         int a2 = endColor.getAlpha();
 
         List<String> sidesList = Arrays.asList(sides.split("-"));
-
         if (sidesList.contains("north") || sides.equalsIgnoreCase("all")) {
             buffer.pos(x + w, y, z).color(r1, g1, b1, a1).endVertex();
             buffer.pos(x, y, z).color(r1, g1, b1, a1).endVertex();

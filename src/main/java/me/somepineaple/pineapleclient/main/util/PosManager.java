@@ -24,5 +24,4 @@ public class PosManager {
         mc.player.posZ = z;
         mc.player.onGround = onground;
     }
-
 }

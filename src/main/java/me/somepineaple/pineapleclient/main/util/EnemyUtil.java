@@ -94,5 +94,4 @@ public class EnemyUtil {
         s.close();
         return r;
     }
-
 }

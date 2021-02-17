@@ -1,6 +1,5 @@
 package me.somepineaple.pineapleclient.main.guiscreen.hud;
 
-
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.render.Draw;
 import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
@@ -66,5 +65,4 @@ public class Compass extends Pinnable {
         return Math.cos(rad) * Math.sin(pitch_radians) * (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDCompassScale").get_value(1));
 
     }
-
 }

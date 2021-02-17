@@ -190,7 +190,6 @@ public class ConfigManager {
             }
 
             br.close();
-
         }
     }
 
@@ -423,7 +422,6 @@ public class ConfigManager {
             } catch (Exception ignored) {}
         }
         br.close();
-
     }
 
     // LOAD & SAVE SETTINGS
@@ -482,6 +480,4 @@ public class ConfigManager {
             Files.createDirectory(path);
         }
     }
-
-
 }

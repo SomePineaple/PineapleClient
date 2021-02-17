@@ -1,4 +1,4 @@
- package me.somepineaple.pineapleclient.main.manager;
+package me.somepineaple.pineapleclient.main.manager;
 
 import me.somepineaple.pineapleclient.main.command.PineapleclientCommands;
 import net.minecraft.util.text.Style;

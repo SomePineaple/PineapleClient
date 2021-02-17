@@ -22,7 +22,5 @@ public class MixinRenderPlayer {
         if (event_packet.isCancelled()) {
             info.cancel();
         }
-
 	}
-    
 }

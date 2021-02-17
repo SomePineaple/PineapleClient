@@ -155,5 +155,4 @@ public class HoleFill extends Hack {
         }
         return -1;
     }
-
 }

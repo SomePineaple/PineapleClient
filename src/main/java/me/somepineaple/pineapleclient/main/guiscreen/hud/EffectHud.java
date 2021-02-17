@@ -63,12 +63,10 @@ public class EffectHud extends Pinnable {
                 create_line(e, this.docking(1, e), counter, nl_r, nl_g, nl_b, nl_a);
                 counter += 12;
             }
-
         }
 
         this.set_width(this.get("weakness", "width") + 12);
         this.set_height(this.get("weakness", "height") + 36);
-
     }
 
     public static String get_friendly_potion_name(PotionEffect potionEffect) {
@@ -88,5 +86,4 @@ public class EffectHud extends Pinnable {
     public static String get_name_duration_string(PotionEffect potionEffect) {
         return String.format("%s (%s)", get_friendly_potion_name(potionEffect), Potion.getPotionDurationString(potionEffect, 1.0F));
     }
-
 }

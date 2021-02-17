@@ -20,5 +20,4 @@ public class TabUtil {
     public static String section_sign() {
         return "\u00A7";
     }
-
 }

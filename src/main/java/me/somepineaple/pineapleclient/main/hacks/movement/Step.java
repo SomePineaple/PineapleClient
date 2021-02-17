@@ -82,6 +82,5 @@ public class Step extends Hack {
         }
 
         return max_y - mc.player.posY;
-
     }
 }

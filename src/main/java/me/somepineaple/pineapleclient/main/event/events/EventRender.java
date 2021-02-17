@@ -9,7 +9,6 @@ import net.minecraft.util.math.Vec3d;
 
 // External.
 
-
 public class EventRender extends EventCancellable {
 	private final ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
 	private final Tessellator tessellator;
@@ -44,9 +43,9 @@ public class EventRender extends EventCancellable {
 
 	public double get_screen_width() {
 		return res.getScaledWidth_double();
-	  }
+	}
 	  
-	  public double get_screen_height() {
+	public double get_screen_height() {
 		return res.getScaledHeight_double();
-	  }
+	}
 }

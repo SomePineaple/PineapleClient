@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GL11;
 
 // Travis.
 
-
 public class Pinnable {
 	private String title;
 	private String tag;

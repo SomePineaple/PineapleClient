@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import java.awt.*;
 import java.util.ArrayList;
 
-
 public class Frame {
 	private ArrayList<PinnableButton> pinnable_button;
 

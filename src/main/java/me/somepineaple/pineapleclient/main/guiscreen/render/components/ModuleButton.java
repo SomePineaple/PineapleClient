@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 // Hacks.
 
-
 public class ModuleButton {
 	private Hack module;
 	private Frame master;

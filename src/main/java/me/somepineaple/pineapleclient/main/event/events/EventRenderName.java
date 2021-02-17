@@ -4,7 +4,6 @@ import me.somepineaple.pineapleclient.main.event.EventCancellable;
 import net.minecraft.client.entity.AbstractClientPlayer;
 
 public class EventRenderName extends EventCancellable {
-
     public AbstractClientPlayer Entity;
     public double X;
     public double Y;
@@ -21,6 +20,5 @@ public class EventRenderName extends EventCancellable {
         z = Z;
         Name = name;
         DistanceSq = distanceSq;
-	}
-
+	  }
 }
