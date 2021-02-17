@@ -498,6 +498,8 @@ public class AutoCrystal extends Hack {
                     return;
                 } else if (switch_mode.in("Silent")) {
                     mc.player.connection.sendPacket(new CPacketHeldItemChange(crystal_slot));
+                } else if (switch_mode.in("Off")) {
+                    return;
                 }
             }
         } else {
