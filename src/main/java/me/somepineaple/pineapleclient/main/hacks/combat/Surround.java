@@ -109,7 +109,6 @@ public class Surround extends Hack {
 					mc.player.motionX = motion_x / 2;
 					mc.player.motionZ = motion_z / 2;
 				}
-
 			}
 
 			if ((int) Math.round(mc.player.posY) != y_level && this.hybrid.get_value(true)) {
@@ -152,11 +151,9 @@ public class Surround extends Hack {
 				}
 
 				offset_step++;
-
 			}
 
 			this.tick_runs++;
-
 		}
 	}
 
@@ -175,7 +172,6 @@ public class Surround extends Hack {
 
                 else if (block instanceof BlockObsidian)
                     return i;
-
             }
         }
         return -1;
@@ -189,5 +185,19 @@ public class Surround extends Hack {
         return new Vec3d(x, y, z);
     }
 
+	public boolean areBlocksLeftToSurrond () {
+		if (!this.is_active()) {
+			return false;
+		}
 
+		boolean areAllPlaced = true;
+
+		for (Vec3d target : surround_targets) {
+			BlockPos offsetPos = new BlockPos(target);
+			BlockPos targetPos = new BlockPos(mc.player.getPositionVector()).add(offsetPos.getX(), offsetPos.getY(), offsetPos.getZ());
+			areAllPlaced = areAllPlaced && !mc.world.getBlockState(targetPos).getMaterial().isReplaceable();
+		}
+
+		return !areAllPlaced;
+	}
 }

@@ -70,7 +70,7 @@ public class AutoCrystal extends Hack {
     Setting rotate_mode = create("Rotate", "CaRotateMode", "Good", combobox("Off", "Old", "Const", "Good"));
     Setting raytrace = create("Raytrace", "CaRaytrace", false);
 
-    Setting switch_mode = create("Switch: ", "CaSwitchMode", "Silent", combobox("Swap", "Silent", "Off"));
+    Setting switch_mode = create("Switch: ", "CaSwitchMode", "Swap", combobox("Swap", "Silent", "Off"));
     Setting anti_suicide = create("Anti Suicide", "CaAntiSuicide", true);
 
     Setting fast_mode = create("Fast Mode", "CaSpeed", true);
@@ -90,7 +90,7 @@ public class AutoCrystal extends Hack {
     Setting stop_while_mining = create("Stop While Mining", "CaStopWhileMining", false);
     Setting faceplace_check = create("No Sword FP", "CaJumpyFaceMode", false);
 
-    Setting swing = create("Swing", "CaSwing", "Mainhand", combobox("Mainhand", "Offhand", "Both", "None"));
+    Setting swing = create("Swing:", "CaSwing", "Mainhand", combobox("Mainhand", "Offhand", "Both", "None"));
 
     Setting render_mode = create("Render", "CaRenderMode", "Pretty", combobox("Pretty", "Solid", "Outline", "Glow", "Glow 2", "None"));
     Setting old_render = create("Old Render", "CaOldRender", false);
@@ -612,7 +612,8 @@ public class AutoCrystal extends Hack {
             return true;
         }
 
-        if (PineapleClient.get_hack_manager().get_module_with_tag("Surround").is_active()) {
+        Surround s = (Surround) PineapleClient.get_hack_manager().get_module_with_tag("Surround");
+        if (s.areBlocksLeftToSurrond()) {
             if (old_render.get_value(true)) {
                 render_block_init = null;
             }

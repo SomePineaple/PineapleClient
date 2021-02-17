@@ -87,7 +87,6 @@ public class EntityUtil {
             else if (mc.world.getBlockState(pos.south().south()).getBlock() == Blocks.AIR) {
                 return pos.south();
             }
-
         }
         if (mc.world.getBlockState(pos.west()).getBlock() == Blocks.OBSIDIAN) {
             if (end_crystal) {
@@ -99,7 +98,5 @@ public class EntityUtil {
         }
 
         return null;
-
     }
-
 }

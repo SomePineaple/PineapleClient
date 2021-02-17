@@ -68,19 +68,19 @@ public class CrystalUtil {
                 return false;
             }
             if (!specialEntityCheck) {
-                return mc.world.getEntitiesWithinAABB((Class)Entity.class, new AxisAlignedBB(boost)).isEmpty() && mc.world.getEntitiesWithinAABB((Class)Entity.class, new AxisAlignedBB(boost2)).isEmpty();
+                return mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost)).isEmpty() && mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost2)).isEmpty();
             }
-            for (final Object entity : mc.world.getEntitiesWithinAABB((Class)Entity.class, new AxisAlignedBB(boost))) {
+            for (final Object entity : mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost))) {
                 if (!(entity instanceof EntityEnderCrystal)) {
                     return false;
                 }
             }
-            for (final Object entity : mc.world.getEntitiesWithinAABB((Class)Entity.class, new AxisAlignedBB(boost2))) {
+            for (final Object entity : mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(boost2))) {
                 if (!(entity instanceof EntityEnderCrystal)) {
                     return false;
                 }
             }
-            for (final Object entity : mc.world.getEntitiesWithinAABB((Class)Entity.class, new AxisAlignedBB(final_boost))) {
+            for (final Object entity : mc.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(final_boost))) {
                 if (entity instanceof EntityEnderCrystal) {
                     return false;
                 }
