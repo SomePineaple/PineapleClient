@@ -83,6 +83,7 @@ public class ModuleManager {
 		add_hack(new Freecam());
 		add_hack(new MCP());
 		add_hack(new ReverseStep());
+		add_hack(new Scaffold());
 		
 		// Render.
 		add_hack(new Highlight());

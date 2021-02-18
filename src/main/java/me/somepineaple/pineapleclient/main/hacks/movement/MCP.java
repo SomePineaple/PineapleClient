@@ -33,6 +33,7 @@ public class MCP extends Hack {
 
     @Override
     public void update() {
+        if (mc.currentScreen != null) return;
         if (mode.in("Midclick")) {
             if (Mouse.isButtonDown(2)) {
                 if (!clicked) {

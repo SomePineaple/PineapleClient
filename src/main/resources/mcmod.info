@@ -2,7 +2,7 @@
 	"modid"        : "pineapleclient",
 	"name"         : "PineapleClient",
 	"description"  : "Epic!",
-	"version"      : "1.7.1",
+	"version"      : "1.7.3",
 	"mcversion"    : "1.12.2-14.23.5.2772",
 	"url"          : "https://github.com/somepineaple/pineapleclient",
 	"updateUrl"    : "",
