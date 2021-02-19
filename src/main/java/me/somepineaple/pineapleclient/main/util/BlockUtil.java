@@ -77,7 +77,7 @@ public class BlockUtil {
         }
     }
 
-    public static boolean placeBlock(BlockPos pos, int slot, boolean rotate, boolean rotateBack, Setting setting) {
+    public static boolean placeBlock(BlockPos pos, int slot, boolean rotate, boolean rotateBack, boolean sneak, Setting setting) {
         if (isBlockEmpty(pos)) {
             int old_slot = -1;
             if (slot != mc.player.inventory.currentItem) {
@@ -89,7 +89,7 @@ public class BlockUtil {
 
             for (EnumFacing f : facings) {
                 Block neighborBlock = mc.world.getBlockState(pos.offset(f)).getBlock();
-                Vec3d vec = new Vec3d(pos.getX() + 0.5D + (double) f.getXOffset() * 0.5D, pos.getY() + 0.5D + (double) f.getYOffset() * 0.5D, pos.getZ() + 0.5D + (double) f.getZOffset() * 0.5D);
+                Vec3d vec = new Vec3d(pos.getX() + 0.5D + f.getXOffset() * 0.5D, pos.getY() + 0.5D + f.getYOffset() * 0.5D, pos.getZ() + 0.5D + (double) f.getZOffset() * 0.5D);
 
                 if (!emptyBlocks.contains(neighborBlock) && mc.player.getPositionEyes(mc.getRenderPartialTicks()).distanceTo(vec) <= 4.25D) {
                     float[] rot = new float[]{mc.player.rotationYaw, mc.player.rotationPitch};
@@ -98,12 +98,12 @@ public class BlockUtil {
                         rotatePacket(vec.x, vec.y, vec.z);
                     }
 
-                    if (rightclickableBlocks.contains(neighborBlock)) {
+                    if (rightclickableBlocks.contains(neighborBlock) && sneak) {
                         mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, Action.START_SNEAKING));
                     }
 
                     mc.playerController.processRightClickBlock(mc.player, mc.world, pos.offset(f), f.getOpposite(), new Vec3d(pos), EnumHand.MAIN_HAND);
-                    if (rightclickableBlocks.contains(neighborBlock)) {
+                    if (rightclickableBlocks.contains(neighborBlock) && sneak) {
                         mc.player.connection.sendPacket(new CPacketEntityAction(mc.player, Action.STOP_SNEAKING));
                     }
 
@@ -120,7 +120,6 @@ public class BlockUtil {
                     return true;
                 }
             }
-
         }
 
         return false;
@@ -147,8 +146,7 @@ public class BlockUtil {
         return false;
     }
 
-    public static boolean canPlaceBlock(BlockPos pos)
-    {
+    public static boolean canPlaceBlock(BlockPos pos) {
         if (isBlockEmpty(pos)) {
             EnumFacing[] facings = EnumFacing.values();
 
@@ -162,8 +160,7 @@ public class BlockUtil {
         return false;
     }
 
-    public static void rotatePacket(double x, double y, double z)
-    {
+    public static void rotatePacket(double x, double y, double z) {
         double diffX = x - mc.player.posX;
         double diffY = y - (mc.player.posY + (double) mc.player.getEyeHeight());
         double diffZ = z - mc.player.posZ;

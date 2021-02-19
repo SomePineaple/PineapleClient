@@ -90,7 +90,7 @@ public class HoleFill extends Hack {
         }
 
         if (pos_to_fill != null) {
-            if (BlockUtil.placeBlock(pos_to_fill, find_in_hotbar(), hole_rotate.get_value(true), hole_rotate.get_value(true), swing)) {
+            if (BlockUtil.placeBlock(pos_to_fill, find_in_hotbar(), hole_rotate.get_value(true), hole_rotate.get_value(true), true, swing)) {
                 holes.remove(pos_to_fill);
             }
         }

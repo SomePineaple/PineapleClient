@@ -146,7 +146,7 @@ public class Surround extends Hack {
 					break;
 				}
 
-				if (try_to_place && BlockUtil.placeBlock(targetPos, find_in_hotbar(), rotate.get_value(true), rotate.get_value(true), swing)) {
+				if (try_to_place && BlockUtil.placeBlock(targetPos, find_in_hotbar(), rotate.get_value(true), rotate.get_value(true), true, swing)) {
 					blocks_placed++;
 				}
 

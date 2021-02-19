@@ -159,7 +159,7 @@ public class BedAura extends Hack {
             mc.player.connection.sendPacket(new CPacketPlayer.Rotation(-90, 0, mc.player.onGround));
         }
 
-        BlockUtil.placeBlock(best_pos, bed_slot, false, false, swing);
+        BlockUtil.placeBlock(best_pos, bed_slot, false, false, true, swing);
 
     }
 

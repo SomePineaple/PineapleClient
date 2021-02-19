@@ -101,9 +101,9 @@ public class Auto32k extends Hack {
             if (BlockUtil.canPlaceBlock(this.pos) && BlockUtil.isBlockEmpty(this.pos) && BlockUtil.isBlockEmpty(this.pos.add(this.rot[0], 0, this.rot[1])) &&
                     BlockUtil.isBlockEmpty(this.pos.add(0, 1, 0)) && BlockUtil.isBlockEmpty(this.pos.add(0, 2, 0)) && BlockUtil.isBlockEmpty(this.pos.add(this.rot[0], 1, this.rot[1]))) {
 
-                BlockUtil.placeBlock(pos, block_slot, rotate.get_value(true), false, swing);
+                BlockUtil.placeBlock(pos, block_slot, rotate.get_value(true), false, true, swing);
                 BlockUtil.rotatePacket((double) this.pos.add(-this.rot[0], 1, -this.rot[1]).getX() + 0.5D, this.pos.getY() + 1, (double) this.pos.add(-this.rot[0], 1, -this.rot[1]).getZ() + 0.5D);
-                BlockUtil.placeBlock(this.pos.up(), dispenser_slot, false, false, swing);
+                BlockUtil.placeBlock(this.pos.up(), dispenser_slot, false, false, true, swing);
                 BlockUtil.openBlock(this.pos.up());
 
                 setup = true;
@@ -122,9 +122,9 @@ public class Auto32k extends Hack {
 
                         if (mc.player.getPositionEyes(mc.getRenderPartialTicks()).distanceTo(mc.player.getPositionVector().add(x - rot[0] / 2f, (double) y + 0.5D, z + rot[1] / 2)) <= 4.5D && mc.player.getPositionEyes(mc.getRenderPartialTicks()).distanceTo(mc.player.getPositionVector().add((double) x + 0.5D, (double) y + 2.5D, (double) z + 0.5D)) <= 4.5D && BlockUtil.canPlaceBlock(this.pos) && BlockUtil.isBlockEmpty(this.pos) && BlockUtil.isBlockEmpty(this.pos.add(this.rot[0], 0, this.rot[1])) && BlockUtil.isBlockEmpty(this.pos.add(0, 1, 0)) && BlockUtil.isBlockEmpty(this.pos.add(0, 2, 0)) && BlockUtil.isBlockEmpty(this.pos.add(this.rot[0], 1, this.rot[1])))
                         {
-                            BlockUtil.placeBlock(this.pos, block_slot, rotate.get_value(true), false, swing);
+                            BlockUtil.placeBlock(this.pos, block_slot, rotate.get_value(true), false, true, swing);
                             BlockUtil.rotatePacket((double) this.pos.add(-this.rot[0], 1, -this.rot[1]).getX() + 0.5D, this.pos.getY() + 1, (double) this.pos.add(-this.rot[0], 1, -this.rot[1]).getZ() + 0.5D);
-                            BlockUtil.placeBlock(this.pos.up(), dispenser_slot, false, false, swing);
+                            BlockUtil.placeBlock(this.pos.up(), dispenser_slot, false, false, true, swing);
                             BlockUtil.openBlock(this.pos.up());
 
                             setup = true;
@@ -143,8 +143,8 @@ public class Auto32k extends Hack {
                     for (int x = -2; x <= 2; x++) {
                         if ((z != 0 || y != 0 || x != 0) && (z != 0 || y != 1 || x != 0) && BlockUtil.isBlockEmpty(mc.player.getPosition().add(z, y, x)) && mc.player.getPositionEyes(mc.getRenderPartialTicks()).distanceTo(mc.player.getPositionVector().add((double) z + 0.5D, (double) y + 0.5D, (double) x + 0.5D)) < 4.5D && BlockUtil.isBlockEmpty(mc.player.getPosition().add(z, y + 1, x)) && mc.player.getPositionEyes(mc.getRenderPartialTicks()).distanceTo(mc.player.getPositionVector().add((double) z + 0.5D, (double) y + 1.5D, (double) x + 0.5D)) < 4.5D)  {
 
-                            BlockUtil.placeBlock(mc.player.getPosition().add(z, y, x), hopper_slot, rotate.get_value(true), false, swing);
-                            BlockUtil.placeBlock(mc.player.getPosition().add(z, y + 1, x), shulker_slot, rotate.get_value(true), false, swing);
+                            BlockUtil.placeBlock(mc.player.getPosition().add(z, y, x), hopper_slot, rotate.get_value(true), false, true, swing);
+                            BlockUtil.placeBlock(mc.player.getPosition().add(z, y + 1, x), shulker_slot, rotate.get_value(true), false, true, swing);
                             BlockUtil.openBlock(mc.player.getPosition().add(z, y, x));
 
                             pos = mc.player.getPosition().add(z, y, x);
@@ -186,7 +186,7 @@ public class Auto32k extends Hack {
             }
 
             if (!place_redstone) {
-                BlockUtil.placeBlock(pos.add(0, 2, 0), redstone_slot, rotate.get_value(true), false, swing);
+                BlockUtil.placeBlock(pos.add(0, 2, 0), redstone_slot, rotate.get_value(true), false, true, swing);
                 if (debug.get_value(true)) {
                     MessageUtil.send_client_message("placed redstone");
                 }
@@ -197,7 +197,7 @@ public class Auto32k extends Hack {
             if (!place_mode.in("Hopper") && mc.world.getBlockState(this.pos.add(this.rot[0], 1, this.rot[1])).getBlock() instanceof BlockShulkerBox
                     && mc.world.getBlockState(this.pos.add(this.rot[0], 0, this.rot[1])).getBlock() != Blocks.HOPPER
                     && place_redstone && dispenser_done && !(mc.currentScreen instanceof GuiInventory)) {
-                BlockUtil.placeBlock(this.pos.add(this.rot[0], 0, this.rot[1]), hopper_slot, rotate.get_value(true), false, swing);
+                BlockUtil.placeBlock(this.pos.add(this.rot[0], 0, this.rot[1]), hopper_slot, rotate.get_value(true), false, true, swing);
                 BlockUtil.openBlock(this.pos.add(this.rot[0], 0, this.rot[1]));
                 if (debug.get_value(true)) {
                     MessageUtil.send_client_message("in the hopper");

@@ -49,8 +49,7 @@ public class Socks extends Hack {
         BlockPos center_pos = PlayerUtil.GetLocalPlayerPosFloored();
         ArrayList<BlockPos> blocks_to_fill = new ArrayList<>();
 
-        switch (PlayerUtil.GetFacing())
-        {
+        switch (PlayerUtil.GetFacing()) {
             case East:
                 blocks_to_fill.add(center_pos.east().east());
                 blocks_to_fill.add(center_pos.east().east().up());
@@ -94,7 +93,7 @@ public class Socks extends Hack {
 
         }
 
-        BlockUtil.placeBlock(pos_to_fill, find_in_hotbar(), rotate.get_value(true), rotate.get_value(true), swing);
+        BlockUtil.placeBlock(pos_to_fill, find_in_hotbar(), rotate.get_value(true), rotate.get_value(true), true, swing);
 
     }
 

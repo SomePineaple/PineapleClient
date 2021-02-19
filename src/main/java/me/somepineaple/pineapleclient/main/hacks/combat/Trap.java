@@ -200,31 +200,26 @@ public class Trap extends Hack {
             if (!mc.world.getBlockState(target_pos).getMaterial().isReplaceable()) 
                 should_try_place = false;
             
-                for (final Entity entity : mc.world.getEntitiesWithinAABBExcludingEntity((Entity) null, new AxisAlignedBB(target_pos))) {
+            for (final Entity entity : mc.world.getEntitiesWithinAABBExcludingEntity((Entity) null, new AxisAlignedBB(target_pos))) {
 
-                    if (!(entity instanceof EntityItem) && !(entity instanceof EntityXPOrb)) {
-                        should_try_place = false;
-                        break;
-                    }
-
+                if (!(entity instanceof EntityItem) && !(entity instanceof EntityXPOrb)) {
+                    should_try_place = false;
+                    break;
                 }
+            }
 
-                if (should_try_place && BlockUtil.placeBlock(target_pos, find_obi_in_hotbar(), rotate.get_value(true), rotate.get_value(true), swing)) {
-                    ++blocks_placed;
-                }
+            if (should_try_place && BlockUtil.placeBlock(target_pos, find_obi_in_hotbar(), rotate.get_value(true), rotate.get_value(true), true, swing)) {
+                ++blocks_placed;
+            }
 
-                offset_step++;
-
+            offset_step++;
         }
 
         timeout_ticker++;
-
     }
 
-    private int find_obi_in_hotbar()
-    {
-        for (int i = 0; i < 9; ++i)
-        {
+    private int find_obi_in_hotbar() {
+        for (int i = 0; i < 9; ++i) {
             final ItemStack stack = mc.player.inventory.getStackInSlot(i);
             if (stack != ItemStack.EMPTY && stack.getItem() instanceof ItemBlock)
             {
