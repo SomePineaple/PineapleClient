@@ -1,252 +1,159 @@
 package me.somepineaple.pineapleclient.main.hacks.render;
 
-import me.somepineaple.pineapleclient.main.event.events.EventRender;
-import me.somepineaple.pineapleclient.main.event.events.EventRenderEntityModel;
+import me.somepineaple.pineapleclient.main.event.events.EventRenderEntity;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
-import me.somepineaple.pineapleclient.main.util.EntityUtil;
-import me.somepineaple.pineapleclient.main.util.RenderUtil;
+import me.zero.alpine.fork.listener.EventHandler;
+import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderGlobal;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityEnderPearl;
-import net.minecraft.entity.item.EntityExpBottle;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.item.EntityEnderCrystal;
+import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.Vec3d;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-public class Chams extends Hack {
+import static org.lwjgl.opengl.GL11.*;
 
+public class Chams extends Hack {
     public Chams() {
         super(Category.RENDER);
-
-        this.name = "Chams";
-        this.tag = "Chams";
-        this.description = "see even less (now with epic colours)";
+        name = "Chams";
+        tag = "Chams";
+        description = "Oooh shiny";
     }
 
-    Setting mode = create("Mode", "ChamsMode", "Outline", combobox("Outline", "Wireframe"));
-    Setting players = create("Players", "ChamsPlayers", true);
-    Setting mobs = create("Mobs", "ChamsMobs", true);
+    Setting mode = create("Mode", "ChamsMode", "Color", combobox("Texture", "Color"));
+    Setting range = create("Range", "ChamsRange", 100, 0, 250);
+    Setting player = create("Player", "ChamsPlayer", true);
+    Setting mob = create("Mob", "ChamsMob", false);
+    Setting crystal = create("Crystals", "ChamsCrystals", true);
     Setting self = create("Self", "ChamsSelf", true);
-    Setting items = create("Items", "ChamsItems", true);
-    Setting xporbs = create("Xp Orbs", "ChamsXPO", true);
-    Setting xpbottles = create("Xp Bottles", "ChamsBottles", true);
-    Setting pearl = create("Pearls", "ChamsPearls", true);
-    Setting top = create("Top", "ChamsTop", true);
-    Setting scale = create("Factor", "ChamsFactor", 0, -1f, 1f);
-    Setting r = create("R", "ChamsR", 255, 0, 255);
-    Setting g = create("G", "ChamsG", 255, 0, 255);
-    Setting b = create("B", "ChamsB", 255, 0, 255);
-    Setting a = create("A", "ChamsA", 100, 0, 255);
-    Setting box_a = create("Box A", "ChamsABox", 100, 0, 255);
-    Setting width = create("Width", "ChamsWdith", 2, 0.5, 5);
-    Setting rainbow_mode = create("Rainbow", "ChamsRainbow", false);
-    Setting sat = create("Satiation", "ChamsSatiation", 0.8, 0, 1);
-    Setting brightness = create("Brightness", "ChamsBrightness", 0.8, 0, 1);
+    Setting rainbow = create("Rainbow", "ChamsRainbow", false);
+    Setting r = create("r", "ChamsR", 70, 0, 255);
+    Setting g = create("g", "ChamsG", 150, 0, 255);
+    Setting b = create("b", "ChamsB", 200, 0, 255);
+    Setting a = create("a", "ChamsA", 100, 0, 255);
 
     @Override
     public void update() {
-        if (rainbow_mode.get_value(true)) {
-            cycle_rainbow();
-        }
-    }
-
-    public void cycle_rainbow() {
-
         float[] tick_color = {
                 (System.currentTimeMillis() % (360 * 32)) / (360f * 32)
         };
-
-        int color_rgb_o = Color.HSBtoRGB(tick_color[0], sat.get_value(1), brightness.get_value(1));
-
-        r.set_value((color_rgb_o >> 16) & 0xFF);
-        g.set_value((color_rgb_o >> 8) & 0xFF);
-        b.set_value(color_rgb_o & 0xFF);
-
+        int color_rgb = Color.HSBtoRGB(tick_color[0], 1, 1);
+        if (rainbow.get_value(true)) {
+            r.set_value(((color_rgb >> 16) & 0xFF));
+            g.set_value(((color_rgb >> 8) & 0xFF));
+            b.set_value((color_rgb & 0xFF));
+        }
     }
 
-    @Override
-    public void render(EventRender event) {
-        if (items.get_value(true)) {
-            int i = 0;
-            for (final Entity entity : mc.world.loadedEntityList) {
-                if (entity instanceof EntityItem && mc.player.getDistanceSq(entity) < 2500.0) {
-                    final Vec3d interp = EntityUtil.getInterpolatedRenderPos(entity, mc.getRenderPartialTicks());
-                    final AxisAlignedBB bb = new AxisAlignedBB(entity.getEntityBoundingBox().minX - 0.05 - entity.posX + interp.x, entity.getEntityBoundingBox().minY - 0.0 - entity.posY + interp.y, entity.getEntityBoundingBox().minZ - 0.05 - entity.posZ + interp.z, entity.getEntityBoundingBox().maxX + 0.05 - entity.posX + interp.x, entity.getEntityBoundingBox().maxY + 0.1 - entity.posY + interp.y, entity.getEntityBoundingBox().maxZ + 0.05 - entity.posZ + interp.z);
-                    GlStateManager.pushMatrix();
-                    GlStateManager.enableBlend();
-                    GlStateManager.disableDepth();
-                    GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
-                    GlStateManager.disableTexture2D();
-                    GlStateManager.depthMask(false);
-                    GL11.glEnable(2848);
-                    GL11.glHint(3154, 4354);
-                    GL11.glLineWidth(1.0f);
-                    RenderGlobal.renderFilledBox(bb.grow(scale.get_value(1)), r.get_value(1) / 255.0f, g.get_value(1) / 255.0f, b.get_value(1) / 255.0f, box_a.get_value(1) / 255.0f);
-                    GL11.glDisable(2848);
-                    GlStateManager.depthMask(true);
-                    GlStateManager.enableDepth();
-                    GlStateManager.enableTexture2D();
-                    GlStateManager.disableBlend();
-                    GlStateManager.popMatrix();
-                    RenderUtil.drawBlockOutline(bb.grow(scale.get_value(1)), new Color(r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1)), 1);
-                    if (++i >= 50) {
-                        break;
-                    }
-                }
-            }
+    @EventHandler
+    public Listener<EventRenderEntity.Head> renderHeadListener = new Listener<>(event -> {
+        if (event.getType() == EventRenderEntity.Type.COLOR && mode.in("Texture")) return;
+        else if (event.getType() == EventRenderEntity.Type.TEXTURE && mode.in("Color")) return;
+        Entity entity = event.getEntity();
+        if (mc.player.getDistance(entity) > range.get_value(1)) return;
+        if (entity instanceof EntityPlayer && player.get_value(true) && (self.get_value(true) || entity != mc.player)) {
+            renderChamsPre(true);
         }
 
-        if (xporbs.get_value(true)) {
-            int i = 0;
-            for (final Entity entity : mc.world.loadedEntityList) {
-                if (entity instanceof EntityXPOrb && mc.player.getDistanceSq(entity) < 2500.0) {
-                    final Vec3d interp = EntityUtil.getInterpolatedRenderPos(entity, mc.getRenderPartialTicks());
-                    final AxisAlignedBB bb = new AxisAlignedBB(entity.getEntityBoundingBox().minX - 0.05 - entity.posX + interp.x, entity.getEntityBoundingBox().minY - 0.0 - entity.posY + interp.y, entity.getEntityBoundingBox().minZ - 0.05 - entity.posZ + interp.z, entity.getEntityBoundingBox().maxX + 0.05 - entity.posX + interp.x, entity.getEntityBoundingBox().maxY + 0.1 - entity.posY + interp.y, entity.getEntityBoundingBox().maxZ + 0.05 - entity.posZ + interp.z);
-                    GlStateManager.pushMatrix();
-                    GlStateManager.enableBlend();
-                    GlStateManager.disableDepth();
-                    GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
-                    GlStateManager.disableTexture2D();
-                    GlStateManager.depthMask(false);
-                    GL11.glEnable(2848);
-                    GL11.glHint(3154, 4354);
-                    GL11.glLineWidth(1.0f);
-                    RenderGlobal.renderFilledBox(bb.grow(scale.get_value(1)), r.get_value(1) / 255.0f, g.get_value(1) / 255.0f, b.get_value(1) / 255.0f, box_a.get_value(1) / 255.0f);
-                    GL11.glDisable(2848);
-                    GlStateManager.depthMask(true);
-                    GlStateManager.enableDepth();
-                    GlStateManager.enableTexture2D();
-                    GlStateManager.disableBlend();
-                    GlStateManager.popMatrix();
-                    RenderUtil.drawBlockOutline(bb.grow(scale.get_value(1)), new Color(r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1)), 1);
-                    if (++i >= 50) {
-                        break;
-                    }
-                }
-            }
+        if (mob.get_value(true) && (entity instanceof EntityCreature || entity instanceof EntitySlime || entity instanceof EntitySquid)) {
+            renderChamsPre(false);
         }
 
-        if (pearl.get_value(true)) {
-            int i = 0;
-            for (final Entity entity : mc.world.loadedEntityList) {
-                if (entity instanceof EntityEnderPearl && mc.player.getDistanceSq(entity) < 2500.0) {
-                    final Vec3d interp = EntityUtil.getInterpolatedRenderPos(entity, mc.getRenderPartialTicks());
-                    final AxisAlignedBB bb = new AxisAlignedBB(entity.getEntityBoundingBox().minX - 0.05 - entity.posX + interp.x, entity.getEntityBoundingBox().minY - 0.0 - entity.posY + interp.y, entity.getEntityBoundingBox().minZ - 0.05 - entity.posZ + interp.z, entity.getEntityBoundingBox().maxX + 0.05 - entity.posX + interp.x, entity.getEntityBoundingBox().maxY + 0.1 - entity.posY + interp.y, entity.getEntityBoundingBox().maxZ + 0.05 - entity.posZ + interp.z);
-                    GlStateManager.pushMatrix();
-                    GlStateManager.enableBlend();
-                    GlStateManager.disableDepth();
-                    GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
-                    GlStateManager.disableTexture2D();
-                    GlStateManager.depthMask(false);
-                    GL11.glEnable(2848);
-                    GL11.glHint(3154, 4354);
-                    GL11.glLineWidth(1.0f);
-                    RenderGlobal.renderFilledBox(bb.grow(scale.get_value(1)), r.get_value(1) / 255.0f, g.get_value(1) / 255.0f, b.get_value(1) / 255.0f, box_a.get_value(1) / 255.0f);
-                    GL11.glDisable(2848);
-                    GlStateManager.depthMask(true);
-                    GlStateManager.enableDepth();
-                    GlStateManager.enableTexture2D();
-                    GlStateManager.disableBlend();
-                    GlStateManager.popMatrix();
-                    RenderUtil.drawBlockOutline(bb.grow(scale.get_value(1)), new Color(r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1)), 1);
-                    if (++i >= 50) {
-                        break;
-                    }
-                }
-            }
+        if (crystal.get_value(true) && entity instanceof EntityEnderCrystal) {
+            renderChamsPre(false);
+        }
+    });
+
+    @EventHandler
+    public Listener<EventRenderEntity.Return> returnListener = new Listener<>(event -> {
+        if (event.getType() == EventRenderEntity.Type.COLOR && mode.in("Texture")) return;
+        else if (event.getType() == EventRenderEntity.Type.TEXTURE && mode.in("Color")) return;
+        Entity entity = event.getEntity();
+        if (mc.player.getDistance(entity) > range.get_value(1)) return;
+        if (entity instanceof EntityPlayer && player.get_value(true) && (self.get_value(true) || entity != mc.player)) {
+            renderChamsPost(true);
         }
 
-        if (xpbottles.get_value(true)) {
-            int i = 0;
-            for (final Entity entity : mc.world.loadedEntityList) {
-                if (entity instanceof EntityExpBottle && mc.player.getDistanceSq(entity) < 2500.0) {
-                    final Vec3d interp = EntityUtil.getInterpolatedRenderPos(entity, mc.getRenderPartialTicks());
-                    final AxisAlignedBB bb = new AxisAlignedBB(entity.getEntityBoundingBox().minX - 0.05 - entity.posX + interp.x, entity.getEntityBoundingBox().minY - 0.0 - entity.posY + interp.y, entity.getEntityBoundingBox().minZ - 0.05 - entity.posZ + interp.z, entity.getEntityBoundingBox().maxX + 0.05 - entity.posX + interp.x, entity.getEntityBoundingBox().maxY + 0.1 - entity.posY + interp.y, entity.getEntityBoundingBox().maxZ + 0.05 - entity.posZ + interp.z);
-                    GlStateManager.pushMatrix();
-                    GlStateManager.enableBlend();
-                    GlStateManager.disableDepth();
-                    GlStateManager.tryBlendFuncSeparate(770, 771, 0, 1);
-                    GlStateManager.disableTexture2D();
-                    GlStateManager.depthMask(false);
-                    GL11.glEnable(2848);
-                    GL11.glHint(3154, 4354);
-                    GL11.glLineWidth(1.0f);
-                    RenderGlobal.renderFilledBox(bb.grow(scale.get_value(1)), r.get_value(1) / 255.0f, g.get_value(1) / 255.0f, b.get_value(1) / 255.0f, box_a.get_value(1) / 255.0f);
-                    GL11.glDisable(2848);
-                    GlStateManager.depthMask(true);
-                    GlStateManager.enableDepth();
-                    GlStateManager.enableTexture2D();
-                    GlStateManager.disableBlend();
-                    GlStateManager.popMatrix();
-                    RenderUtil.drawBlockOutline(bb.grow(scale.get_value(1)), new Color(r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1)), 1);
-                    if (++i >= 50) {
-                        break;
-                    }
-                }
-            }
+        if (mob.get_value(true) && (entity instanceof EntityCreature || entity instanceof EntitySlime || entity instanceof EntitySquid)) {
+            renderChamsPost(false);
         }
 
+        if (crystal.get_value(true) && entity instanceof EntityEnderCrystal) {
+            renderChamsPost(false);
+        }
+    });
+
+    private void renderChamsPre(boolean isPlayer) {
+        if (mode.in("Texture")) {
+            createChamsPre();
+        } else if (mode.in("Color")) {
+            createColorPre(isPlayer);
+        }
     }
 
-    @Override
-    public void on_render_model(final EventRenderEntityModel event) {
-        if (event.stage != 0 || event.entity == null || !self.get_value(true) && event.entity.equals(mc.player) || !players.get_value(true) && event.entity instanceof EntityPlayer || !mobs.get_value(true) && event.entity instanceof EntityMob) {
-            return;
+    private void renderChamsPost(boolean isPlayer) {
+        if (mode.in("Texture")) {
+            createChamsPost();
+        } else if (mode.in("Color")) {
+            createColorPost(isPlayer);
         }
-        final Color color = new Color(r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1));
-        final boolean fancyGraphics = mc.gameSettings.fancyGraphics;
-        mc.gameSettings.fancyGraphics = false;
-        final float gamma = mc.gameSettings.gammaSetting;
-        mc.gameSettings.gammaSetting = 10000.0f;
-        if (top.get_value(true)) {
-            event.modelBase.render(event.entity, event.limbSwing, event.limbSwingAmount, event.age, event.headYaw, event.headPitch, event.scale);
+    }
+
+    private void createChamsPre() {
+        mc.getRenderManager().setRenderShadow(false);
+        mc.getRenderManager().setRenderOutlines(false);
+        GlStateManager.pushMatrix();
+        GlStateManager.depthMask(true);
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
+        GL11.glEnable(GL11.GL_POLYGON_OFFSET_FILL);
+        GL11.glPolygonOffset(1.0f, -5300000.0f);
+        GlStateManager.popMatrix();
+    }
+
+    private void createColorPre(boolean isPlayer) {
+        mc.getRenderManager().setRenderShadow(false);
+        mc.getRenderManager().setRenderOutlines(false);
+        GlStateManager.pushMatrix();
+        GlStateManager.depthMask(true);
+        GL11.glEnable(GL11.GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0f, -5300000.0f);
+        glDisable(GL11.GL_TEXTURE_2D);
+        if (!isPlayer) {
+            GlStateManager.enableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
         }
-        if (mode.in("outline")) {
-            RenderUtil.renderOne(width.get_value(1));
-            event.modelBase.render(event.entity, event.limbSwing, event.limbSwingAmount, event.age, event.headYaw, event.headPitch, event.scale);
-            GlStateManager.glLineWidth((float)width.get_value(1));
-            RenderUtil.renderTwo();
-            event.modelBase.render(event.entity, event.limbSwing, event.limbSwingAmount, event.age, event.headYaw, event.headPitch, event.scale);
-            GlStateManager.glLineWidth((float)width.get_value(1));
-            RenderUtil.renderThree();
-            RenderUtil.renderFour(color);
-            event.modelBase.render(event.entity, event.limbSwing, event.limbSwingAmount, event.age, event.headYaw, event.headPitch, event.scale);
-            GlStateManager.glLineWidth((float)width.get_value(1));
-            RenderUtil.renderFive();
+        GlStateManager.color(r.get_value(1) / 255f, g.get_value(1) / 255f, b.get_value(1) / 255f, a.get_value(1) / 255f);
+        GlStateManager.popMatrix();
+    }
+
+    private void createChamsPost() {
+        boolean shadow = mc.getRenderManager().isRenderShadow();
+        mc.getRenderManager().setRenderShadow(shadow);
+        GlStateManager.pushMatrix();
+        GlStateManager.depthMask(false);
+        glDisable(GL11.GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0f, -5300000.0f);
+        GlStateManager.popMatrix();
+    }
+
+    private void createColorPost(boolean isPlayer) {
+        boolean shadow = mc.getRenderManager().isRenderShadow();
+        mc.getRenderManager().setRenderShadow(shadow);
+        GlStateManager.pushMatrix();
+        GlStateManager.depthMask(false);
+        if (!isPlayer) {
+            GlStateManager.disableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
         }
-        else {
-            GL11.glPushMatrix();
-            GL11.glPushAttrib(1048575);
-            GL11.glPolygonMode(1028, 6913);
-            GL11.glDisable(3553);
-            GL11.glDisable(2896);
-            GL11.glDisable(2929);
-            GL11.glEnable(2848);
-            GL11.glEnable(3042);
-            GlStateManager.blendFunc(770, 771);
-            GlStateManager.color((float)color.getRed(), (float)color.getGreen(), (float)color.getBlue(), (float)color.getAlpha());
-            GlStateManager.glLineWidth((float)width.get_value(1));
-            event.modelBase.render(event.entity, event.limbSwing, event.limbSwingAmount, event.age, event.headYaw, event.headPitch, event.scale);
-            GL11.glPopAttrib();
-            GL11.glPopMatrix();
-        }
-        if (!top.get_value(true)) {
-            event.modelBase.render(event.entity, event.limbSwing, event.limbSwingAmount, event.age, event.headYaw, event.headPitch, event.scale);
-        }
-        try {
-            mc.gameSettings.fancyGraphics = fancyGraphics;
-            mc.gameSettings.gammaSetting = gamma;
-        }
-        catch (Exception ignore) {}
-        event.cancel();
+        glDisable(GL11.GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0f, -5300000.0f);
+        glEnable(GL11.GL_TEXTURE_2D);
+        GlStateManager.popMatrix();
     }
 }

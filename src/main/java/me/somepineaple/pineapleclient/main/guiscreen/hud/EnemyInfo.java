@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.network.play.server.SPacketEntityStatus;
 import net.minecraft.util.math.BlockPos;
+import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,6 +120,7 @@ public class EnemyInfo extends Pinnable implements Listenable {
 
             create_rect(0, this.get_height(), (int) (target_hp / 36 * this.get_width()), this.get_height() -5, hp_r, hp_g, hp_b, 255);
 
+            GL11.glColor3f(1f, 1f, 1f);
             GuiInventory.drawEntityOnScreen(this.get_x() + this.get_width() -20, this.get_y()
                     + this.get_height() - 10, 30, -target.rotationYaw, -target.rotationPitch, target);
         } catch (Exception ignored){}

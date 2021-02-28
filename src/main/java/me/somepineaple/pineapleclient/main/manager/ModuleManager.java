@@ -84,6 +84,8 @@ public class ModuleManager {
 		add_hack(new MCP());
 		add_hack(new ReverseStep());
 		add_hack(new Scaffold());
+		add_hack(new BlockLag());
+		add_hack(new Blink());
 		
 		// Render.
 		add_hack(new Highlight());
@@ -96,13 +98,14 @@ public class ModuleManager {
 		add_hack(new FuckedDetector());
 		add_hack(new Tracers());
 		add_hack(new SkyColour());
-		add_hack(new Chams());
+		add_hack(new ESP());
 		add_hack(new Capes());
 		add_hack(new AlwaysNight());
 		add_hack(new CityEsp());
 		add_hack(new FullBright());
 		add_hack(new BreakHighlight());
 		add_hack(new NoFire());
+		add_hack(new Chams());
 
 		// Misc.
 		add_hack(new MiddleClickFriends());

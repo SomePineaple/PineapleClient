@@ -18,6 +18,7 @@
 		"MixinItemRenderer",
 		"MixinGuiPlayerTabOverlay",
 		"MixinRenderLivingBase",
-		"MixinAbstractClientPlayer"
+		"MixinAbstractClientPlayer",
+		"MixinRenderManager"
 	]
 }

@@ -359,17 +359,14 @@ public class AutoCrystal extends Hack {
     }
 
     public BlockPos get_best_block() {
-
         if (get_best_crystal() != null && !fast_mode.get_value(true)) {
             place_timeout_flag = true;
             return null;
         }
-
         if (place_timeout_flag) {
             place_timeout_flag = false;
             return null;
         }
-
         List<Pair<Double, BlockPos>> damage_blocks = new ArrayList<>();
         double best_damage = 0;
         double minimum_damage;
@@ -425,9 +422,7 @@ public class AutoCrystal extends Hack {
                 }
 
             }
-
             if (best_block == null) ca_target = null;
-
         }
 
         blocks.clear();

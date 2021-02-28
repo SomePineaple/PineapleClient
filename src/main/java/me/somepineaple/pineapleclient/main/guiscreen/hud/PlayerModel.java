@@ -4,6 +4,7 @@ import me.somepineaple.pineapleclient.main.guiscreen.render.pinnables.Pinnable;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.MathHelper;
+import org.lwjgl.opengl.GL11;
 
 public class PlayerModel extends Pinnable {
     public PlayerModel() {
@@ -21,6 +22,7 @@ public class PlayerModel extends Pinnable {
 
         float yaw = interpolateAndWrap(player.prevRotationYaw, player.rotationYaw);
         float pitch = interpolateAndWrap(player.prevRotationPitch, player.rotationPitch);
+        GL11.glColor3f(1f, 1f, 1f);
         GuiInventory.drawEntityOnScreen(this.get_x() + 20, this.get_y() + 80, 40, -yaw, -pitch, player);
     }
 
