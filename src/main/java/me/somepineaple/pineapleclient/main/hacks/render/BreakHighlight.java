@@ -4,6 +4,7 @@ import com.mojang.realmsclient.gui.ChatFormatting;
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
+import me.somepineaple.pineapleclient.main.util.RenderUtil;
 import me.somepineaple.turok.draw.RenderHelp;
 import me.somepineaple.pineapleclient.main.event.events.EventRender;
 import me.somepineaple.pineapleclient.main.hacks.Category;
@@ -11,7 +12,9 @@ import me.somepineaple.pineapleclient.main.hacks.Hack;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.block.BlockAir;
+import net.minecraft.init.Blocks;
 import net.minecraft.network.play.server.SPacketBlockBreakAnim;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 import java.awt.*;
@@ -37,6 +40,7 @@ public class BreakHighlight extends Hack {
     Setting r = create("R", "BreakR", 255, 0, 255);
 	Setting g = create("G", "BreakG", 255, 0, 255);
 	Setting b = create("B", "BreakB", 255, 0, 255);
+	Setting range = create("Range", "BreakRange", 20, 0, 100);
 	Setting a = create("A", "BreakA", 100, 0, 255);
 
 	Setting l_a = create("Outline A", "BreakLineA", 255, 0, 255);
@@ -52,26 +56,6 @@ public class BreakHighlight extends Hack {
     protected void disable() {
         outline = false;
         solid = false;
-    }
-
-    private boolean WasJustMined = false;
-
-    @Override
-    public void update() {
-        String line = "Warning >>> Ur feet r being mined rn";
-        if (IsFootBeingMined()) {
-            WasJustMined = true;
-            client_message_simple(ChatFormatting.GOLD + PineapleClient.NAME + ChatFormatting.GRAY + " > " + ChatFormatting.RED + line);
-        } else {
-            if (WasJustMined) {
-                client_message_simple(ChatFormatting.GOLD + PineapleClient.NAME + ChatFormatting.GRAY + " > " + ChatFormatting.DARK_AQUA + "Your feet r no longer being mined out!");
-                WasJustMined = false;
-            }
-        }
-
-        try {
-            BlocksBeingBroken.removeIf(block -> mc.world.getBlockState(block).getBlock() instanceof BlockAir);
-        } catch (Exception ignored) {}
     }
 
     @Override
@@ -112,54 +96,39 @@ public class BreakHighlight extends Hack {
 				solid   = false;
 			}
 
-			for (BlockPos block : BlocksBeingBroken) {
-			    // Solid.
-                if (solid) {
-                    RenderHelp.prepare("quads");
-                    RenderHelp.draw_cube(block, color_r, color_g, color_b, a.get_value(1), "all");
-                    RenderHelp.release();
-                }
+			mc.renderGlobal.damagedBlocks.forEach((integer, destroyBlockProgress) -> {
+				if (destroyBlockProgress != null) {
 
-                // Outline.
-                if (outline) {
-                    RenderHelp.prepare("lines");
-                    RenderHelp.draw_cube_line(block, color_r, color_g, color_b, l_a.get_value(1), "all");
-                    RenderHelp.release();
-                }
-            }
+					BlockPos blockPos = destroyBlockProgress.getPosition();
+
+					if (mc.world.getBlockState(blockPos).getBlock() == Blocks.AIR) {
+						return;
+					}
+
+					if (blockPos.getDistance((int) mc.player.posX, (int) mc.player.posY, (int) mc.player.posZ) <= range.get_value(1)) {
+						if (solid) {
+							RenderHelp.prepare("quads");
+							RenderHelp.draw_cube(RenderHelp.get_buffer_build(),
+									blockPos.getX(), blockPos.getY(), blockPos.getZ(),
+									1, 1, 1,
+									r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1),
+									"all"
+							);
+							RenderHelp.release();
+						}
+						if (outline) {
+							RenderHelp.prepare("lines");
+							RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
+									blockPos.getX(), blockPos.getY(), blockPos.getZ(),
+									1, 1, 1,
+									r.get_value(1), g.get_value(1), b.get_value(1), l_a.get_value(1),
+									"all"
+							);
+							RenderHelp.release();
+						}
+					}
+				}
+			});
         }
     }
-
-    private boolean IsFootBeingMined () {
-        ArrayList<BlockPos> surroundingBlocks = new ArrayList<>();
-        surroundingBlocks.add(new BlockPos((int)mc.player.posX + 1, (int)mc.player.posY, (int)mc.player.posZ));
-        surroundingBlocks.add(new BlockPos((int)mc.player.posX - 1, (int)mc.player.posY, (int)mc.player.posZ));
-        surroundingBlocks.add(new BlockPos((int)mc.player.posX, (int)mc.player.posY, (int)mc.player.posZ + 1));
-        surroundingBlocks.add(new BlockPos((int)mc.player.posX, (int)mc.player.posY, (int)mc.player.posZ - 1));
-
-        for (BlockPos block : BlocksBeingBroken) {
-            if (surroundingBlocks.contains(block)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    @EventHandler
-    private final Listener<EventPacket.ReceivePacket> packet_event = new Listener<>(event -> {
-
-        if (event.get_packet() instanceof SPacketBlockBreakAnim)
-        {
-            SPacketBlockBreakAnim l_Packet = (SPacketBlockBreakAnim)event.get_packet();
-
-            try {
-                if (!BlocksBeingBroken.contains(l_Packet.getPosition()) && (l_Packet.getProgress() > 0 && l_Packet.getProgress() <= 10)) {
-                    BlocksBeingBroken.add(l_Packet.getPosition());
-                } else if (l_Packet.getProgress() <= 0 || l_Packet.getProgress() > 10) {
-                    BlocksBeingBroken.remove(l_Packet.getPosition());
-                }
-            } catch (Exception ignored){}
-        }
-    });
 }

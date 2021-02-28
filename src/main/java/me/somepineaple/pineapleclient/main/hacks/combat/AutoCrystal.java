@@ -288,7 +288,6 @@ public class AutoCrystal extends Hack {
     }
 
     public EntityEnderCrystal get_best_crystal() {
-
         double best_damage = 0;
 
         double minimum_damage;
@@ -326,7 +325,7 @@ public class AutoCrystal extends Hack {
                 if (target.isDead || target.getHealth() <= 0) continue;
 
                 boolean no_place = faceplace_check.get_value(true) && mc.player.getHeldItemMainhand().getItem() == Items.DIAMOND_SWORD;
-                if ((target.getHealth() < faceplace_mode_damage.get_value(1) && faceplace_mode.get_value(true)&& !no_place) || (get_armor_fucker(target) && !no_place)) {
+                if ((target.getHealth() < faceplace_mode_damage.get_value(1) && faceplace_mode.get_value(true) && !no_place) || (get_armor_fucker(target) && !no_place)) {
                     minimum_damage = 2;
                 } else {
                     minimum_damage = this.min_player_break.get_value(1);
@@ -345,14 +344,12 @@ public class AutoCrystal extends Hack {
                     best_damage = target_damage;
                     best_crystal = crystal;
                 }
-
             }
 
             if (jumpy_mode.get_value(true) && mc.player.getDistanceSq(crystal) > best_distance) {
                 best_distance = mc.player.getDistanceSq(crystal);
                 best_crystal = crystal;
             }
-
         }
 
         return best_crystal;
@@ -369,6 +366,7 @@ public class AutoCrystal extends Hack {
         }
         List<Pair<Double, BlockPos>> damage_blocks = new ArrayList<>();
         double best_damage = 0;
+        double bestBlockSelfDamage = 0;
         double minimum_damage;
         double maximum_damage_self = this.max_self_damage.get_value(1);
 
@@ -418,9 +416,14 @@ public class AutoCrystal extends Hack {
                 if (target_damage > best_damage) {
                     best_damage = target_damage;
                     best_block = block;
+                    bestBlockSelfDamage = self_damage;
+                    autoez_target = target;
+                } else if (target_damage == best_damage && self_damage < bestBlockSelfDamage) {
+                    best_damage = target_damage;
+                    best_block = block;
+                    bestBlockSelfDamage = self_damage;
                     autoez_target = target;
                 }
-
             }
             if (best_block == null) ca_target = null;
         }
@@ -449,7 +452,6 @@ public class AutoCrystal extends Hack {
             }
             return damage_blocks.get(current_chain_index).getValue();
         }
-
     }
 
     public List<Pair<Double, BlockPos>> sort_best_blocks(List<Pair<Double, BlockPos>> list) {
@@ -471,7 +473,6 @@ public class AutoCrystal extends Hack {
     }
 
     public void place_crystal() {
-
         BlockPos target_block = get_best_block();
 
         if (target_block == null) {
@@ -516,7 +517,6 @@ public class AutoCrystal extends Hack {
     }
 
     public boolean get_armor_fucker(EntityPlayer p) {
-
         for (ItemStack stack : p.getArmorInventoryList()) {
 
             if (stack == null || stack.getItem() == Items.AIR) return true;
@@ -524,7 +524,6 @@ public class AutoCrystal extends Hack {
             final float armor_percent = ((float) (stack.getMaxDamage() - stack.getItemDamage()) / (float) stack.getMaxDamage()) * 100.0f;
 
             if (fuck_armor_mode.get_value(true) && fuck_armor_mode_precent.get_value(1) >= armor_percent) return true;
-
         }
 
         return false;
@@ -532,22 +531,18 @@ public class AutoCrystal extends Hack {
     }
 
     public void break_crystal() {
-
         EntityEnderCrystal crystal = get_best_crystal();
         if (crystal == null) {
             return;
         }
 
         if (anti_weakness.get_value(true) && mc.player.isPotionActive(MobEffects.WEAKNESS)) {
-
             boolean should_weakness = true;
 
             if (mc.player.isPotionActive(MobEffects.STRENGTH)) {
-
                 if (Objects.requireNonNull(mc.player.getActivePotionEffect(MobEffects.STRENGTH)).getAmplifier() == 2) {
                     should_weakness = false;
                 }
-
             }
 
             if (should_weakness) {
@@ -595,7 +590,6 @@ public class AutoCrystal extends Hack {
     }
 
     public boolean check_pause() {
-
         if (find_crystals_hotbar() == -1 && mc.player.getHeldItemOffhand().getItem() != Items.END_CRYSTAL) {
             return true;
         }
@@ -642,7 +636,6 @@ public class AutoCrystal extends Hack {
     }
 
     private void add_attacked_crystal(EntityEnderCrystal crystal) {
-
         if (attacked_crystals.containsKey(crystal)) {
             int value = attacked_crystals.get(crystal);
             attacked_crystals.put(crystal, value + 1);

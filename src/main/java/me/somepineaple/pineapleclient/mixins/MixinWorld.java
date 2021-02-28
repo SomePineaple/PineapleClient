@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = World.class)
 public class MixinWorld {
-    
     @Inject(method = "onEntityRemoved", at = @At("HEAD"), cancellable = true)
     public void onEntityRemoved(Entity event_packet, CallbackInfo p_Info) {
         EventEntityRemoved l_Event = new EventEntityRemoved(event_packet);

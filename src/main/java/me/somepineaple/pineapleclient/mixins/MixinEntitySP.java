@@ -21,7 +21,6 @@ public class MixinEntitySP extends MixinEntity {
 
 	@Inject(method = "move", at = @At("HEAD"), cancellable = true)
 	private void move(MoverType type, double x, double y, double z, CallbackInfo info) {
-
 		EventMove event = new EventMove(type, x, y, z);
 		PineapleEventBus.EVENT_BUS.post(event);
 
