@@ -24,6 +24,7 @@ public class Strafe extends Hack {
 
 	Setting speed_mode = create("Mode", "StrafeMode", "Strafe", combobox("Strafe", "On Ground"));
 	Setting speed = create("Strafe Speed", "StrafeSpeed", 1.0d, 1.0d, 2.0d);
+	Setting timerSpeed = create("Timer", "Strafe timer speed", 1.0, 1.0, 5.0);
 	Setting auto_sprint = create("Auto Sprint", "StrafeSprint", true);
 	Setting on_water = create("On Water", "StrafeOnWater", true);
 	Setting auto_jump = create("Auto Jump", "StrafeAutoJump", true);
@@ -32,6 +33,7 @@ public class Strafe extends Hack {
 
 	@Override
 	public void update() {
+		mc.timer.tickLength = (float) (50.0 / timerSpeed.get_value(1.0));
 		
 		if (mc.player.isRiding()) return;
 

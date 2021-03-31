@@ -86,6 +86,8 @@ public class ModuleManager {
 		add_hack(new Scaffold());
 		add_hack(new BlockLag());
 		add_hack(new Blink());
+		add_hack(new InstantBurrow());
+		add_hack(new Timer());
 		
 		// Render.
 		add_hack(new Highlight());
