@@ -71,7 +71,7 @@ public class Draw {
 
 		GL11.glPopMatrix();
 
-		RenderHelp.release_gl();
+		RenderHelp.releaseGl();
 	}
 
 	public int get_string_height() {

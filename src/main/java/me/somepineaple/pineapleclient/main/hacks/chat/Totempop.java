@@ -76,7 +76,7 @@ public class Totempop extends Hack {
 
     @Override
 	public void update() {
-        should_notify = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "notificationtotem").get_value(true);
+        should_notify = PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationtotem").getValue(true);
         for (EntityPlayer player : mc.world.playerEntities) {
 
             if (!totem_pop_counter.containsKey(player.getName())) continue;

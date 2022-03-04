@@ -9,7 +9,7 @@ public class NotificationTest extends PineapleclientCommand {
         super("notificationtest", "send urself notification");
     }
 
-    public boolean get_message (String[] message) {
+    public boolean getMessage(String[] message) {
         NotificationUtil.send_notification(new Notification("Test notification"));
         return true;
     }

@@ -64,7 +64,7 @@ public class HUDManager {
 					pinnables.render();
 				} catch (Exception e) {
 					if (Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().world != null) {
-						MessageUtil.client_message("Error at " + pinnables.get_tag() + " " + e.getMessage());
+						MessageUtil.clientMessage("Error at " + pinnables.get_tag() + " " + e.getMessage());
 						NotificationUtil.send_notification(new Notification("Error at " + pinnables.get_tag() + " " + e.getMessage(), 255, 0, 0));
 					}
 				}

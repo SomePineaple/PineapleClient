@@ -46,10 +46,10 @@ public class Chams extends Hack {
                 (System.currentTimeMillis() % (360 * 32)) / (360f * 32)
         };
         int color_rgb = Color.HSBtoRGB(tick_color[0], 1, 1);
-        if (rainbow.get_value(true)) {
-            r.set_value(((color_rgb >> 16) & 0xFF));
-            g.set_value(((color_rgb >> 8) & 0xFF));
-            b.set_value((color_rgb & 0xFF));
+        if (rainbow.getValue(true)) {
+            r.setValue(((color_rgb >> 16) & 0xFF));
+            g.setValue(((color_rgb >> 8) & 0xFF));
+            b.setValue((color_rgb & 0xFF));
         }
     }
 
@@ -58,16 +58,16 @@ public class Chams extends Hack {
         if (event.getType() == EventRenderEntity.Type.COLOR && mode.in("Texture")) return;
         else if (event.getType() == EventRenderEntity.Type.TEXTURE && mode.in("Color")) return;
         Entity entity = event.getEntity();
-        if (mc.player.getDistance(entity) > range.get_value(1)) return;
-        if (entity instanceof EntityPlayer && player.get_value(true) && (self.get_value(true) || entity != mc.player)) {
+        if (mc.player.getDistance(entity) > range.getValue(1)) return;
+        if (entity instanceof EntityPlayer && player.getValue(true) && (self.getValue(true) || entity != mc.player)) {
             renderChamsPre(true);
         }
 
-        if (mob.get_value(true) && (entity instanceof EntityCreature || entity instanceof EntitySlime || entity instanceof EntitySquid)) {
+        if (mob.getValue(true) && (entity instanceof EntityCreature || entity instanceof EntitySlime || entity instanceof EntitySquid)) {
             renderChamsPre(false);
         }
 
-        if (crystal.get_value(true) && entity instanceof EntityEnderCrystal) {
+        if (crystal.getValue(true) && entity instanceof EntityEnderCrystal) {
             renderChamsPre(false);
         }
     });
@@ -77,16 +77,16 @@ public class Chams extends Hack {
         if (event.getType() == EventRenderEntity.Type.COLOR && mode.in("Texture")) return;
         else if (event.getType() == EventRenderEntity.Type.TEXTURE && mode.in("Color")) return;
         Entity entity = event.getEntity();
-        if (mc.player.getDistance(entity) > range.get_value(1)) return;
-        if (entity instanceof EntityPlayer && player.get_value(true) && (self.get_value(true) || entity != mc.player)) {
+        if (mc.player.getDistance(entity) > range.getValue(1)) return;
+        if (entity instanceof EntityPlayer && player.getValue(true) && (self.getValue(true) || entity != mc.player)) {
             renderChamsPost(true);
         }
 
-        if (mob.get_value(true) && (entity instanceof EntityCreature || entity instanceof EntitySlime || entity instanceof EntitySquid)) {
+        if (mob.getValue(true) && (entity instanceof EntityCreature || entity instanceof EntitySlime || entity instanceof EntitySquid)) {
             renderChamsPost(false);
         }
 
-        if (crystal.get_value(true) && entity instanceof EntityEnderCrystal) {
+        if (crystal.getValue(true) && entity instanceof EntityEnderCrystal) {
             renderChamsPost(false);
         }
     });
@@ -129,7 +129,7 @@ public class Chams extends Hack {
         if (!isPlayer) {
             GlStateManager.enableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
         }
-        GlStateManager.color(r.get_value(1) / 255f, g.get_value(1) / 255f, b.get_value(1) / 255f, a.get_value(1) / 255f);
+        GlStateManager.color(r.getValue(1) / 255f, g.getValue(1) / 255f, b.getValue(1) / 255f, a.getValue(1) / 255f);
         GlStateManager.popMatrix();
     }
 

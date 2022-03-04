@@ -41,9 +41,9 @@ public class VoidESP extends Hack {
 
         final Vec3i player_pos = new Vec3i(mc.player.posX, mc.player.posY, mc.player.posZ);
 
-        for (int x = player_pos.getX() - void_radius.get_value(1); x < player_pos.getX() + void_radius.get_value(1); x++) {
-            for (int z = player_pos.getZ() - void_radius.get_value(1); z < player_pos.getZ() + void_radius.get_value(1); z++) {
-                for (int y = player_pos.getY() + void_radius.get_value(1); y > player_pos.getY() - void_radius.get_value(1); y--) {
+        for (int x = player_pos.getX() - void_radius.getValue(1); x < player_pos.getX() + void_radius.getValue(1); x++) {
+            for (int z = player_pos.getZ() - void_radius.getValue(1); z < player_pos.getZ() + void_radius.getValue(1); z++) {
+                for (int y = player_pos.getY() + void_radius.getValue(1); y > player_pos.getY() - void_radius.getValue(1); y--) {
                     final BlockPos blockPos = new BlockPos(x, y, z);
 
                     if (is_void_hole(blockPos))

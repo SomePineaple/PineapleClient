@@ -30,47 +30,47 @@ public class HUD extends GuiScreen {
 	public void initGui() {
 		this.on_gui = true;
 
-		Frame.nc_r = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUINameFrameR").get_value(1);
-		Frame.nc_g = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUINameFrameG").get_value(1);
-		Frame.nc_b = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUINameFrameB").get_value(1);
+		Frame.nc_r = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUINameFrameR").getValue(1);
+		Frame.nc_g = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUINameFrameG").getValue(1);
+		Frame.nc_b = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUINameFrameB").getValue(1);
 		
-		Frame.bg_r = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBackgroundFrameR").get_value(1);
-		Frame.bg_g = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBackgroundFrameG").get_value(1);
-		Frame.bg_b = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBackgroundFrameB").get_value(1);
-		Frame.bg_a = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBackgroundFrameA").get_value(1);
+		Frame.bg_r = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBackgroundFrameR").getValue(1);
+		Frame.bg_g = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBackgroundFrameG").getValue(1);
+		Frame.bg_b = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBackgroundFrameB").getValue(1);
+		Frame.bg_a = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBackgroundFrameA").getValue(1);
 		
-		Frame.bd_r = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderFrameR").get_value(1);
-		Frame.bd_g = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderFrameG").get_value(1);
-		Frame.bd_b = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderFrameB").get_value(1);
-		Frame.bd_a = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderFrameA").get_value(1);
+		Frame.bd_r = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBorderFrameR").getValue(1);
+		Frame.bd_g = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBorderFrameG").getValue(1);
+		Frame.bd_b = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBorderFrameB").getValue(1);
+		Frame.bd_a = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBorderFrameA").getValue(1);
 		
-		Frame.bdw_r = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderWidgetR").get_value(1);
-		Frame.bdw_g = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderWidgetG").get_value(1);
-		Frame.bdw_b = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderWidgetB").get_value(1);
+		Frame.bdw_r = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBorderWidgetR").getValue(1);
+		Frame.bdw_g = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBorderWidgetG").getValue(1);
+		Frame.bdw_b = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBorderWidgetB").getValue(1);
 		Frame.bdw_a = 255;
 
-		PinnableButton.nc_r = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUINameWidgetR").get_value(1);
-		PinnableButton.nc_g = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUINameWidgetG").get_value(1);
-		PinnableButton.nc_b = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUINameWidgetB").get_value(1);
+		PinnableButton.nc_r = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUINameWidgetR").getValue(1);
+		PinnableButton.nc_g = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUINameWidgetG").getValue(1);
+		PinnableButton.nc_b = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUINameWidgetB").getValue(1);
 	
-		PinnableButton.bg_r = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBackgroundWidgetR").get_value(1);
-		PinnableButton.bg_g = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBackgroundWidgetG").get_value(1);
-		PinnableButton.bg_b = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBackgroundWidgetB").get_value(1);
-		PinnableButton.bg_a = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBackgroundWidgetA").get_value(1);
+		PinnableButton.bg_r = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBackgroundWidgetR").getValue(1);
+		PinnableButton.bg_g = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBackgroundWidgetG").getValue(1);
+		PinnableButton.bg_b = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBackgroundWidgetB").getValue(1);
+		PinnableButton.bg_a = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBackgroundWidgetA").getValue(1);
 	
-		PinnableButton.bd_r = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderWidgetR").get_value(1);
-		PinnableButton.bd_g = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderWidgetG").get_value(1);
-		PinnableButton.bd_b = PineapleClient.get_setting_manager().get_setting_with_tag("GUI", "ClickGUIBorderWidgetB").get_value(1);
+		PinnableButton.bd_r = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBorderWidgetR").getValue(1);
+		PinnableButton.bd_g = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBorderWidgetG").getValue(1);
+		PinnableButton.bd_b = PineapleClient.getSettingManager().getSettingWithTag("GUI", "ClickGUIBorderWidgetB").getValue(1);
 	}
 
 	@Override
 	public void onGuiClosed() {
 		if (this.back) {
-			PineapleClient.get_hack_manager().get_module_with_tag("GUI").set_active(true);
-			PineapleClient.get_hack_manager().get_module_with_tag("HUD").set_active(false);
+			PineapleClient.get_hack_manager().getModuleWithTag("GUI").set_active(true);
+			PineapleClient.get_hack_manager().getModuleWithTag("HUD").set_active(false);
 		} else {
-			PineapleClient.get_hack_manager().get_module_with_tag("HUD").set_active(false);
-			PineapleClient.get_hack_manager().get_module_with_tag("GUI").set_active(false);
+			PineapleClient.get_hack_manager().getModuleWithTag("HUD").set_active(false);
+			PineapleClient.get_hack_manager().getModuleWithTag("GUI").set_active(false);
 		}
 
 		this.on_gui = false;

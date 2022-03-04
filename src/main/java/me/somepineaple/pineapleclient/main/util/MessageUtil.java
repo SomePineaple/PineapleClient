@@ -24,21 +24,21 @@ public class MessageUtil {
 	public static String opener = g + "[" + PineapleClient.NAME + "]" + ChatFormatting.GRAY + " " + r;
 
 	public static void toggle_message(Hack module) {
-		if (module.is_active()) {
-			if (module.get_tag().equals("AutoCrystal")) {
+		if (module.isActive()) {
+			if (module.getTag().equals("AutoCrystal")) {
 				client_message_simple(opener + "we" + ChatFormatting.DARK_GREEN + " gaming ");
-				if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "notificationenable").get_value(true)) NotificationUtil.send_notification(new Notification("We Gaming"));
+				if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationenable").getValue(true)) NotificationUtil.send_notification(new Notification("We Gaming"));
 			} else {
 				client_message_simple(opener + r + module.get_name() + ChatFormatting.DARK_GREEN + " Enabled");
-				if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "notificationenable").get_value(true)) NotificationUtil.send_notification(new Notification(module.get_name() + " Enabled"));
+				if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationenable").getValue(true)) NotificationUtil.send_notification(new Notification(module.get_name() + " Enabled"));
 			}			
 		} else {
-			if (module.get_tag().equals("AutoCrystal")) {
+			if (module.getTag().equals("AutoCrystal")) {
 				client_message_simple(opener + "we aint" + ChatFormatting.RED + " gaming " + r + "no more");
-				if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "notificationenable").get_value(true)) NotificationUtil.send_notification(new Notification("We aint gaming no more"));
+				if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationenable").getValue(true)) NotificationUtil.send_notification(new Notification("We aint gaming no more"));
 			} else {
 				client_message_simple(opener + r + module.get_name() + ChatFormatting.RED + " Disabled");
-				if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "notificationenable").get_value(true)) NotificationUtil.send_notification(new Notification(module.get_name() + " Disabled"));
+				if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationenable").getValue(true)) NotificationUtil.send_notification(new Notification(module.get_name() + " Disabled"));
 			}
 		}
 	}
@@ -50,22 +50,22 @@ public class MessageUtil {
 		}
 	}
 
-	public static void client_message(String message) {
+	public static void clientMessage(String message) {
 		if (mc.player != null) {
 			mc.player.sendMessage(new ChatMessage(message));
 		}
 	}
 
 	public static void send_client_message_simple(String message) {
-		client_message(ChatFormatting.GOLD + PineapleClient.NAME + " " + r + message);
+		clientMessage(ChatFormatting.GOLD + PineapleClient.NAME + " " + r + message);
 	}
 
 	public static void send_client_message(String message) {
-		client_message(ChatFormatting.GOLD + "[" + PineapleClient.NAME + "] " + r + message);
+		clientMessage(ChatFormatting.GOLD + "[" + PineapleClient.NAME + "] " + r + message);
 	}
 
 	public static void send_client_error_message(String message) {
-		client_message(ChatFormatting.RED + PineapleClient.NAME + " " + r + message);
+		clientMessage(ChatFormatting.RED + PineapleClient.NAME + " " + r + message);
 	}
 
 	public static class ChatMessage extends TextComponentBase {

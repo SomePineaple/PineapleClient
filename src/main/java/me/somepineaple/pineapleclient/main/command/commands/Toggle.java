@@ -11,7 +11,7 @@ public class Toggle extends PineapleclientCommand {
 		super("t", "turn on and off stuffs");
 	}
 
-	public boolean get_message(String[] message) {
+	public boolean getMessage(String[] message) {
 		String module = "null";
 
 		if (message.length > 1) {
@@ -19,23 +19,23 @@ public class Toggle extends PineapleclientCommand {
 		}
 
 		if (message.length > 2) {
-			MessageUtil.send_client_error_message(current_prefix() + "t <ModuleNameNoSpace>");
+			MessageUtil.send_client_error_message(currentPrefix() + "t <ModuleNameNoSpace>");
 
 			return true;
 		}
 
 		if (module.equals("null")) {
-			MessageUtil.send_client_error_message(CommandManager.get_prefix() + "t <ModuleNameNoSpace>");
+			MessageUtil.send_client_error_message(CommandManager.getPrefix() + "t <ModuleNameNoSpace>");
 
 			return true;
 		}
 
-		Hack module_requested = PineapleClient.get_module_manager().get_module_with_tag(module);
+		Hack module_requested = PineapleClient.getModuleManager().getModuleWithTag(module);
 
 		if (module_requested != null) {
 			module_requested.toggle();
 
-			MessageUtil.send_client_message("[" + module_requested.get_tag() + "] - Toggled to " + module_requested.is_active() + ".");
+			MessageUtil.send_client_message("[" + module_requested.getTag() + "] - Toggled to " + module_requested.isActive() + ".");
 		} else {
 			MessageUtil.send_client_error_message("Module does not exist.");
 		}

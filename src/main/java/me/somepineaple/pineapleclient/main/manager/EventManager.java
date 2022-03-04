@@ -73,7 +73,7 @@ public class EventManager {
 		if (event.getType() == target) {
 			PineapleClient.get_hack_manager().render();
 
-			if (!PineapleClient.get_hack_manager().get_module_with_tag("GUI").is_active()) {
+			if (!PineapleClient.get_hack_manager().getModuleWithTag("GUI").isActive()) {
 				PineapleClient.get_hud_manager().render();
 			}
 
@@ -86,7 +86,7 @@ public class EventManager {
 
 			GL11.glPopMatrix();
 
-			RenderHelp.release_gl();
+			RenderHelp.releaseGl();
 		}
 	}
 
@@ -111,14 +111,14 @@ public class EventManager {
 
 			for (PineapleclientCommand command : PineapleclientCommands.get_pure_command_list()) {
 				try {
-					if (CommandManager.command_list.get_message(event.getMessage())[0].equalsIgnoreCase(command.get_name())) {
-						true_command = command.get_message(CommandManager.command_list.get_message(event.getMessage()));
+					if (CommandManager.command_list.get_message(event.getMessage())[0].equalsIgnoreCase(command.getName())) {
+						true_command = command.getMessage(CommandManager.command_list.get_message(event.getMessage()));
 					}
 				} catch (Exception ignored) {}
 			}
 
 			if (!true_command && CommandManager.command_list.has_prefix(event.getMessage())) {
-				MessageUtil.send_client_message("Try using " + CommandManager.get_prefix() + "help list to see all commands");
+				MessageUtil.send_client_message("Try using " + CommandManager.getPrefix() + "help list to see all commands");
 
 				true_command = false;
 			}

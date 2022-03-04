@@ -202,7 +202,7 @@ public class Pinnable {
 
 			GL11.glPopMatrix();
 
-			RenderHelp.release_gl();
+			RenderHelp.releaseGl();
 
 			if (motion(mx, my)) {
 				Draw.draw_rect(this.x - 1, this.y - 1, this.width + 1, this.height + 1, 0, 0, 0, 90, 2, "right-left-down-up");

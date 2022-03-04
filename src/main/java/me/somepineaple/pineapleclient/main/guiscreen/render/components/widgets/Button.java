@@ -29,7 +29,7 @@ public class Button extends AbstractWidget {
 	public Button(Frame frame, ModuleButton master, String tag, int update_postion) {
 		this.frame   = frame;
 		this.master  = master;
-		this.setting = PineapleClient.get_setting_manager().get_setting_with_tag(master.get_module(), tag);
+		this.setting = PineapleClient.getSettingManager().getSettingWithTag(master.get_module(), tag);
 
 		this.x = master.get_x();
 		this.y = update_postion;
@@ -120,7 +120,7 @@ public class Button extends AbstractWidget {
 			if (motion(mx, my) && this.master.is_open() && can()) {
 				this.frame.does_can(false);
 
-				this.setting.set_value(!(this.setting.get_value(true)));
+				this.setting.setValue(!(this.setting.getValue(true)));
 			}
 		}
 	}
@@ -141,7 +141,7 @@ public class Button extends AbstractWidget {
 		int bg_b = PineapleClient.click_gui.theme_widget_background_b;
 		int bg_a = PineapleClient.click_gui.theme_widget_background_a;
 
-		if (this.setting.get_value(true)) { // filling in the button box if button is enabled
+		if (this.setting.getValue(true)) { // filling in the button box if button is enabled
 			Draw.draw_rect(get_x(), this.save_y, get_x() + this.width, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 		}
 		Draw.draw_string(this.button_name, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);

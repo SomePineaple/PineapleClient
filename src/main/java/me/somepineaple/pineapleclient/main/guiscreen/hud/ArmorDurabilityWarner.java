@@ -46,7 +46,7 @@ public class ArmorDurabilityWarner extends Pinnable { // STILL BROKEN
             if (mc.player.inventoryContainer.getInventory().get(5)== stack) {
                 notification += "Your helmet is at ";
                 if (percent < 30 && !already_warned_helmet) {
-                    if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "notificationarmor").get_value(true)) NotificationUtil.send_notification(new Notification(notification + (int) percent + "%", 214, 38, 26));
+                    if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationarmor").getValue(true)) NotificationUtil.send_notification(new Notification(notification + (int) percent + "%", 214, 38, 26));
                     already_warned_helmet = true;
                 } else if (percent > 30) {
                     already_warned_helmet = false;
@@ -54,7 +54,7 @@ public class ArmorDurabilityWarner extends Pinnable { // STILL BROKEN
             } else if (mc.player.inventoryContainer.getInventory().get(6)== stack) {
                 notification += "Your chestplate is at ";
                 if (percent < 40 && !already_warned_chestplate) {
-                    if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "notificationarmor").get_value(true)) NotificationUtil.send_notification(new Notification(notification + (int) percent + "%", 214, 38, 26));
+                    if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationarmor").getValue(true)) NotificationUtil.send_notification(new Notification(notification + (int) percent + "%", 214, 38, 26));
                     already_warned_chestplate = true;
                 } else if (percent > 40) {
                     already_warned_chestplate = false;
@@ -62,7 +62,7 @@ public class ArmorDurabilityWarner extends Pinnable { // STILL BROKEN
             } else if (mc.player.inventoryContainer.getInventory().get(7)== stack) {
                 notification += "Your leggings are at ";
                 if (percent < 40 && !already_warned_leggings) {
-                    if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "notificationarmor").get_value(true)) NotificationUtil.send_notification(new Notification(notification + (int) percent + "%", 214, 38, 26));
+                    if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationarmor").getValue(true)) NotificationUtil.send_notification(new Notification(notification + (int) percent + "%", 214, 38, 26));
                     already_warned_leggings = true;
                 } else if (percent > 40) {
                     already_warned_leggings = false;
@@ -70,7 +70,7 @@ public class ArmorDurabilityWarner extends Pinnable { // STILL BROKEN
             } else if (mc.player.inventoryContainer.getInventory().get(8)== stack) {
                 notification += "Your boots are at ";
                 if (percent < 30 && !already_warned_boots) {
-                    if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "notificationarmor").get_value(true)) NotificationUtil.send_notification(new Notification(notification + (int) percent + "%", 214, 38, 26));
+                    if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationarmor").getValue(true)) NotificationUtil.send_notification(new Notification(notification + (int) percent + "%", 214, 38, 26));
                     already_warned_boots = true;
                 } else if (percent > 30) {
                     already_warned_boots = false;

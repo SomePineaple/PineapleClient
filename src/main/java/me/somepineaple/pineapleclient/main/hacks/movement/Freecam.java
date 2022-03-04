@@ -42,8 +42,8 @@ public class Freecam extends Hack {
     public void update() {
         mc.player.noClip = true;
         mc.player.setVelocity(0, 0, 0);
-        mc.player.jumpMovementFactor = (float) speed.get_value(1.0);
-        double[] dir = MathUtil.directionSpeed(speed.get_value(1.0));
+        mc.player.jumpMovementFactor = (float) speed.getValue(1.0);
+        double[] dir = MathUtil.directionSpeed(speed.getValue(1.0));
         if (mc.player.movementInput.moveStrafe != 0 || mc.player.movementInput.moveForward != 0) {
             mc.player.motionX = dir[0];
             mc.player.motionZ = dir[1];
@@ -55,9 +55,9 @@ public class Freecam extends Hack {
         mc.player.setSprinting(false);
 
         if (mc.gameSettings.keyBindJump.isKeyDown()) {
-            mc.player.motionY += speed.get_value(1.0);
+            mc.player.motionY += speed.getValue(1.0);
         } else if (mc.gameSettings.keyBindSneak.isKeyDown()) {
-            mc.player.motionY -= speed.get_value(1.0);
+            mc.player.motionY -= speed.getValue(1.0);
         }
     }
 
@@ -118,7 +118,7 @@ public class Freecam extends Hack {
 
     @EventHandler
     private final Listener<EventPacket.SendPacket> sendPacketListener = new Listener<>(event -> {
-        if (cancelpackets.get_value(true) && (event.get_packet() instanceof CPacketPlayer || event.get_packet() instanceof CPacketInput)) {
+        if (cancelpackets.getValue(true) && (event.get_packet() instanceof CPacketPlayer || event.get_packet() instanceof CPacketInput)) {
             event.cancel();
         }
     });

@@ -32,13 +32,13 @@ public class PineapleclientCommands {
 		add_command(new Config());
 		add_command(new NotificationTest());
 
-		command_list.sort(Comparator.comparing(PineapleclientCommand::get_name));
+		command_list.sort(Comparator.comparing(PineapleclientCommand::getName));
 	}
 
 	public static void add_command(PineapleclientCommand command) {
 		command_list.add(command);
 
-		list_command.put(command.get_name().toLowerCase(), command);
+		list_command.put(command.getName().toLowerCase(), command);
 	}
 
 	public java.lang.String[] get_message(java.lang.String message) {

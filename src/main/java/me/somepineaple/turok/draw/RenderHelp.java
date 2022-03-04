@@ -61,14 +61,14 @@ public class RenderHelp extends Tessellator {
 
     public static void release() {
         render();
-        release_gl();
+        releaseGl();
     }
 
     public static void render() {
         INSTANCE.draw();
     }
 
-    public static void release_gl() {
+    public static void releaseGl() {
         GlStateManager.enableCull();
         GlStateManager.depthMask(true);
         GlStateManager.enableTexture2D();

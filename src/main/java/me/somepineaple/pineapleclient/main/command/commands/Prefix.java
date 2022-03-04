@@ -11,7 +11,7 @@ public class Prefix extends PineapleclientCommand {
 		super("prefix", "Change prefix.");
 	}
 
-	public boolean get_message(String[] message) {
+	public boolean getMessage(String[] message) {
 		String prefix = "null";
 
 		if (message.length > 1) {
@@ -19,18 +19,18 @@ public class Prefix extends PineapleclientCommand {
 		}
 
 		if (message.length > 2) {
-			MessageUtil.send_client_error_message(current_prefix() + "prefix <character>");
+			MessageUtil.send_client_error_message(currentPrefix() + "prefix <character>");
 
 			return true;
 		}
 
 		if (prefix.equals("null")) {
-			MessageUtil.send_client_error_message(current_prefix() + "prefix <character>");
+			MessageUtil.send_client_error_message(currentPrefix() + "prefix <character>");
 
 			return true;
 		}
 
-		CommandManager.set_prefix(prefix);
+		CommandManager.setPrefix(prefix);
 
 		MessageUtil.send_client_message("The new prefix is " + prefix);
 

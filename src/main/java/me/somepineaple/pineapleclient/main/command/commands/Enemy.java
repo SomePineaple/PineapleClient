@@ -16,7 +16,7 @@ public class Enemy extends PineapleclientCommand {
     public static ChatFormatting bold = ChatFormatting.BOLD;
     public static ChatFormatting reset = ChatFormatting.RESET;
 
-    public boolean get_message(String[] message) {
+    public boolean getMessage(String[] message) {
 
         if (message.length == 1) {
             MessageUtil.send_client_message("Add - add enemy");

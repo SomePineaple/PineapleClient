@@ -32,19 +32,19 @@ public class FastUtil extends Hack {
 		boolean main_cry = main instanceof ItemEndCrystal;
 		boolean off_cry  = off instanceof ItemEndCrystal;
 
-		if (main_exp | off_exp && exp.get_value(true)) {
+		if (main_exp | off_exp && exp.getValue(true)) {
 			mc.rightClickDelayTimer = 0;
 		}
 
-		if (main_cry | off_cry && crystal.get_value(true)) {
+		if (main_cry | off_cry && crystal.getValue(true)) {
 			mc.rightClickDelayTimer = 0;
 		}
 
-		if (!(main_exp | off_exp | main_cry | off_cry) && fast_place.get_value(true)) {
+		if (!(main_exp | off_exp | main_cry | off_cry) && fast_place.getValue(true)) {
 			mc.rightClickDelayTimer = 0;
 		}
 
-		if (fast_break.get_value(true)) {
+		if (fast_break.getValue(true)) {
 			mc.playerController.blockHitDelay = 0;
 		}
 	}

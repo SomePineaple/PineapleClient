@@ -73,13 +73,13 @@ public class HoleESP extends Hack {
 
 	@Override
 	public void update() {
-		color_r_b = rb.get_value(1);
-		color_g_b = gb.get_value(1);
-		color_b_b = bb.get_value(1);
+		color_r_b = rb.getValue(1);
+		color_g_b = gb.getValue(1);
+		color_b_b = bb.getValue(1);
 
-		color_r_o = ro.get_value(1);
-		color_g_o = go.get_value(1);
-		color_b_o = bo.get_value(1);
+		color_r_o = ro.getValue(1);
+		color_g_o = go.getValue(1);
+		color_b_o = bo.getValue(1);
 
 		holes.clear();
 		dual_holes.clear();
@@ -121,7 +121,7 @@ public class HoleESP extends Hack {
 				glowOutline = true;
 			}
 
-			int colapso_range = (int) Math.ceil(range.get_value(1));
+			int colapso_range = (int) Math.ceil(range.getValue(1));
 
 			List<BlockPos> spheres = sphere(player_as_blockpos(), colapso_range);
 
@@ -178,16 +178,16 @@ public class HoleESP extends Hack {
 
 				if (possible) {
 					if (safe_sides == 5) {
-						if (!this.bedrock_enable.get_value(true)) continue;
+						if (!this.bedrock_enable.getValue(true)) continue;
 						holes.add(new Pair<>(pos, true));
 					} else {
-						if (!this.obsidian_enable.get_value(true)) continue;
+						if (!this.obsidian_enable.getValue(true)) continue;
 						holes.add(new Pair<>(pos, false));
 					}
 					continue;
 				}
 
-				if (!dual_enable.get_value(true) || air_orient < 0) continue;
+				if (!dual_enable.getValue(true) || air_orient < 0) continue;
 				BlockPos second_pos = pos.add(orientConv(air_orient));
 				
 				if (checkDual(second_pos, air_orient)) {
@@ -311,22 +311,22 @@ public class HoleESP extends Hack {
 	public void render(EventRender event) {
 		float off_set_h;
 		if (!holes.isEmpty() || !dual_holes.isEmpty()) {
-			off_set_h = (float) off_set.get_value(1.0);
+			off_set_h = (float) off_set.getValue(1.0);
 
 			for (Pair<BlockPos, Boolean> hole : holes) {
 				if (hole.getValue()) {
 					color_r = color_r_b;
 					color_g = color_g_b;
 					color_b = color_b_b;
-					color_a = ab.get_value(1);
+					color_a = ab.getValue(1);
 				} else if (!hole.getValue()) {
 					color_r = color_r_o;
 					color_g = color_g_o;
 					color_b = color_b_o;
-					color_a = ao.get_value(1);
+					color_a = ao.getValue(1);
 				} else continue;
 
-				if (hide_own.get_value(true) && hole.getKey().equals(new BlockPos(mc.player.posX, mc.player.posY, mc.player.posZ))) {
+				if (hide_own.getValue(true) && hole.getKey().equals(new BlockPos(mc.player.posX, mc.player.posY, mc.player.posZ))) {
 					continue;
 				}
 
@@ -347,7 +347,7 @@ public class HoleESP extends Hack {
 					RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
 						hole.getKey().getX(), hole.getKey().getY(), hole.getKey().getZ(),
 						1, off_set_h, 1,
-						color_r, color_g, color_b, line_a.get_value(1),
+						color_r, color_g, color_b, line_a.getValue(1),
 						"all"
 					);
 
@@ -359,7 +359,7 @@ public class HoleESP extends Hack {
 					RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
 						hole.getKey().getX(), hole.getKey().getY(), hole.getKey().getZ(),
 						1, 0, 1,
-						color_r, color_g, color_b, line_a.get_value(1),
+						color_r, color_g, color_b, line_a.getValue(1),
 						"all"
 					);
 					RenderHelp.release();
@@ -379,7 +379,7 @@ public class HoleESP extends Hack {
 					RenderHelp.prepare("lines");
 					RenderHelp.draw_gradiant_outline(RenderHelp.get_buffer_build(), hole.getKey().getX(),
 						hole.getKey().getY(), hole.getKey().getZ(), off_set_h,
-						new Color(color_r, color_g, color_b, line_a.get_value(1)),
+						new Color(color_r, color_g, color_b, line_a.getValue(1)),
 						new Color(0, 0, 0, 0), "all");
 					RenderHelp.release();
 				}
@@ -388,7 +388,7 @@ public class HoleESP extends Hack {
 			for (Pair<BlockPos, Boolean> hole : dual_holes) {
 
 				BlockPos playerPos = new BlockPos(mc.player);
-				if (hide_own.get_value(true) && (hole.getKey().equals(new BlockPos(mc.player.posX, mc.player.posY, mc.player.posZ)) ||
+				if (hide_own.getValue(true) && (hole.getKey().equals(new BlockPos(mc.player.posX, mc.player.posY, mc.player.posZ)) ||
 					hole.getKey().equals(playerPos.add(orientConv(oppositeIntOrient(dual_hole_sides.get(hole.getKey()))))))) {
 					continue;
 				}
@@ -397,12 +397,12 @@ public class HoleESP extends Hack {
 					color_r = color_r_b;
 					color_g = color_g_b;
 					color_b = color_b_b;
-					color_a = ab.get_value(1);
+					color_a = ab.getValue(1);
 				} else if (!hole.getValue()) {
 					color_r = color_r_o;
 					color_g = color_g_o;
 					color_b = color_b_o;
-					color_a = ao.get_value(1);
+					color_a = ao.getValue(1);
 				} else continue;
 
 				if (solid) {
@@ -421,7 +421,7 @@ public class HoleESP extends Hack {
 					RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
 						hole.getKey().getX(), hole.getKey().getY(), hole.getKey().getZ(),
 						1, off_set_h, 1,
-						color_r, color_g, color_b, line_a.get_value(1),
+						color_r, color_g, color_b, line_a.getValue(1),
 						getDirectionsToRenderOutline(hole.getKey())
 					);
 
@@ -433,7 +433,7 @@ public class HoleESP extends Hack {
 					RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
 						hole.getKey().getX(), hole.getKey().getY(), hole.getKey().getZ(),
 						1, 0, 1,
-						color_r, color_g, color_b, line_a.get_value(1),
+						color_r, color_g, color_b, line_a.getValue(1),
 						getDirectionsToRenderOutline(hole.getKey())
 					);
 					RenderHelp.release();
@@ -452,7 +452,7 @@ public class HoleESP extends Hack {
 					RenderHelp.prepare("lines");
 					RenderHelp.draw_gradiant_outline(RenderHelp.get_buffer_build(), hole.getKey().getX(),
 						hole.getKey().getY(), hole.getKey().getZ(), off_set_h,
-						new Color(color_r, color_g, color_b, line_a.get_value(1)),
+						new Color(color_r, color_g, color_b, line_a.getValue(1)),
 						new Color(0, 0, 0, 0), 
 						getDirectionsToRenderOutline(hole.getKey())
 					);
@@ -498,7 +498,7 @@ public class HoleESP extends Hack {
 		return "all";
 	}
 
-    public List<BlockPos> sphere(BlockPos pos, float r) {
+    public static List<BlockPos> sphere(BlockPos pos, float r) {
 		int plus_y = 0;
 
 		List<BlockPos> sphere_block = new ArrayList<>();
@@ -527,7 +527,7 @@ public class HoleESP extends Hack {
 	}
 
 	public boolean isBlockHole(BlockPos block) {
-		if (!is_active()) {
+		if (!isActive()) {
 			update();
 		}
 

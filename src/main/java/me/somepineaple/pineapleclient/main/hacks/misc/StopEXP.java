@@ -52,7 +52,7 @@ public class StopEXP extends Hack {
 			double percent = (dam_left / max_dam) * 100;
 
 			if (counter == 1 || counter == 4) {
-				if (percent >= helmet_boot_percent.get_value(1)) {
+				if (percent >= helmet_boot_percent.getValue(1)) {
 					if (is_holding_exp()) {
 						should_cancel = true;
 					} else {
@@ -64,7 +64,7 @@ public class StopEXP extends Hack {
 			} 
 			
 			if (counter == 2 || counter == 3) {
-				if (percent >= chest_leggings_percent.get_value(1)) {
+				if (percent >= chest_leggings_percent.getValue(1)) {
 					if (is_holding_exp()) {
 						should_cancel = true;
 					} else {

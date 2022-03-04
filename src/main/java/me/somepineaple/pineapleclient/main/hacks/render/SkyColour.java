@@ -26,9 +26,9 @@ public class SkyColour extends Hack {
 
     @SubscribeEvent
     public void fog_colour(final EntityViewRenderEvent.FogColors event) {
-        event.setRed(r.get_value(1) / 255f);
-        event.setGreen(g.get_value(1) / 255f);
-        event.setBlue(b.get_value(1) / 255f);
+        event.setRed(r.getValue(1) / 255f);
+        event.setGreen(g.getValue(1) / 255f);
+        event.setBlue(b.getValue(1) / 255f);
     }
 
     @SubscribeEvent
@@ -49,7 +49,7 @@ public class SkyColour extends Hack {
 
     @Override
     public void update() {
-        if (rainbow_mode.get_value(true)) {
+        if (rainbow_mode.getValue(true)) {
             cycle_rainbow();
         }
     }
@@ -62,8 +62,8 @@ public class SkyColour extends Hack {
 
         int color_rgb_o = Color.HSBtoRGB(tick_color[0], 0.8f, 0.8f);
 
-        r.set_value((color_rgb_o >> 16) & 0xFF);
-        g.set_value((color_rgb_o >> 8) & 0xFF);
-        b.set_value(color_rgb_o & 0xFF);
+        r.setValue((color_rgb_o >> 16) & 0xFF);
+        g.setValue((color_rgb_o >> 8) & 0xFF);
+        b.setValue(color_rgb_o & 0xFF);
     }
 }

@@ -63,12 +63,12 @@ public class AutoWeb extends Hack {
 
         if (mc.player == null) return;
 
-        if (always_on.get_value(true)) {
+        if (always_on.getValue(true)) {
 
             EntityPlayer target = find_closest_target();
             if (target == null) return;
 
-            if (mc.player.getDistance(target) < range.get_value(1) && is_surround()) {
+            if (mc.player.getDistance(target) < range.getValue(1) && is_surround()) {
                 int last_slot = mc.player.inventory.currentItem;
                 mc.player.inventory.currentItem = new_slot;
                 mc.playerController.updateController();
@@ -168,7 +168,7 @@ public class AutoWeb extends Hack {
 
             Vec3d hitVec = new Vec3d(neighbor).add(0.5, 0.5, 0.5).add(new Vec3d(side2.getDirectionVec()).scale(0.5));
 
-            if (rotate.get_value(true)) {
+            if (rotate.getValue(true)) {
                 BlockInteractHelper.faceVectorPacketInstant(hitVec);
             }
 

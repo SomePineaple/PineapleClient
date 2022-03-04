@@ -91,7 +91,7 @@ public class AutoNomadHut extends Hack {
 
 			blocks_placed = 0;
 
-			while (blocks_placed < this.tick_for_place.get_value(1)) {
+			while (blocks_placed < this.tick_for_place.getValue(1)) {
 
 				if (this.offset_step >= this.targets.length) {
 					this.offset_step = 0;
@@ -155,7 +155,7 @@ public class AutoNomadHut extends Hack {
 			
 			Vec3d hitVec = new Vec3d((Vec3i)neighbor).add(0.5, 0.5, 0.5).add(new Vec3d(side2.getDirectionVec()).scale(0.5));
 			
-            if (this.rotate.get_value(true)) {
+            if (this.rotate.getValue(true)) {
                 BlockInteractHelper.faceVectorPacketInstant(hitVec);
 			}
 			

@@ -72,7 +72,7 @@ public class ModuleButton {
 
 		this.count = 0;
 
-		for (Setting settings : PineapleClient.get_setting_manager().get_settings_with_hack(module)) {
+		for (Setting settings : PineapleClient.getSettingManager().get_settings_with_hack(module)) {
 			if (settings.get_type().equals("button")) {
 				this.widget.add(new Button(master, this, settings.get_tag(), this.settings_height));
 
@@ -106,7 +106,7 @@ public class ModuleButton {
 			}
 		}
 
-		int size = PineapleClient.get_setting_manager().get_settings_with_hack(module).size();
+		int size = PineapleClient.getSettingManager().get_settings_with_hack(module).size();
 
 		if (this.count >= size) {
 			this.widget.add(new ButtonBind(master, this, "bind", this.settings_height));
@@ -148,7 +148,7 @@ public class ModuleButton {
 	}
 
 	public boolean get_state() {
-		return this.module.is_active();
+		return this.module.isActive();
 	}
 
 	public int get_settings_height() {
@@ -266,7 +266,7 @@ public class ModuleButton {
 		int bd_g = PineapleClient.click_gui.theme_widget_border_g;
 		int bd_b = PineapleClient.click_gui.theme_widget_border_b;
 
-		if (this.module.is_active()) {
+		if (this.module.isActive()) {
 			Draw.draw_rect(this.x, this.save_y, this.x + this.width - separe, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 
 			Draw.draw_string(this.module_name, this.x + separe, this.save_y, nm_r, nm_g, nm_b, nm_a);

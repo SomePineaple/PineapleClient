@@ -140,7 +140,7 @@ public class Trap extends Hack {
 	public void update() {
 
         int timeout_ticks = 20;
-        if (timeout_ticker > timeout_ticks && chad_mode.get_value(true)) {
+        if (timeout_ticker > timeout_ticks && chad_mode.getValue(true)) {
             timeout_ticker =  0;
             this.set_disable();
             return;
@@ -154,7 +154,7 @@ public class Trap extends Hack {
             return;
         }
 
-        if (chad_mode.get_value(true) && (int) Math.round(mc.player.posY) != y_level) {
+        if (chad_mode.getValue(true) && (int) Math.round(mc.player.posY) != y_level) {
             this.set_disable();
             MessageUtil.toggle_message(this);
             return;
@@ -186,7 +186,7 @@ public class Trap extends Hack {
 
         int blocks_placed = 0;
 
-        while (blocks_placed < blocks_per_tick.get_value(1)) {
+        while (blocks_placed < blocks_per_tick.getValue(1)) {
 
             if (offset_step >= place_targets.size()) {
                 offset_step = 0;
@@ -208,7 +208,7 @@ public class Trap extends Hack {
                 }
             }
 
-            if (should_try_place && BlockUtil.placeBlock(target_pos, find_obi_in_hotbar(), rotate.get_value(true), rotate.get_value(true), true, swing)) {
+            if (should_try_place && BlockUtil.placeBlock(target_pos, find_obi_in_hotbar(), rotate.getValue(true), rotate.getValue(true), true, swing)) {
                 ++blocks_placed;
             }
 

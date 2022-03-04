@@ -43,12 +43,12 @@ public class ViewmodleChanger extends Hack {
 
     @Override
     public void update() {
-        mc.gameSettings.fovSetting = custom_fov.get_value(1);
+        mc.gameSettings.fovSetting = custom_fov.getValue(1);
     }
 
     @SubscribeEvent
     public void fov_event(final EntityViewRenderEvent.FOVModifier m) {
-        if (items.get_value(true))
-            m.setFOV(viewmodle_fov.get_value(1));
+        if (items.getValue(true))
+            m.setFOV(viewmodle_fov.getValue(1));
     }
 }

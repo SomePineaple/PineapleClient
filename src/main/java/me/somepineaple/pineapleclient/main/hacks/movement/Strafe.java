@@ -33,31 +33,31 @@ public class Strafe extends Hack {
 
 	@Override
 	public void update() {
-		mc.timer.tickLength = (float) (50.0 / timerSpeed.get_value(1.0));
+		mc.timer.tickLength = (float) (50.0 / timerSpeed.getValue(1.0));
 		
 		if (mc.player.isRiding()) return;
 
 		if (mc.player.isInWater() || mc.player.isInLava()) {
-			if (!on_water.get_value(true)) return;
+			if (!on_water.getValue(true)) return;
 		}
 
 		if (mc.player.moveForward != 0 || mc.player.moveStrafing != 0) {
 
-			if (mc.player.moveForward < 0 && !backward.get_value(true)) return;
+			if (mc.player.moveForward < 0 && !backward.getValue(true)) return;
 
-			if (auto_sprint.get_value(true)) {
+			if (auto_sprint.getValue(true)) {
 				mc.player.setSprinting(true);
 			}
 
 			if (mc.player.onGround && speed_mode.in("Strafe")) {
 
-				if (auto_jump.get_value(true)) {
+				if (auto_jump.getValue(true)) {
 					mc.player.motionY = 0.405f;
 				}
 
 				final float yaw = get_rotation_yaw() * 0.017453292F;
-				mc.player.motionX -= MathHelper.sin(yaw) * 0.2f * speed.get_value(1.0d);
-				mc.player.motionZ += MathHelper.cos(yaw) * 0.2f * speed.get_value(1.0d);
+				mc.player.motionX -= MathHelper.sin(yaw) * 0.2f * speed.getValue(1.0d);
+				mc.player.motionZ += MathHelper.cos(yaw) * 0.2f * speed.getValue(1.0d);
 
 			} else if (mc.player.onGround && speed_mode.in("On Ground")) {
 
@@ -87,12 +87,12 @@ public class Strafe extends Hack {
 		if (speed_mode.in("On Ground")) return;
 
 		if (mc.player.isInWater() || mc.player.isInLava()) {
-			if (!speed_mode.get_value(true)) return;
+			if (!speed_mode.getValue(true)) return;
 		}
 
 		if (mc.player.isSneaking() || mc.player.isOnLadder() || mc.player.isInWeb || mc.player.isInLava() || mc.player.isInWater() || mc.player.capabilities.isFlying) return;
 
-		float player_speed = (float) (0.2873f * speed.get_value(1.0d));
+		float player_speed = (float) (0.2873f * speed.getValue(1.0d));
 		float move_forward = mc.player.movementInput.moveForward;
 		float move_strafe = mc.player.movementInput.moveStrafe;
 		float rotation_yaw = mc.player.rotationYaw;
@@ -102,7 +102,7 @@ public class Strafe extends Hack {
 			player_speed *= (1.2f * (amp+1));
 		}
 
-		if (!bypass.get_value(true)) {
+		if (!bypass.getValue(true)) {
 			player_speed *= 1.0064f;
 		}
 

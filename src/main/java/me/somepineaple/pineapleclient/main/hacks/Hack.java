@@ -47,7 +47,7 @@ public class Hack implements Listenable {
 		this.toggle_message = value;
 	}
 
-	public boolean is_active() {
+	public boolean isActive() {
 		return this.state_module;
 	}
 
@@ -59,7 +59,7 @@ public class Hack implements Listenable {
 		return this.name;
 	}
 
-	public String get_tag() {
+	public String getTag() {
 		return this.tag;
 	}
 
@@ -67,19 +67,19 @@ public class Hack implements Listenable {
 		return this.description;
 	}
 
-	public int get_bind(int type) {
+	public int getBind(int type) {
 		return this.bind;
 	}
 
-	public String get_bind(String type) {
+	public String getBind(String type) {
 		String converted_bind = "null";
 
-		if (get_bind(0) < 0) {
+		if (getBind(0) < 0) {
 			converted_bind = "NONE";
 		}
 
 		if (!(converted_bind.equals("NONE"))) {
-			String key     = Keyboard.getKeyName(get_bind(0));
+			String key     = Keyboard.getKeyName(getBind(0));
 			converted_bind = Character.toUpperCase(key.charAt(0)) + (key.length() != 1 ? key.substring(1).toLowerCase() : "");
 		} else {
 			converted_bind = "None";
@@ -88,7 +88,7 @@ public class Hack implements Listenable {
 		return converted_bind;
 	}
 
-	public Category get_category() {
+	public Category getCategory() {
 		return this.category;
 	}
 
@@ -127,37 +127,37 @@ public class Hack implements Listenable {
 	}
 
 	public void toggle() {
-		set_active(!is_active());
+		set_active(!isActive());
 	}
 
 	protected Setting create(String name, String tag, int value, int min, int max) {
-		PineapleClient.get_setting_manager().register(new Setting(this, name, tag, value, min, max));
+		PineapleClient.getSettingManager().register(new Setting(this, name, tag, value, min, max));
 
-		return PineapleClient.get_setting_manager().get_setting_with_tag(this, tag);
+		return PineapleClient.getSettingManager().getSettingWithTag(this, tag);
 	}
 
 	protected Setting create(String name, String tag, double value, double min, double max) {
-		PineapleClient.get_setting_manager().register(new Setting(this, name, tag, value, min, max));
+		PineapleClient.getSettingManager().register(new Setting(this, name, tag, value, min, max));
 
-		return PineapleClient.get_setting_manager().get_setting_with_tag(this, tag);
+		return PineapleClient.getSettingManager().getSettingWithTag(this, tag);
 	}
 
 	protected Setting create(String name, String tag, boolean value) {
-		PineapleClient.get_setting_manager().register(new Setting(this, name, tag, value));
+		PineapleClient.getSettingManager().register(new Setting(this, name, tag, value));
 
-		return PineapleClient.get_setting_manager().get_setting_with_tag(this, tag);
+		return PineapleClient.getSettingManager().getSettingWithTag(this, tag);
 	}
 
 	protected Setting create(String name, String tag, String value) {
-		PineapleClient.get_setting_manager().register(new Setting(this, name, tag, value));
+		PineapleClient.getSettingManager().register(new Setting(this, name, tag, value));
 
-		return PineapleClient.get_setting_manager().get_setting_with_tag(this, tag);
+		return PineapleClient.getSettingManager().getSettingWithTag(this, tag);
 	}
 
 	protected Setting create(String name, String tag, String value, List<String> values) {
-		PineapleClient.get_setting_manager().register(new Setting(this, name, tag, values, value));
+		PineapleClient.getSettingManager().register(new Setting(this, name, tag, values, value));
 
-		return PineapleClient.get_setting_manager().get_setting_with_tag(this, tag);
+		return PineapleClient.getSettingManager().getSettingWithTag(this, tag);
 	}
 
 	protected List<String> combobox(String... item) {

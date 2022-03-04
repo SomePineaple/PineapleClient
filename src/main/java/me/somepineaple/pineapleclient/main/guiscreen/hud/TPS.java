@@ -12,10 +12,10 @@ public class TPS extends Pinnable {
 
     @Override
 	public void render() {
-		int nl_r = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
-		int nl_g = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
-		int nl_b = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
-		int nl_a = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
+		int nl_r = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorR").getValue(1);
+		int nl_g = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorG").getValue(1);
+		int nl_b = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorB").getValue(1);
+		int nl_a = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorA").getValue(1);
 
 		String line = "TPS: " + getTPS();
 
@@ -27,7 +27,7 @@ public class TPS extends Pinnable {
 
     public String getTPS() {
         try {
-            int tps = Math.round(EventHandler.INSTANCE.get_tick_rate());
+            int tps = Math.round(EventHandler.INSTANCE.getTickRate());
         if (tps >= 16) {
             return "\u00A7a"+Integer.toString(tps);
         } else if (tps >= 10) {

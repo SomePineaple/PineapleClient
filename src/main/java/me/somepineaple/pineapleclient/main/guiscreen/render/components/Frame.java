@@ -50,10 +50,10 @@ public class Frame {
 		this.move_x = 0;
 		this.move_y = 0;
 
-		int size  = PineapleClient.get_hack_manager().get_modules_with_category(category).size();
+		int size  = PineapleClient.get_hack_manager().getModulesWithCategory(category).size();
 		int count = 0;
 
-		for (Hack modules : PineapleClient.get_hack_manager().get_modules_with_category(category)) {
+		for (Hack modules : PineapleClient.get_hack_manager().getModulesWithCategory(category)) {
 			ModuleButton buttons = new ModuleButton(modules, this);
 
 			buttons.set_y(this.height);
@@ -77,7 +77,7 @@ public class Frame {
 
 		this.height = 25;
 
-		int size  = PineapleClient.get_hack_manager().get_modules_with_category(this.category).size();
+		int size  = PineapleClient.get_hack_manager().getModulesWithCategory(this.category).size();
 		int count = 0;
 
 		for (ModuleButton buttons : this.module_button) {

@@ -197,7 +197,7 @@ public class ButtonBind extends AbstractWidget {
 
 			Draw.draw_string("Listening " + this.points, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		} else {
-			Draw.draw_string("Bind <" + this.master.get_module().get_bind("string") + ">", this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+			Draw.draw_string("Bind <" + this.master.get_module().getBind("string") + ">", this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		}
 
 		tick_color[0] += 5;

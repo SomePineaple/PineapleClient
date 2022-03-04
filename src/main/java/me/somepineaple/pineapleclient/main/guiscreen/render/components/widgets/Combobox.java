@@ -37,7 +37,7 @@ public class Combobox extends AbstractWidget {
 		this.values  = new ArrayList<>();
 		this.frame   = frame;
 		this.master  = master;
-		this.setting = PineapleClient.get_setting_manager().get_setting_with_tag(master.get_module(), tag);
+		this.setting = PineapleClient.getSettingManager().getSettingWithTag(master.get_module(), tag);
 
 		this.x = master.get_x();
 		this.y = update_postion;

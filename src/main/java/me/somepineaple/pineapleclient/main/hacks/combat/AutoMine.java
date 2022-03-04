@@ -33,9 +33,9 @@ public class AutoMine extends Hack {
         target_block = null;
 
         for (EntityPlayer player : mc.world.playerEntities) {
-            if (mc.player.getDistance(player) > range.get_value(1)) continue;
+            if (mc.player.getDistance(player) > range.getValue(1)) continue;
 
-            BlockPos p = EntityUtil.is_cityable(player, end_crystal.get_value(true));
+            BlockPos p = EntityUtil.is_cityable(player, end_crystal.getValue(true));
 
             if (p != null) {
                 target_block = p;
@@ -49,7 +49,7 @@ public class AutoMine extends Hack {
         }
 
         int pickSlot = findPickaxe();
-        if (swap.get_value(true) && pickSlot != -1) {
+        if (swap.getValue(true) && pickSlot != -1) {
             mc.player.inventory.currentItem = pickSlot;
         }
 
@@ -58,7 +58,7 @@ public class AutoMine extends Hack {
 
     @Override
     public void update() {
-        BreakUtil.update(range.get_value(1), ray_trace.get_value(true));
+        BreakUtil.update(range.getValue(1), ray_trace.getValue(true));
         if(mc.world.getBlockState(target_block).getBlock() instanceof BlockAir) {
             this.set_active(false);
         }

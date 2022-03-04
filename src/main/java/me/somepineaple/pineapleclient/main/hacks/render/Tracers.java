@@ -41,8 +41,8 @@ public class Tracers extends Hack {
             if (!(entity instanceof EntityPlayer) || entity == mc.player) return;
             EntityPlayer player = (EntityPlayer) entity;
 
-            if (mc.player.getDistance(player) > range.get_value(1)) return;
-            if (FriendUtil.isFriend(player.getName()) && !friends.get_value(true)) return;
+            if (mc.player.getDistance(player) > range.getValue(1)) return;
+            if (FriendUtil.isFriend(player.getName()) && !friends.getValue(true)) return;
 
             colour[0] = this.getColorByDistance(player);
             this.drawLineToEntity(player, colour[0][0], colour[0][1], colour[0][2], colour[0][3]);
@@ -70,14 +70,14 @@ public class Tracers extends Hack {
 
     public void drawLine(final double posx, final double posy, final double posz, final double up, final float red, final float green, final float blue, final float opacity) {
         final Vec3d eyes = new Vec3d(0.0, 0.0, 1.0).rotatePitch(-(float)Math.toRadians(mc.player.rotationPitch)).rotateYaw(-(float)Math.toRadians(mc.player.rotationYaw));
-        drawLineFromPosToPos(eyes.x, eyes.y + mc.player.getEyeHeight() + (float) offset.get_value(1), eyes.z, posx, posy, posz, up, red, green, blue, opacity);
+        drawLineFromPosToPos(eyes.x, eyes.y + mc.player.getEyeHeight() + (float) offset.getValue(1), eyes.z, posx, posy, posz, up, red, green, blue, opacity);
 
     }
 
     public void drawLineFromPosToPos(final double posx, final double posy, final double posz, final double posx2, final double posy2, final double posz2, final double up, final float red, final float green, final float blue, final float opacity) {
         GL11.glBlendFunc(770, 771);
         GL11.glEnable(3042);
-        GL11.glLineWidth((float) width.get_value(1));
+        GL11.glLineWidth((float) width.getValue(1));
         GL11.glDisable(3553);
         GL11.glDisable(2929);
         GL11.glDepthMask(false);

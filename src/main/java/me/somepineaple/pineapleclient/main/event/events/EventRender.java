@@ -37,7 +37,7 @@ public class EventRender extends EventCancellable {
 		get_buffer_build().setTranslation(- pos.x, - pos.y, - pos.z);
 	}
 
-	public void reset_translation() {
+	public void resetTranslation() {
 		set_translation(render_pos);
 	}
 

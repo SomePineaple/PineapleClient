@@ -29,7 +29,7 @@ public class EventHandler implements Listenable {
 		reset_tick();
 	}
 
-	public float get_tick_rate() {
+	public float getTickRate() {
 		float num_ticks = 0.0f;
 		float sum_ticks = 0.0f;
 

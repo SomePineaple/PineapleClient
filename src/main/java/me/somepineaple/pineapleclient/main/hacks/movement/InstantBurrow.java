@@ -40,7 +40,7 @@ public class InstantBurrow extends Hack {
     @Override
     public void update() {
         if (findHotbarSlot() == -1) {
-            MessageUtil.client_message("Instant burrow cannot find blocks in your hotbar");
+            MessageUtil.clientMessage("Instant burrow cannot find blocks in your hotbar");
             this.toggle();
             return;
         }
@@ -50,10 +50,10 @@ public class InstantBurrow extends Hack {
         mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.00133597911214D, mc.player.posZ, true));
         mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + 1.16610926093821D, mc.player.posZ, true));
 
-        BlockUtil.placeBlock(originalPos, findHotbarSlot(), rotate.get_value(true), rotate.get_value(true), false, hand);
+        BlockUtil.placeBlock(originalPos, findHotbarSlot(), rotate.getValue(true), rotate.getValue(true), false, hand);
 
         // Rubberband
-        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + offset.get_value(1.0), mc.player.posZ, false));
+        mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY + offset.getValue(1.0), mc.player.posZ, false));
 
         this.toggle();
     }

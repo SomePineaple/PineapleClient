@@ -64,7 +64,7 @@ public class NameTags extends Hack {
     @Override
     public void render(EventRender event) {
         for (final EntityPlayer player : mc.world.playerEntities) {
-            if (player != null && !player.equals(mc.player) && player.isEntityAlive() && (!player.isInvisible() || show_invis.get_value(true)) && mc.player.getDistance(player) < range.get_value(1)) {
+            if (player != null && !player.equals(mc.player) && player.isEntityAlive() && (!player.isInvisible() || show_invis.getValue(true)) && mc.player.getDistance(player) < range.getValue(1)) {
                 final double x = this.interpolate(player.lastTickPosX, player.posX, event.get_partial_ticks()) - mc.getRenderManager().renderPosX;
                 final double y = this.interpolate(player.lastTickPosY, player.posY, event.get_partial_ticks()) - mc.getRenderManager().renderPosY;
                 final double z = this.interpolate(player.lastTickPosZ, player.posZ, event.get_partial_ticks()) - mc.getRenderManager().renderPosZ;
@@ -75,7 +75,7 @@ public class NameTags extends Hack {
 
     @Override
     public void update() {
-        if (rainbow_mode.get_value(true)) {
+        if (rainbow_mode.getValue(true)) {
             cycle_rainbow();
         }
     }
@@ -86,11 +86,11 @@ public class NameTags extends Hack {
                 (System.currentTimeMillis() % (360 * 32)) / (360f * 32)
         };
 
-        int color_rgb_o = Color.HSBtoRGB(tick_color[0], sat.get_value(1), brightness.get_value(1));
+        int color_rgb_o = Color.HSBtoRGB(tick_color[0], sat.getValue(1), brightness.getValue(1));
 
-        r.set_value((color_rgb_o >> 16) & 0xFF);
-        g.set_value((color_rgb_o >> 8) & 0xFF);
-        b.set_value(color_rgb_o & 0xFF);
+        r.setValue((color_rgb_o >> 16) & 0xFF);
+        g.setValue((color_rgb_o >> 8) & 0xFF);
+        b.setValue(color_rgb_o & 0xFF);
 
     }
 
@@ -108,7 +108,7 @@ public class NameTags extends Hack {
         final String displayTag = this.getDisplayTag(player);
         final double distance = camera.getDistance(x + mc.getRenderManager().viewerPosX, y + mc.getRenderManager().viewerPosY, z + mc.getRenderManager().viewerPosZ);
         final int width = mc.fontRenderer.getStringWidth(displayTag) / 2;
-        double scale = (0.0018 + m_scale.get_value(1) * (distance * 0.3)) / 1000.0;
+        double scale = (0.0018 + m_scale.getValue(1) * (distance * 0.3)) / 1000.0;
         if (distance <= 8.0) {
             scale = 0.0245;
         }
@@ -126,9 +126,9 @@ public class NameTags extends Hack {
         GlStateManager.enableBlend();
         boolean is_friend = FriendUtil.isFriend(player.getName());
         boolean is_enemy = EnemyUtil.isEnemy(player.getName());
-        int red = r.get_value(1);
-        int green = g.get_value(1);
-        int blue = b.get_value(1);
+        int red = r.getValue(1);
+        int green = g.getValue(1);
+        int blue = b.getValue(1);
         if (is_friend) {
             red = 157;
             green = 99;
@@ -139,7 +139,7 @@ public class NameTags extends Hack {
             green = 40;
             blue = 7;
         }
-        RenderUtil.drawRect((float)(-width - 2)-1, (float)(-(mc.fontRenderer.FONT_HEIGHT + 1))-1, width + 3f, 2.5f, red, green, blue, (float) a.get_value(1));
+        RenderUtil.drawRect((float)(-width - 2)-1, (float)(-(mc.fontRenderer.FONT_HEIGHT + 1))-1, width + 3f, 2.5f, red, green, blue, (float) a.getValue(1));
         RenderUtil.drawRect((float)(-width - 2), (float)(-(mc.fontRenderer.FONT_HEIGHT + 1)), width + 2.0f, 1.5f, 1426063360);
         GlStateManager.disableBlend();
         final ItemStack renderMainHand = player.getHeldItemMainhand().copy();
@@ -155,7 +155,7 @@ public class NameTags extends Hack {
             GL11.glScalef(1.5f, 1.5f, 1.0f);
             GL11.glPopMatrix();
         }
-        if (show_armor.get_value(true)) {
+        if (show_armor.getValue(true)) {
             GlStateManager.pushMatrix();
             int xOffset = -8;
             for (final ItemStack stack : player.inventory.armorInventory) {
@@ -170,7 +170,7 @@ public class NameTags extends Hack {
             }
             this.renderItemStack(renderOffhand, xOffset);
             xOffset += 16;
-            if (reverse.get_value(true)) {
+            if (reverse.getValue(true)) {
                 for (final ItemStack stack2 : player.inventory.armorInventory) {
                     if (stack2 != null) {
                         final ItemStack armourStack = stack2.copy();
@@ -233,7 +233,7 @@ public class NameTags extends Hack {
     private void renderEnchantmentText(final ItemStack stack, final int x) {
         int enchantmentY = -37;
         final NBTTagList enchants = stack.getEnchantmentTagList();
-        if (enchants.tagCount() > 2 && simplify.get_value(true)) {
+        if (enchants.tagCount() > 2 && simplify.getValue(true)) {
             mc.fontRenderer.drawStringWithShadow("god", (float)(x * 2), (float)enchantmentY, -3977919);
             enchantmentY -= 8;
         } else {
@@ -322,7 +322,7 @@ public class NameTags extends Hack {
 
     private String getDisplayTag(final EntityPlayer player) {
         String name = player.getDisplayNameString();
-        if (!show_health.get_value(true)) {
+        if (!show_health.getValue(true)) {
             return name;
         }
         final float health = player.getHealth() + player.getAbsorptionAmount();
@@ -349,7 +349,7 @@ public class NameTags extends Hack {
             color = section_sign() + "4";
         }
         String pingStr = "";
-        if (show_ping.get_value(true)) {
+        if (show_ping.getValue(true)) {
             try {
                 final int responseTime = Objects.requireNonNull(mc.getConnection()).getPlayerInfo(player.getUniqueID()).getResponseTime();
                 if (responseTime > 150) {
@@ -364,7 +364,7 @@ public class NameTags extends Hack {
             catch (Exception ignore) {}
         }
         String popStr = " ";
-        if (show_totems.get_value(true)) {
+        if (show_totems.getValue(true)) {
             try {
                 popStr += (Totempop.totem_pop_counter.get(player.getName()) == null ? section_sign() + "70" : section_sign() + "c -" + Totempop.totem_pop_counter.get(player.getName()));
             } catch (Exception ignore) {}

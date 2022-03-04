@@ -70,7 +70,7 @@ public class ChatSuffix extends Hack {
 		accept_suffix = true;
 
 		// Get value.
-		boolean ignore_prefix = ignore.get_value(true);
+		boolean ignore_prefix = ignore.getValue(true);
 
 		String message = ((CPacketChatMessage) event.get_packet()).getMessage();
 

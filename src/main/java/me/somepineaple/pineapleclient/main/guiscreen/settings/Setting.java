@@ -80,7 +80,7 @@ public class Setting {
 		return this.tag;
 	}
 
-	public void set_value(boolean value) {
+	public void setValue(boolean value) {
 		this.button = value;
 	}
 
@@ -88,11 +88,11 @@ public class Setting {
 		this.current = value;
 	}
 
-	public void set_value(String value) {
+	public void setValue(String value) {
 		this.label = value;
 	}
 
-	public void set_value(double value) {
+	public void setValue(double value) {
 		if (value >= get_max(value)) {
 			this.slider = get_max(value);
 		} else if (value <= get_min(value)) {
@@ -102,7 +102,7 @@ public class Setting {
 		}
 	}
 
-	public void set_value(int value) {
+	public void setValue(int value) {
 		if (value >= get_max(value)) {
 			this.slider = get_max(value);
 		} else if (value <= get_min(value)) {
@@ -120,7 +120,7 @@ public class Setting {
 		return this.current.equalsIgnoreCase(value);
 	}
 
-	public boolean get_value(boolean type) {
+	public boolean getValue(boolean type) {
 		return this.button;
 	}
 
@@ -132,15 +132,15 @@ public class Setting {
 		return this.current;
 	}
 
-	public String get_value(String type) {
+	public String getValue(String type) {
 		return this.label;
 	}
 
-	public double get_value(double type) {
+	public double getValue(double type) {
 		return this.slider;
 	}
 
-	public int get_value(int type) {
+	public int getValue(int type) {
 		return ((int) Math.round(this.slider));
 	}
 

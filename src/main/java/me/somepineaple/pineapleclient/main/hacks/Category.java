@@ -11,9 +11,9 @@ public enum Category {
 	BETA("Beta", "Beta", false),
 	HIDDEN("Hidden", "Hidden", true);
 
-	String name;
-	String tag;
-	boolean hidden;
+	final String name;
+	final String tag;
+	final boolean hidden;
 
 	Category(String name, String tag, boolean hidden) {
 		this.name   = name;

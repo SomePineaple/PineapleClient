@@ -156,7 +156,7 @@ public class AutoCrystal extends Hack {
     @EventHandler
     private final Listener<EventPacket.SendPacket> send_listener = new Listener<>(event -> {
         if (event.get_packet() instanceof CPacketPlayer && is_rotating && rotate_mode.in("Old")) {
-            if (debug.get_value(true)) {
+            if (debug.getValue(true)) {
                 MessageUtil.send_client_message("Rotating");
             }
             final CPacketPlayer p = (CPacketPlayer) event.get_packet();
@@ -165,7 +165,7 @@ public class AutoCrystal extends Hack {
             is_rotating = false;
         }
         if (event.get_packet() instanceof CPacketPlayerTryUseItemOnBlock && is_rotating && rotate_mode.in("Old")) {
-            if (debug.get_value(true)) {
+            if (debug.getValue(true)) {
                 MessageUtil.send_client_message("Rotating");
             }
             final CPacketPlayerTryUseItemOnBlock p = (CPacketPlayerTryUseItemOnBlock) event.get_packet();
@@ -179,7 +179,7 @@ public class AutoCrystal extends Hack {
     @EventHandler
     private final Listener<EventMotionUpdate> on_movement = new Listener<>(event -> {
         if (event.stage == 0 && (rotate_mode.in("Good") || rotate_mode.in("Const"))) {
-            if (debug.get_value(true)) {
+            if (debug.getValue(true)) {
                 MessageUtil.send_client_message("updating rotation");
             }
             PosManager.updatePosition();
@@ -187,7 +187,7 @@ public class AutoCrystal extends Hack {
             do_ca();
         }
         if (event.stage == 1 && (rotate_mode.in("Good") || rotate_mode.in("Const"))) {
-            if (debug.get_value(true)) {
+            if (debug.getValue(true)) {
                 MessageUtil.send_client_message("resetting rotation");
             }
             PosManager.restorePosition();
@@ -218,7 +218,7 @@ public class AutoCrystal extends Hack {
 
         if (mc.player == null || mc.world == null) return;
 
-        if (rainbow_mode.get_value(true)) {
+        if (rainbow_mode.getValue(true)) {
             cycle_rainbow();
         }
 
@@ -231,16 +231,16 @@ public class AutoCrystal extends Hack {
             return;
         }
 
-        if (place_crystal.get_value(true) && place_delay_counter > place_timeout) {
+        if (place_crystal.getValue(true) && place_delay_counter > place_timeout) {
             place_crystal();
         }
 
-        if (break_crystal.get_value(true) && break_delay_counter > break_timeout) {
+        if (break_crystal.getValue(true) && break_delay_counter > break_timeout) {
             break_crystal();
         }
 
         if (!did_anything) {
-            if (old_render.get_value(true)) {
+            if (old_render.getValue(true)) {
                 render_block_init = null;
             }
             autoez_target = null;
@@ -279,11 +279,11 @@ public class AutoCrystal extends Hack {
                 (System.currentTimeMillis() % (360 * 32)) / (360f * 32)
         };
 
-        int color_rgb_o = Color.HSBtoRGB(tick_color[0], sat.get_value(1), brightness.get_value(1));
+        int color_rgb_o = Color.HSBtoRGB(tick_color[0], sat.getValue(1), brightness.getValue(1));
 
-        r.set_value((color_rgb_o >> 16) & 0xFF);
-        g.set_value((color_rgb_o >> 8) & 0xFF);
-        b.set_value(color_rgb_o & 0xFF);
+        r.setValue((color_rgb_o >> 16) & 0xFF);
+        g.setValue((color_rgb_o >> 8) & 0xFF);
+        b.setValue(color_rgb_o & 0xFF);
 
     }
 
@@ -291,7 +291,7 @@ public class AutoCrystal extends Hack {
         double best_damage = 0;
 
         double minimum_damage;
-        double maximum_damage_self = this.max_self_damage.get_value(1);
+        double maximum_damage_self = this.max_self_damage.getValue(1);
 
         double best_distance = 0;
 
@@ -302,15 +302,15 @@ public class AutoCrystal extends Hack {
             if (!(c instanceof EntityEnderCrystal)) continue;
 
             EntityEnderCrystal crystal = (EntityEnderCrystal) c;
-            if (mc.player.getDistance(crystal) > (!mc.player.canEntityBeSeen(crystal) ? hit_range_wall.get_value(1) : hit_range.get_value(1))) {
+            if (mc.player.getDistance(crystal) > (!mc.player.canEntityBeSeen(crystal) ? hit_range_wall.getValue(1) : hit_range.getValue(1))) {
                 continue;
             }
-            if (!mc.player.canEntityBeSeen(crystal) && raytrace.get_value(true)) {
+            if (!mc.player.canEntityBeSeen(crystal) && raytrace.getValue(true)) {
                 continue;
             }
             if (crystal.isDead) continue;
 
-            if (attacked_crystals.containsKey(crystal) && attacked_crystals.get(crystal) > 5 && anti_stuck.get_value(true)) continue;
+            if (attacked_crystals.containsKey(crystal) && attacked_crystals.get(crystal) > 5 && anti_stuck.getValue(true)) continue;
 
             for (Entity player : mc.world.playerEntities) {
 
@@ -324,11 +324,11 @@ public class AutoCrystal extends Hack {
 
                 if (target.isDead || target.getHealth() <= 0) continue;
 
-                boolean no_place = faceplace_check.get_value(true) && mc.player.getHeldItemMainhand().getItem() == Items.DIAMOND_SWORD;
-                if ((target.getHealth() < faceplace_mode_damage.get_value(1) && faceplace_mode.get_value(true) && !no_place) || (get_armor_fucker(target) && !no_place)) {
+                boolean no_place = faceplace_check.getValue(true) && mc.player.getHeldItemMainhand().getItem() == Items.DIAMOND_SWORD;
+                if ((target.getHealth() < faceplace_mode_damage.getValue(1) && faceplace_mode.getValue(true) && !no_place) || (get_armor_fucker(target) && !no_place)) {
                     minimum_damage = 2;
                 } else {
-                    minimum_damage = this.min_player_break.get_value(1);
+                    minimum_damage = this.min_player_break.getValue(1);
                 }
 
                 final double target_damage = CrystalUtil.calculateDamage(crystal, target);
@@ -337,16 +337,16 @@ public class AutoCrystal extends Hack {
 
                 final double self_damage = CrystalUtil.calculateDamage(crystal, mc.player);
 
-                if (self_damage > maximum_damage_self || (anti_suicide.get_value(true) && (mc.player.getHealth() + mc.player.getAbsorptionAmount()) - self_damage <= 0.5)) continue;
+                if (self_damage > maximum_damage_self || (anti_suicide.getValue(true) && (mc.player.getHealth() + mc.player.getAbsorptionAmount()) - self_damage <= 0.5)) continue;
 
-                if (target_damage > best_damage && !jumpy_mode.get_value(true)) {
+                if (target_damage > best_damage && !jumpy_mode.getValue(true)) {
                     autoez_target = target;
                     best_damage = target_damage;
                     best_crystal = crystal;
                 }
             }
 
-            if (jumpy_mode.get_value(true) && mc.player.getDistanceSq(crystal) > best_distance) {
+            if (jumpy_mode.getValue(true) && mc.player.getDistanceSq(crystal) > best_distance) {
                 best_distance = mc.player.getDistanceSq(crystal);
                 best_crystal = crystal;
             }
@@ -356,7 +356,7 @@ public class AutoCrystal extends Hack {
     }
 
     public BlockPos get_best_block() {
-        if (get_best_crystal() != null && !fast_mode.get_value(true)) {
+        if (get_best_crystal() != null && !fast_mode.getValue(true)) {
             place_timeout_flag = true;
             return null;
         }
@@ -368,11 +368,11 @@ public class AutoCrystal extends Hack {
         double best_damage = 0;
         double bestBlockSelfDamage = 0;
         double minimum_damage;
-        double maximum_damage_self = this.max_self_damage.get_value(1);
+        double maximum_damage_self = this.max_self_damage.getValue(1);
 
         BlockPos best_block = null;
 
-        List<BlockPos> blocks = CrystalUtil.possiblePlacePositions((float) place_range.get_value(1), endcrystal.get_value(true), true);
+        List<BlockPos> blocks = CrystalUtil.possiblePlacePositions((float) place_range.getValue(1), endcrystal.getValue(true), true);
 
         for (Entity player : mc.world.playerEntities) {
 
@@ -384,11 +384,11 @@ public class AutoCrystal extends Hack {
 
                 if (player.getDistance(mc.player) >= 11) continue;
 
-                if (!BlockUtil.rayTracePlaceCheck(block, this.raytrace.get_value(true))) {
+                if (!BlockUtil.rayTracePlaceCheck(block, this.raytrace.getValue(true))) {
                     continue;
                 }
 
-                if (!BlockUtil.canSeeBlock(block) && mc.player.getDistance(block.getX(), block.getY(), block.getZ()) > hit_range_wall.get_value(1)) {
+                if (!BlockUtil.canSeeBlock(block) && mc.player.getDistance(block.getX(), block.getY(), block.getZ()) > hit_range_wall.getValue(1)) {
                     continue;
                 }
 
@@ -398,11 +398,11 @@ public class AutoCrystal extends Hack {
 
                 if (target.isDead || target.getHealth() <= 0) continue;
 
-                boolean no_place = faceplace_check.get_value(true) && mc.player.getHeldItemMainhand().getItem() == Items.DIAMOND_SWORD;
-                if ((target.getHealth() < faceplace_mode_damage.get_value(1) && faceplace_mode.get_value(true)&& !no_place) || (get_armor_fucker(target) && !no_place)) {
+                boolean no_place = faceplace_check.getValue(true) && mc.player.getHeldItemMainhand().getItem() == Items.DIAMOND_SWORD;
+                if ((target.getHealth() < faceplace_mode_damage.getValue(1) && faceplace_mode.getValue(true)&& !no_place) || (get_armor_fucker(target) && !no_place)) {
                     minimum_damage = 2;
                 } else {
-                    minimum_damage = this.min_player_place.get_value(1);
+                    minimum_damage = this.min_player_place.getValue(1);
                 }
 
                 final double target_damage = CrystalUtil.calculateDamage((double) block.getX() + 0.5, (double) block.getY() + 1, (double) block.getZ() + 0.5, target);
@@ -411,7 +411,7 @@ public class AutoCrystal extends Hack {
 
                 final double self_damage = CrystalUtil.calculateDamage((double) block.getX() + 0.5, (double) block.getY() + 1, (double) block.getZ() + 0.5, mc.player);
 
-                if (self_damage > maximum_damage_self || (anti_suicide.get_value(true) && (mc.player.getHealth() + mc.player.getAbsorptionAmount()) - self_damage <= 0.5)) continue;
+                if (self_damage > maximum_damage_self || (anti_suicide.getValue(true) && (mc.player.getHealth() + mc.player.getAbsorptionAmount()) - self_damage <= 0.5)) continue;
 
                 if (target_damage > best_damage) {
                     best_damage = target_damage;
@@ -431,7 +431,7 @@ public class AutoCrystal extends Hack {
         blocks.clear();
 
         if (chain_step == 1) {
-            current_chain_index = chain_length.get_value(1);
+            current_chain_index = chain_length.getValue(1);
         } else if (chain_step > 1) {
             current_chain_index--;
         } 
@@ -441,7 +441,7 @@ public class AutoCrystal extends Hack {
 
         damage_blocks = sort_best_blocks(damage_blocks);
 
-        if (!attempt_chain.get_value(true)) {
+        if (!attempt_chain.getValue(true)) {
             return best_block;
         } else {
             if (damage_blocks.size() == 0) {
@@ -502,7 +502,7 @@ public class AutoCrystal extends Hack {
             offhand_check = true;
         }
 
-        if (debug.get_value(true)) {
+        if (debug.getValue(true)) {
             MessageUtil.send_client_message("placing");
         }
 
@@ -523,7 +523,7 @@ public class AutoCrystal extends Hack {
 
             final float armor_percent = ((float) (stack.getMaxDamage() - stack.getItemDamage()) / (float) stack.getMaxDamage()) * 100.0f;
 
-            if (fuck_armor_mode.get_value(true) && fuck_armor_mode_precent.get_value(1) >= armor_percent) return true;
+            if (fuck_armor_mode.getValue(true) && fuck_armor_mode_precent.getValue(1) >= armor_percent) return true;
         }
 
         return false;
@@ -536,7 +536,7 @@ public class AutoCrystal extends Hack {
             return;
         }
 
-        if (anti_weakness.get_value(true) && mc.player.isPotionActive(MobEffects.WEAKNESS)) {
+        if (anti_weakness.getValue(true) && mc.player.isPotionActive(MobEffects.WEAKNESS)) {
             boolean should_weakness = true;
 
             if (mc.player.isPotionActive(MobEffects.STRENGTH)) {
@@ -570,19 +570,19 @@ public class AutoCrystal extends Hack {
             }
         }
 
-        if (debug.get_value(true)) {
+        if (debug.getValue(true)) {
             MessageUtil.send_client_message("attacking");
         }
 
         did_anything = true;
 
         rotate_to(crystal);
-        for (int i = 0; i < break_trys.get_value(1); i++) {
+        for (int i = 0; i < break_trys.getValue(1); i++) {
             EntityUtil.attackEntity(crystal, false, swing);
         }
         add_attacked_crystal(crystal);
 
-        if (client_side.get_value(true) && crystal.isEntityAlive()) {
+        if (client_side.getValue(true) && crystal.isEntityAlive()) {
             crystal.setDead();
         }
 
@@ -594,30 +594,30 @@ public class AutoCrystal extends Hack {
             return true;
         }
 
-        if (stop_while_mining.get_value(true) && mc.gameSettings.keyBindAttack.isKeyDown() && mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe) {
-            if (old_render.get_value(true)) {
+        if (stop_while_mining.getValue(true) && mc.gameSettings.keyBindAttack.isKeyDown() && mc.player.getHeldItemMainhand().getItem() instanceof ItemPickaxe) {
+            if (old_render.getValue(true)) {
                 render_block_init = null;
             }
             return true;
         }
 
-        Surround s = (Surround) PineapleClient.get_hack_manager().get_module_with_tag("Surround");
+        Surround s = (Surround) PineapleClient.get_hack_manager().getModuleWithTag("Surround");
         if (s.areBlocksLeftToSurrond()) {
-            if (old_render.get_value(true)) {
+            if (old_render.getValue(true)) {
                 render_block_init = null;
             }
             return true;
         }
 
-        if (PineapleClient.get_hack_manager().get_module_with_tag("HoleFill").is_active()) {
-            if (old_render.get_value(true)) {
+        if (PineapleClient.get_hack_manager().getModuleWithTag("HoleFill").isActive()) {
+            if (old_render.getValue(true)) {
                 render_block_init = null;
             }
             return true;
         }
 
-        if (PineapleClient.get_hack_manager().get_module_with_tag("Trap").is_active()) {
-            if (old_render.get_value(true)) {
+        if (PineapleClient.get_hack_manager().getModuleWithTag("Trap").isActive()) {
+            if (old_render.getValue(true)) {
                 render_block_init = null;
             }
             return true;
@@ -723,27 +723,27 @@ public class AutoCrystal extends Hack {
 
         render_block(render_block_init);
 
-        if (future_render.get_value(true) && render_block_old != null) {
+        if (future_render.getValue(true) && render_block_old != null) {
             render_block(render_block_old);
         }
 
-        if (render_damage.get_value(true)) {
+        if (render_damage.getValue(true)) {
             RenderUtil.drawText(render_block_init, ((Math.floor(this.render_damage_value) == this.render_damage_value) ? Integer.valueOf((int)this.render_damage_value) : String.format("%.1f", this.render_damage_value)) + "");
         }
 
     }
 
     public void render_block(BlockPos pos) {
-        BlockPos render_block = (top_block.get_value(true) ? pos.up() : pos);
+        BlockPos render_block = (top_block.getValue(true) ? pos.up() : pos);
 
-        float h = (float) height.get_value(1.0);
+        float h = (float) height.getValue(1.0);
 
         if (solid) {
             RenderHelp.prepare("quads");
             RenderHelp.draw_cube(RenderHelp.get_buffer_build(),
                     render_block.getX(), render_block.getY(), render_block.getZ(),
                     1, h, 1,
-                    r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1),
+                    r.getValue(1), g.getValue(1), b.getValue(1), a.getValue(1),
                     "all"
             );
             RenderHelp.release();
@@ -754,7 +754,7 @@ public class AutoCrystal extends Hack {
             RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
                     render_block.getX(), render_block.getY(), render_block.getZ(),
                     1, h, 1,
-                    r.get_value(1), g.get_value(1), b.get_value(1), a_out.get_value(1),
+                    r.getValue(1), g.getValue(1), b.getValue(1), a_out.getValue(1),
                     "all"
             );
             RenderHelp.release();
@@ -765,14 +765,14 @@ public class AutoCrystal extends Hack {
             RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
                     render_block.getX(), render_block.getY(), render_block.getZ(),
                     1, 0, 1,
-                    r.get_value(1), g.get_value(1), b.get_value(1), a_out.get_value(1),
+                    r.getValue(1), g.getValue(1), b.getValue(1), a_out.getValue(1),
                     "all"
             );
             RenderHelp.release();
             RenderHelp.prepare("quads");
             RenderHelp.draw_gradiant_cube(RenderHelp.get_buffer_build(), 
                     render_block.getX(), render_block.getY(), render_block.getZ(), 
-                    1, h, 1,  new Color(r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1)),
+                    1, h, 1,  new Color(r.getValue(1), g.getValue(1), b.getValue(1), a.getValue(1)),
                     new Color(0, 0, 0, 0), 
                     "all"
             );
@@ -783,7 +783,7 @@ public class AutoCrystal extends Hack {
             RenderHelp.prepare("lines");
             RenderHelp.draw_gradiant_outline(RenderHelp.get_buffer_build(), 
                     render_block.getX(), render_block.getY(), render_block.getZ(), 
-                    h, new Color(r.get_value(1), g.get_value(1), b.get_value(1), a_out.get_value(1)), 
+                    h, new Color(r.getValue(1), g.getValue(1), b.getValue(1), a_out.getValue(1)),
                     new Color(0, 0, 0, 0),
                     "all"
             );
@@ -793,8 +793,8 @@ public class AutoCrystal extends Hack {
 
     @Override
     public void enable() {
-        place_timeout = this.place_delay.get_value(1);
-        break_timeout = this.break_delay.get_value(1);
+        place_timeout = this.place_delay.getValue(1);
+        break_timeout = this.break_delay.getValue(1);
         place_timeout_flag = false;
         is_rotating = false;
         autoez_target = null;

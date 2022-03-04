@@ -41,9 +41,9 @@ public class CityEsp extends Hack {
     public void update() {
         blocks.clear();
         for (EntityPlayer player : mc.world.playerEntities) {
-            if (mc.player.getDistance(player) > range.get_value(1) || mc.player == player) continue;
+            if (mc.player.getDistance(player) > range.getValue(1) || mc.player == player) continue;
 
-            BlockPos p = EntityUtil.is_cityable(player, endcrystal_mode.get_value(true));
+            BlockPos p = EntityUtil.is_cityable(player, endcrystal_mode.getValue(true));
 
             if (p != null) {
                 blocks.add(p);
@@ -54,7 +54,7 @@ public class CityEsp extends Hack {
     @Override
     public void render(EventRender event) {
 
-        float off_set_h = (float) off_set.get_value(1.0);
+        float off_set_h = (float) off_set.getValue(1.0);
 
         for (BlockPos pos : blocks) {
 
@@ -78,7 +78,7 @@ public class CityEsp extends Hack {
                 RenderHelp.draw_cube(RenderHelp.get_buffer_build(),
                         pos.getX(), pos.getY(), pos.getZ(),
                 1, off_set_h, 1,
-                r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1),
+                r.getValue(1), g.getValue(1), b.getValue(1), a.getValue(1),
                 "all"
                 );
 
@@ -91,7 +91,7 @@ public class CityEsp extends Hack {
                 RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
                     pos.getX(), pos.getY(), pos.getZ(),
                     1, off_set_h, 1,
-                    r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1),
+                    r.getValue(1), g.getValue(1), b.getValue(1), a.getValue(1),
                     "all"
                 );
 

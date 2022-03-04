@@ -39,7 +39,7 @@ public class Slider extends AbstractWidget {
 	public Slider(Frame frame, ModuleButton master, String tag, int update_postion) {
 		this.frame   = frame;
 		this.master  = master;
-		this.setting = PineapleClient.get_setting_manager().get_setting_with_tag(master.get_module(), tag);
+		this.setting = PineapleClient.getSettingManager().getSettingWithTag(master.get_module(), tag);
 
 		this.x = master.get_x();
 		this.y = update_postion;
@@ -57,9 +57,9 @@ public class Slider extends AbstractWidget {
 		this.intenger = 8192;
 
 		if (this.setting.get_type().equals("doubleslider")) {
-			this.double_ = this.setting.get_value(1.0);
+			this.double_ = this.setting.getValue(1.0);
 		} else if (this.setting.get_type().equals("integerslider")) {
-			this.intenger = this.setting.get_value(1);
+			this.intenger = this.setting.getValue(1);
 		}
 	}
 
@@ -177,15 +177,15 @@ public class Slider extends AbstractWidget {
 
 		if (this.click) {
 			if (mouse != 0) {
-				this.setting.set_value(TurokDouble.round(((mouse / this.width) * (this.setting.get_max(1.0) - this.setting.get_min(1.0)) + this.setting.get_min(1.0))));
+				this.setting.setValue(TurokDouble.round(((mouse / this.width) * (this.setting.get_max(1.0) - this.setting.get_min(1.0)) + this.setting.get_min(1.0))));
 			} else {
-				this.setting.set_value(this.setting.get_min(1.0));
+				this.setting.setValue(this.setting.get_min(1.0));
 			}
 		}
 
-		String slider_value = !this.compare ? java.lang.Double.toString(this.setting.get_value(this.double_)) : Integer.toString(this.setting.get_value(this.intenger));
+		String slider_value = !this.compare ? java.lang.Double.toString(this.setting.getValue(this.double_)) : Integer.toString(this.setting.getValue(this.intenger));
 
-		Draw.draw_rect(this.x, this.save_y, this.x + (int)((this.width) * (this.setting.get_value(1.0) - this.setting.get_min(1.0)) / (this.setting.get_max(1.0) - this.setting.get_min(1.0))), this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
+		Draw.draw_rect(this.x, this.save_y, this.x + (int)((this.width) * (this.setting.getValue(1.0) - this.setting.get_min(1.0)) / (this.setting.get_max(1.0) - this.setting.get_min(1.0))), this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 
 		Draw.draw_string(this.slider_name, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		Draw.draw_string(slider_value, this.x + this.width - separe - font.get_string_width(slider_value) + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);

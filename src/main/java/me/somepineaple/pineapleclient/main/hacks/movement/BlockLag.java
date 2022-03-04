@@ -41,7 +41,7 @@ public class BlockLag extends Hack {
         if (event.get_era() != EventCancellable.Era.EVENT_PRE)
             return;
 
-        if (!_timer.passed((long) (Delay.get_value(1.0) * 1000)))
+        if (!_timer.passed((long) (Delay.getValue(1.0) * 1000)))
             return;
 
         // verify we have a block in our hand
@@ -128,7 +128,7 @@ public class BlockLag extends Hack {
 
         if (toPlaceAt != null)
         {
-            BlockUtil.placeBlock(toPlaceAt, mc.player.inventory.currentItem, rotate.get_value(true), rotate.get_value(true), false, arm);
+            BlockUtil.placeBlock(toPlaceAt, mc.player.inventory.currentItem, rotate.getValue(true), rotate.getValue(true), false, arm);
         }
         else
             _towerPauseTimer.reset();

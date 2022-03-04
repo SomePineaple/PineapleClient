@@ -21,7 +21,7 @@ public class AutoTotem extends Hack {
     Setting delay = create("Delay", "TotemDelay", false);
 
     private boolean switching = false;
-    private int last_slot;
+    private int lastSlot;
 
     @Override
     public void update() {
@@ -29,12 +29,12 @@ public class AutoTotem extends Hack {
         if (mc.currentScreen == null || mc.currentScreen instanceof GuiInventory) {
 
             if (switching) {
-                swap_items(last_slot, 2);
+                swapItems(lastSlot, 2);
                 return;
             }
 
             if (mc.player.getHeldItemOffhand().getItem() == Items.AIR) {
-                swap_items(get_item_slot(), delay.get_value(true) ? 1 : 0);
+                swapItems(get_item_slot(), delay.getValue(true) ? 1 : 0);
             }
 
         }
@@ -55,7 +55,7 @@ public class AutoTotem extends Hack {
         return -1;
     }
 
-    public void swap_items(int slot, int step) {
+    public void swapItems(int slot, int step) {
         if (slot == -1) return;
         if (step == 0) {
             mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
@@ -65,7 +65,7 @@ public class AutoTotem extends Hack {
         if (step == 1) {
             mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
             switching = true;
-            last_slot = slot;
+            lastSlot = slot;
         }
         if (step == 2) {
             mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, mc.player);

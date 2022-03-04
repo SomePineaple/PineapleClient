@@ -131,7 +131,7 @@ public class Scaffold extends Hack implements Runnable {
 	@Override
 	public void update() {
 		for (BlockPos block : blocksToBePlacedQueue) {
-			BlockUtil.placeBlock(block, findBlockInHotbar(), rotate.get_value(true), rotate.get_value(true), false, arm);
+			BlockUtil.placeBlock(block, findBlockInHotbar(), rotate.getValue(true), rotate.getValue(true), false, arm);
 			lastBlockPlaced = System.currentTimeMillis();
 		}
 		BlockPos belowPlayer = new BlockPos(mc.player).add(0, -1, 0);
@@ -142,9 +142,9 @@ public class Scaffold extends Hack implements Runnable {
 	@Override
 	public void run() {
 		while (!shouldJoin) {
-			if (!sprint.get_value(true)) mc.player.setSprinting(false);
+			if (!sprint.getValue(true)) mc.player.setSprinting(false);
 			BlockPos belowPlayer = new BlockPos(mc.player).add(0, -1, 0);
-			if (System.currentTimeMillis() - lastBlockPlaced > delay.get_value(1)) {
+			if (System.currentTimeMillis() - lastBlockPlaced > delay.getValue(1)) {
 				int firstBlock = findBlockInHotbar();
 				if (isBlockBelowPlayerEmpty && firstBlock != -1) {
 					mc.player.inventory.currentItem = firstBlock;

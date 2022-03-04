@@ -105,7 +105,7 @@ public class AutoEz extends Hack {
         delay_count = 0;
         targeted_players.remove(name);
         String message = "";
-        if (custom.get_value(true)) {
+        if (custom.getValue(true)) {
             message += EzMessageUtil.get_message().replace("[", "").replace("]", "");
         } else {
             message += "you just got nae nae'd by pineapleclient";

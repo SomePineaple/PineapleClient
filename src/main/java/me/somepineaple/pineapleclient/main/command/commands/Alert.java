@@ -12,7 +12,7 @@ public class Alert extends PineapleclientCommand {
 		super("alert", "if the module should spam chat or not");
 	}
 
-	public boolean get_message(String[] message) {
+	public boolean getMessage(String[] message) {
 		String module = "null";
 		String state  = "null";
 
@@ -25,19 +25,19 @@ public class Alert extends PineapleclientCommand {
 		}
 
 		if (message.length > 3) {
-			MessageUtil.send_client_error_message(current_prefix() + "t <ModuleName> <True/On/False/Off>");
+			MessageUtil.send_client_error_message(currentPrefix() + "t <ModuleName> <True/On/False/Off>");
 
 			return true;
 		}
 
 		if (module.equals("null")) {
-			MessageUtil.send_client_error_message(current_prefix() + "t <ModuleName> <True/On/False/Off>");
+			MessageUtil.send_client_error_message(currentPrefix() + "t <ModuleName> <True/On/False/Off>");
 
 			return true;
 		}
 
 		if (state.equals("null")) {
-			MessageUtil.send_client_error_message(current_prefix() + "t <ModuleName> <True/On/False/Off>");
+			MessageUtil.send_client_error_message(currentPrefix() + "t <ModuleName> <True/On/False/Off>");
 
 			return true;
 		}
@@ -45,7 +45,7 @@ public class Alert extends PineapleclientCommand {
 		module = module.toLowerCase();
 		state  = state.toLowerCase();
 
-		Hack module_requested = PineapleClient.get_hack_manager().get_module_with_tag(module);
+		Hack module_requested = PineapleClient.get_hack_manager().getModuleWithTag(module);
 
 		if (module_requested == null) {
 			MessageUtil.send_client_error_message("This module does not exist.");

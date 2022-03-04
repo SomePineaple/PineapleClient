@@ -16,6 +16,6 @@ public class Timer extends Hack {
 
     @Override
     public void update() {
-        mc.timer.tickLength = (float) (50.0f / timerSpeed.get_value(1.0));
+        mc.timer.tickLength = (float) (50.0f / timerSpeed.getValue(1.0));
     }
 }

@@ -55,18 +55,18 @@ public class Highlight extends Hack {
 	
 			int color_rgb = Color.HSBtoRGB(tick_color[0], 1, 1);
 	
-			if (rgb.get_value(true)) {
+			if (rgb.getValue(true)) {
 				color_r = ((color_rgb >> 16) & 0xFF);
 				color_g = ((color_rgb >> 8) & 0xFF);
 				color_b = (color_rgb & 0xFF);
 	
-				r.set_value(color_r);
-				g.set_value(color_g);
-				b.set_value(color_b);
+				r.setValue(color_r);
+				g.setValue(color_g);
+				b.setValue(color_b);
 			} else {
-				color_r = r.get_value(1);
-				color_g = g.get_value(2);
-				color_b = b.get_value(3);
+				color_r = r.getValue(1);
+				color_g = g.getValue(2);
+				color_b = b.getValue(3);
 			}
 	
 			if (mode.in("Pretty")) {
@@ -93,14 +93,14 @@ public class Highlight extends Hack {
 					// Solid.
 					if (solid) {
 						RenderHelp.prepare("quads");
-						RenderHelp.draw_cube(block_pos, color_r, color_g, color_b, a.get_value(1), "all");
+						RenderHelp.draw_cube(block_pos, color_r, color_g, color_b, a.getValue(1), "all");
 						RenderHelp.release();
 					}
 	
 					// Outline.
 					if (outline) {
 						RenderHelp.prepare("lines");
-						RenderHelp.draw_cube_line(block_pos, color_r, color_g, color_b, l_a.get_value(1), "all");
+						RenderHelp.draw_cube_line(block_pos, color_r, color_g, color_b, l_a.getValue(1), "all");
 						RenderHelp.release();
 					}
 				}

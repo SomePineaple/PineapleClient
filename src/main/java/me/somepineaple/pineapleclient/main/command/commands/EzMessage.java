@@ -12,7 +12,7 @@ public class EzMessage extends PineapleclientCommand {
         super("ezmessage", "Set ez mode");
     }
 
-    public boolean get_message(String[] message) {
+    public boolean getMessage(String[] message) {
 
         if (message.length == 1) {
             MessageUtil.send_client_error_message("message needed");

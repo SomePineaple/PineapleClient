@@ -1,26 +1,15 @@
 package me.somepineaple.pineapleclient.main.hacks.render;
 
-import com.mojang.realmsclient.gui.ChatFormatting;
-import me.somepineaple.pineapleclient.PineapleClient;
-import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
-import me.somepineaple.pineapleclient.main.util.RenderUtil;
 import me.somepineaple.turok.draw.RenderHelp;
 import me.somepineaple.pineapleclient.main.event.events.EventRender;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
-import me.zero.alpine.fork.listener.EventHandler;
-import me.zero.alpine.fork.listener.Listener;
-import net.minecraft.block.BlockAir;
 import net.minecraft.init.Blocks;
-import net.minecraft.network.play.server.SPacketBlockBreakAnim;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 
 import java.awt.*;
 import java.util.ArrayList;
-
-import static me.somepineaple.pineapleclient.main.util.MessageUtil.client_message_simple;
 
 public class BreakHighlight extends Hack {
 
@@ -67,18 +56,18 @@ public class BreakHighlight extends Hack {
 
             int color_rgb = Color.HSBtoRGB(tick_color[0], 1, 1);
 
-			if (rgb.get_value(true)) {
+			if (rgb.getValue(true)) {
 				color_r = ((color_rgb >> 16) & 0xFF);
 				color_g = ((color_rgb >> 8) & 0xFF);
 				color_b = (color_rgb & 0xFF);
 
-				r.set_value(color_r);
-				g.set_value(color_g);
-				b.set_value(color_b);
+				r.setValue(color_r);
+				g.setValue(color_g);
+				b.setValue(color_b);
 			} else {
-				color_r = r.get_value(1);
-				color_g = g.get_value(2);
-				color_b = b.get_value(3);
+				color_r = r.getValue(1);
+				color_g = g.getValue(2);
+				color_b = b.getValue(3);
 			}
 
 			if (mode.in("Pretty")) {
@@ -105,13 +94,13 @@ public class BreakHighlight extends Hack {
 						return;
 					}
 
-					if (blockPos.getDistance((int) mc.player.posX, (int) mc.player.posY, (int) mc.player.posZ) <= range.get_value(1)) {
+					if (blockPos.getDistance((int) mc.player.posX, (int) mc.player.posY, (int) mc.player.posZ) <= range.getValue(1)) {
 						if (solid) {
 							RenderHelp.prepare("quads");
 							RenderHelp.draw_cube(RenderHelp.get_buffer_build(),
 									blockPos.getX(), blockPos.getY(), blockPos.getZ(),
 									1, 1, 1,
-									r.get_value(1), g.get_value(1), b.get_value(1), a.get_value(1),
+									r.getValue(1), g.getValue(1), b.getValue(1), a.getValue(1),
 									"all"
 							);
 							RenderHelp.release();
@@ -121,7 +110,7 @@ public class BreakHighlight extends Hack {
 							RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
 									blockPos.getX(), blockPos.getY(), blockPos.getZ(),
 									1, 1, 1,
-									r.get_value(1), g.get_value(1), b.get_value(1), l_a.get_value(1),
+									r.getValue(1), g.getValue(1), b.getValue(1), l_a.getValue(1),
 									"all"
 							);
 							RenderHelp.release();

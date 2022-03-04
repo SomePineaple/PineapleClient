@@ -48,7 +48,7 @@ public class SelfTrap extends Hack {
         trap_pos = new BlockPos(pos.x, pos.y + 2, pos.z);
         if (is_trapped()) {
 
-            if (!toggle.get_value(true)) {
+            if (!toggle.getValue(true)) {
                 toggle();
                 return;
             } 
@@ -78,7 +78,7 @@ public class SelfTrap extends Hack {
 
                 if (result_ == ValidResult.NoNeighbors || result_ == ValidResult.NoEntityCollision) continue;
 
-                if (BlockUtil.placeBlock(pos_, find_in_hotbar(), rotate.get_value(true), rotate.get_value(true), true, swing)) {
+                if (BlockUtil.placeBlock(pos_, find_in_hotbar(), rotate.getValue(true), rotate.getValue(true), true, swing)) {
                     return;
                 }
 
@@ -88,7 +88,7 @@ public class SelfTrap extends Hack {
 
         }
 
-        BlockUtil.placeBlock(trap_pos, find_in_hotbar(), rotate.get_value(true), rotate.get_value(true), true, swing);
+        BlockUtil.placeBlock(trap_pos, find_in_hotbar(), rotate.getValue(true), rotate.getValue(true), true, swing);
 
     }
 

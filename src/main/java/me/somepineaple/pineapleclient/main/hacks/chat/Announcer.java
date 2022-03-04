@@ -167,7 +167,7 @@ public class Announcer extends Hack {
 
     public void send_cycle() {
         delay_count++;
-        if (delay_count > delay.get_value(1) * 20) {
+        if (delay_count > delay.getValue(1) * 20) {
             delay_count = 0;
             composeGameTickData();
             composeEventData();
@@ -181,18 +181,18 @@ public class Announcer extends Hack {
     }
 
     private void send_message(String s) {
-        if (suffix.get_value(true)) {
+        if (suffix.getValue(true)) {
             String i = " \u2763 ";
             s += i + PineapleClient.smoth("sponsored by pineapleclient");
         }
-        if (smol.get_value(true)) {
+        if (smol.getValue(true)) {
             s = PineapleClient.smoth(s.toLowerCase());
         }
         mc.player.connection.sendPacket(new CPacketChatMessage(s.replaceAll("\u00a7", "")));
     }
 
     public void queue_message(String m) {
-        if (message_q.size() > queue_size.get_value(1)) return;
+        if (message_q.size() > queue_size.getValue(1)) return;
         message_q.add(m);
     }
 
@@ -226,10 +226,10 @@ public class Announcer extends Hack {
             return;
         }
         if (distanceTraveled >= 1.0) {
-            if (distanceTraveled < (double)(this.delay.get_value(1) * this.min_distance.get_value(1))) {
+            if (distanceTraveled < (double)(this.delay.getValue(1) * this.min_distance.getValue(1))) {
                 return;
             }
-            if (distanceTraveled > (double)(this.delay.get_value(1) * this.max_distance.get_value(1))) {
+            if (distanceTraveled > (double)(this.delay.getValue(1) * this.max_distance.getValue(1))) {
                 distanceTraveled = 0.0;
                 return;
             }

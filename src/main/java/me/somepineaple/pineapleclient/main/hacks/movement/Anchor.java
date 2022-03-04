@@ -30,7 +30,7 @@ public class Anchor extends Hack {
 
     public static boolean AnchorING;
     public boolean isBlockHole(BlockPos blockpos) {
-        HoleESP holeEspInstance = (HoleESP) PineapleClient.get_hack_manager().get_module_with_tag("HoleESP");
+        HoleESP holeEspInstance = (HoleESP) PineapleClient.get_hack_manager().getModuleWithTag("HoleESP");
         return holeEspInstance.isBlockHole(blockpos);
     }
     private Vec3d Center = Vec3d.ZERO;
@@ -45,13 +45,13 @@ public class Anchor extends Hack {
 
     @EventHandler
     private Listener<EventMotionUpdate> OnClientTick = new Listener<>(event -> {
-        if (mc.player.rotationPitch >= Pitch.get_value(60)) {
+        if (mc.player.rotationPitch >= Pitch.getValue(60)) {
 
             if (isBlockHole(getPlayerPos().down(1)) || isBlockHole(getPlayerPos().down(2)) ||
                     isBlockHole(getPlayerPos().down(3)) || isBlockHole(getPlayerPos().down(4))) {
                 AnchorING = true;
 
-                if (!Pull.get_value(true)) {
+                if (!Pull.getValue(true)) {
                     mc.player.motionX = 0.0;
                     mc.player.motionZ = 0.0;
                 } else {

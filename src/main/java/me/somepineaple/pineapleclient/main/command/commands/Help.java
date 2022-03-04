@@ -9,7 +9,7 @@ public class Help extends PineapleclientCommand {
 		super("help", "helps people");
 	}
 
-	public boolean get_message(String[] message) {
+	public boolean getMessage(String[] message) {
 		String type = "null";
 
 		if (message.length == 1) {
@@ -21,13 +21,13 @@ public class Help extends PineapleclientCommand {
 		}
 
 		if (message.length > 2) {
-			MessageUtil.send_client_error_message(current_prefix() + "help <List/NameCommand>");
+			MessageUtil.send_client_error_message(currentPrefix() + "help <List/NameCommand>");
 
 			return true;
 		}
 
 		if (type.equals("null")) {
-			MessageUtil.send_client_error_message(current_prefix() + "help <List/NameCommand>");
+			MessageUtil.send_client_error_message(currentPrefix() + "help <List/NameCommand>");
 
 			return true;
 		}
@@ -35,7 +35,7 @@ public class Help extends PineapleclientCommand {
 		if (type.equalsIgnoreCase("list")) {
 
 			for (PineapleclientCommand commands : PineapleclientCommands.get_pure_command_list()) {
-				MessageUtil.send_client_message(commands.get_name());
+				MessageUtil.send_client_message(commands.getName());
 
 			}
 
@@ -50,7 +50,7 @@ public class Help extends PineapleclientCommand {
 			return true;
 		}
 
-		MessageUtil.send_client_message(command_requested.get_name() + " - " + command_requested.get_description());
+		MessageUtil.send_client_message(command_requested.getName() + " - " + command_requested.getDescription());
 
 		return true;
 	}

@@ -52,7 +52,7 @@ public class Webfill extends Hack {
 
         if (holes.isEmpty()) {
 
-            if (!web_toggle.get_value(true)) {
+            if (!web_toggle.getValue(true)) {
 
                 this.set_disable();
                 MessageUtil.toggle_message(this);
@@ -103,7 +103,7 @@ public class Webfill extends Hack {
 
         holes.clear();
 
-        for (BlockPos pos : BlockInteractHelper.getSphere(PlayerUtil.GetLocalPlayerPosFloored(), web_range.get_value(1), (int) web_range.get_value(1), false, true, 0)) {
+        for (BlockPos pos : BlockInteractHelper.getSphere(PlayerUtil.GetLocalPlayerPosFloored(), web_range.getValue(1), (int) web_range.getValue(1), false, true, 0)) {
 
             if (!mc.world.getBlockState(pos).getBlock().equals(Blocks.AIR)) {
                 continue;
@@ -178,7 +178,7 @@ public class Webfill extends Hack {
 
             Vec3d hitVec = new Vec3d((Vec3i)neighbor).add(0.5, 0.5, 0.5).add(new Vec3d(side2.getDirectionVec()).scale(0.5));
 
-            if (web_rotate.get_value(true)) {
+            if (web_rotate.getValue(true)) {
                 BlockInteractHelper.faceVectorPacketInstant(hitVec);
             }
 

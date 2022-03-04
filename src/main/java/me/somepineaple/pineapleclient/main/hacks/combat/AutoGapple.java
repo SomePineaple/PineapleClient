@@ -32,7 +32,7 @@ public class AutoGapple extends Hack {
                 return;
             }
 
-            swap_items(get_item_slot(), delay.get_value(true) ? 1 : 0);
+            swap_items(get_item_slot(), delay.getValue(true) ? 1 : 0);
         }
 
     }

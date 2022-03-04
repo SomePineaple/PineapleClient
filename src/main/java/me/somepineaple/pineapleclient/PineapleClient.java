@@ -92,12 +92,12 @@ public class PineapleClient {
 
 		send_minecraft_log("done");
 
-		if (module_manager.get_module_with_tag("GUI").is_active()) {
-			module_manager.get_module_with_tag("GUI").set_active(false);
+		if (module_manager.getModuleWithTag("GUI").isActive()) {
+			module_manager.getModuleWithTag("GUI").set_active(false);
 		}
 
-		if (module_manager.get_module_with_tag("HUD").is_active()) {
-			module_manager.get_module_with_tag("HUD").set_active(false);
+		if (module_manager.getModuleWithTag("HUD").isActive()) {
+			module_manager.getModuleWithTag("HUD").set_active(false);
 		}
 
 		send_minecraft_log("client started");
@@ -135,7 +135,7 @@ public class PineapleClient {
 		return module_manager;
 	}
 
-	public static SettingManager get_setting_manager() {
+	public static SettingManager getSettingManager() {
 		return setting_manager;
 	}
 
@@ -143,9 +143,9 @@ public class PineapleClient {
 		return hud_manager;
 	}
 
-	public static ModuleManager get_module_manager() { return module_manager; }
+	public static ModuleManager getModuleManager() { return module_manager; }
 
-	public static EventHandler get_event_handler() {
+	public static EventHandler getEventHandler() {
 		return EventHandler.INSTANCE;
 	}
 

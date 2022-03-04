@@ -14,7 +14,7 @@ public class Drawn extends PineapleclientCommand {
         super("drawn", "Hide elements of the array list");
     }
 
-    public boolean get_message(String[] message) {
+    public boolean getMessage(String[] message) {
 
         if (message.length == 1) {
             MessageUtil.send_client_error_message("module name needed");
@@ -38,10 +38,10 @@ public class Drawn extends PineapleclientCommand {
 
     public boolean is_module(String s) {
 
-        List<Hack> modules = PineapleClient.get_hack_manager().get_array_hacks();
+        List<Hack> modules = PineapleClient.get_hack_manager().getArrayHacks();
 
         for (Hack module : modules) {
-            if (module.get_tag().equalsIgnoreCase(s)) {
+            if (module.getTag().equalsIgnoreCase(s)) {
                 return true;
             }
         }

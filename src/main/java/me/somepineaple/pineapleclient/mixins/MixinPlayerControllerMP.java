@@ -22,7 +22,7 @@ public class MixinPlayerControllerMP {
 	// Player damage fix the hit.
 	@Redirect(method = "onPlayerDamageBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/state/IBlockState;getPlayerRelativeBlockHardness(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)F"))
 	private float onPlayerDamageBlockSpeed(IBlockState state, EntityPlayer player, World world, BlockPos pos) {
-		return state.getPlayerRelativeBlockHardness(player, world, pos) * (PineapleClient.get_event_handler().get_tick_rate() / 20f);
+		return state.getPlayerRelativeBlockHardness(player, world, pos) * (PineapleClient.getEventHandler().getTickRate() / 20f);
 	}
 
 	@Inject(method = "onPlayerDamageBlock", at = @At("HEAD"), cancellable = true)

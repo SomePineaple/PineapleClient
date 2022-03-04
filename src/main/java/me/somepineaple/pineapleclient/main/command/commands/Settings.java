@@ -10,7 +10,7 @@ public class Settings extends PineapleclientCommand {
 		super("settings", "To save/load settings.");
 	}
 
-	public boolean get_message(String[] message) {
+	public boolean getMessage(String[] message) {
 		String msg = "null";
 
 		if (message.length > 1) {
@@ -18,7 +18,7 @@ public class Settings extends PineapleclientCommand {
 		}
 
 		if (msg.equals("null")) {
-			MessageUtil.send_client_error_message(current_prefix() + "settings <save/load>");
+			MessageUtil.send_client_error_message(currentPrefix() + "settings <save/load>");
 
 			return true;
 		}
@@ -34,7 +34,7 @@ public class Settings extends PineapleclientCommand {
 
 			MessageUtil.send_client_message(ChatFormatting.GREEN + "Successfully " + c + "loaded!");
 		} else {
-			MessageUtil.send_client_error_message(current_prefix() + "settings <save/load>");
+			MessageUtil.send_client_error_message(currentPrefix() + "settings <save/load>");
 
 			return true;
 		}

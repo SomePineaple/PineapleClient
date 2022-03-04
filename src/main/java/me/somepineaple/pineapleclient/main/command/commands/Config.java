@@ -10,7 +10,7 @@ public class Config extends PineapleclientCommand {
         super("config", "changes which config is loaded");
     }
 
-    public boolean get_message(String[] message) {
+    public boolean getMessage(String[] message) {
 
         if (message.length == 1) {
             MessageUtil.send_client_error_message("config needed");

@@ -21,7 +21,7 @@ public class SettingManager {
 		return this.array_setting;
 	}
 
-	public Setting get_setting_with_tag(Hack module, String tag) {
+	public Setting getSettingWithTag(Hack module, String tag) {
 		Setting setting_requested = null;
 
 		for (Setting settings : get_array_settings()) {
@@ -33,11 +33,11 @@ public class SettingManager {
 		return setting_requested;
 	}
 
-	public Setting get_setting_with_tag(String tag, String tag_) {
+	public Setting getSettingWithTag(String tag, String tag_) {
 		Setting setting_requested = null;
 
 		for (Setting settings : get_array_settings()) {
-			if (settings.get_master().get_tag().equalsIgnoreCase(tag) && settings.get_tag().equalsIgnoreCase(tag_)) {
+			if (settings.get_master().getTag().equalsIgnoreCase(tag) && settings.get_tag().equalsIgnoreCase(tag_)) {
 				setting_requested = settings;
 				break;
 			}

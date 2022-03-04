@@ -35,7 +35,7 @@ public class Label extends AbstractWidget {
 	public Label(Frame frame, ModuleButton master, String tag, int update_postion) {
 		this.frame   = frame;
 		this.master  = master;
-		this.setting = PineapleClient.get_setting_manager().get_setting_with_tag(master.get_module(), tag);
+		this.setting = PineapleClient.getSettingManager().getSettingWithTag(master.get_module(), tag);
 
 		this.x = master.get_x();
 		this.y = update_postion;
@@ -159,14 +159,14 @@ public class Label extends AbstractWidget {
 
 				GL11.glPopMatrix();
 
-				RenderHelp.release_gl();
+				RenderHelp.releaseGl();
 			}
 		}
 
 		if (this.info) {
-			Draw.draw_string(this.setting.get_value(s), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+			Draw.draw_string(this.setting.getValue(s), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		} else {
-			Draw.draw_string(this.label_name + " \"" + this.setting.get_value(s) + "\"", this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+			Draw.draw_string(this.label_name + " \"" + this.setting.getValue(s) + "\"", this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		}
 	}
 }

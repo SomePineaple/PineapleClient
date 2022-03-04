@@ -49,14 +49,14 @@ public class AutoArmour extends Hack {
 
         boolean flag = false;
 
-        if (delay_count < delay.get_value(0)) {
+        if (delay_count < delay.getValue(0)) {
             delay_count++;
             return;
         }
         delay_count = 0;
 
-        if (smart_mode.get_value(true)) {
-            if (!(is_crystal_in_range(crystal_range.get_value(1)) || is_player_in_range(player_range.get_value(1)))) flag = true;
+        if (smart_mode.getValue(true)) {
+            if (!(is_crystal_in_range(crystal_range.getValue(1)) || is_player_in_range(player_range.getValue(1)))) flag = true;
         }
 
         if (flag) {
@@ -66,7 +66,7 @@ public class AutoArmour extends Hack {
             return;
         }
 
-        if (!put_back.get_value(true)) return;
+        if (!put_back.getValue(true)) return;
 
         if (mc.currentScreen instanceof GuiContainer && !(mc.currentScreen instanceof InventoryEffectRenderer)) return;
 
@@ -203,12 +203,12 @@ public class AutoArmour extends Hack {
             double max_dam = item.getMaxDamage();
             double dam_left = item.getMaxDamage() - item.getItemDamage();
             double percent = (dam_left / max_dam) * 100;
-            return percent >= boot_percent.get_value(1);
+            return percent >= boot_percent.getValue(1);
         } else {
             double max_dam = item.getMaxDamage();
             double dam_left = item.getMaxDamage() - item.getItemDamage();
             double percent = (dam_left / max_dam) * 100;
-            return percent >= chest_percent.get_value(1);
+            return percent >= chest_percent.getValue(1);
         }
     }
 }

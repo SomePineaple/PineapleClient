@@ -47,9 +47,9 @@ public class MCP extends Hack {
     }
 
     private void throwPearl() {
-        if (!antiFriend.get_value(true) && mc.objectMouseOver != null && 
+        if (!antiFriend.getValue(true) && mc.objectMouseOver != null &&
             mc.objectMouseOver.typeOfHit == Type.ENTITY && 
-            PineapleClient.get_hack_manager().get_module_with_tag("MiddleclickFriends").is_active()) {
+            PineapleClient.get_hack_manager().getModuleWithTag("MiddleclickFriends").isActive()) {
             return;
         }
         int pearlSlot = findPearlSlot();

@@ -80,7 +80,7 @@ public class GUI extends GuiScreen {
 
 	@Override
 	public void onGuiClosed() {
-		PineapleClient.get_hack_manager().get_module_with_tag("GUI").set_active(false);
+		PineapleClient.get_hack_manager().getModuleWithTag("GUI").set_active(false);
 
 		PineapleClient.get_config_manager().save_settings();
 	}

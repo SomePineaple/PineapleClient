@@ -22,16 +22,16 @@ public class Offhand extends Hack {
         this.description = "Switches shit to ur offhand";
     }
 
-    Setting switch_mode = create("Offhand", "OffhandOffhand", "Totem", combobox("Totem", "Crystal", "Gapple"));
-    Setting totem_switch = create("Totem HP", "OffhandTotemHP", 16, 0, 36);
+    Setting switchMode = create("Offhand", "OffhandOffhand", "Totem", combobox("Totem", "Crystal", "Gapple"));
+    Setting totemSwitch = create("Totem HP", "OffhandTotemHP", 16, 0, 36);
 
-    Setting gapple_in_hole = create("Gapple In Hole", "OffhandGapple", false);
-    Setting gapple_hole_hp = create("Gapple Hole HP", "OffhandGappleHP", 8, 0, 36);
+    Setting gappleInHole = create("Gapple In Hole", "OffhandGapple", false);
+    Setting gappleHoleHp = create("Gapple Hole HP", "OffhandGappleHP", 8, 0, 36);
 
     Setting delay = create("Delay", "OffhandDelay", false);
 
     private boolean switching = false;
-    private int last_slot;
+    private int lastSlot;
 
     @Override
     public void update() {
@@ -39,47 +39,47 @@ public class Offhand extends Hack {
         if (mc.currentScreen == null || mc.currentScreen instanceof GuiInventory) {
 
             if (switching) {
-                swap_items(last_slot, 2);
+                swapItems(lastSlot, 2);
                 return;
             }
 
             float hp = mc.player.getHealth() + mc.player.getAbsorptionAmount();
 
-            if (hp > totem_switch.get_value(1)) {
-                if (switch_mode.in("Crystal") && PineapleClient.get_hack_manager().get_module_with_tag("AutoCrystal").is_active()) {
-                    swap_items(get_item_slot(Items.END_CRYSTAL),0);
+            if (hp > totemSwitch.getValue(1)) {
+                if (switchMode.in("Crystal") && PineapleClient.get_hack_manager().getModuleWithTag("AutoCrystal").isActive()) {
+                    swapItems(get_item_slot(Items.END_CRYSTAL),0);
                     return;
                 }
-                if (gapple_in_hole.get_value(true) && hp > gapple_hole_hp.get_value(1) && is_in_hole()) {
-                    swap_items(get_item_slot(Items.GOLDEN_APPLE), delay.get_value(true) ? 1 : 0);
+                if (gappleInHole.getValue(true) && hp > gappleHoleHp.getValue(1) && is_in_hole()) {
+                    swapItems(get_item_slot(Items.GOLDEN_APPLE), delay.getValue(true) ? 1 : 0);
                     return;
                 }
-                if (switch_mode.in("Totem")) {
-                    swap_items(get_item_slot(Items.TOTEM_OF_UNDYING), delay.get_value(true) ? 1 : 0);
+                if (switchMode.in("Totem")) {
+                    swapItems(get_item_slot(Items.TOTEM_OF_UNDYING), delay.getValue(true) ? 1 : 0);
                     return;
                 }
-                if (switch_mode.in("Gapple")) {
-                    swap_items(get_item_slot(Items.GOLDEN_APPLE), delay.get_value(true) ? 1 : 0);
+                if (switchMode.in("Gapple")) {
+                    swapItems(get_item_slot(Items.GOLDEN_APPLE), delay.getValue(true) ? 1 : 0);
                     return;
                 }
-                if (switch_mode.in("Crystal") && !PineapleClient.get_hack_manager().get_module_with_tag("AutoCrystal").is_active()) {
-                    swap_items(get_item_slot(Items.TOTEM_OF_UNDYING),0);
+                if (switchMode.in("Crystal") && !PineapleClient.get_hack_manager().getModuleWithTag("AutoCrystal").isActive()) {
+                    swapItems(get_item_slot(Items.TOTEM_OF_UNDYING),0);
                     return;
                 }
             } else {
-                swap_items(get_item_slot(Items.TOTEM_OF_UNDYING), delay.get_value(true) ? 1 : 0);
+                swapItems(get_item_slot(Items.TOTEM_OF_UNDYING), delay.getValue(true) ? 1 : 0);
                 return;
             }
 
             if (mc.player.getHeldItemOffhand().getItem() == Items.AIR) {
-                swap_items(get_item_slot(Items.TOTEM_OF_UNDYING), delay.get_value(true) ? 1 : 0);
+                swapItems(get_item_slot(Items.TOTEM_OF_UNDYING), delay.getValue(true) ? 1 : 0);
             }
 
         }
 
     }
 
-    public void swap_items(int slot, int step) {
+    public void swapItems(int slot, int step) {
         if (slot == -1) return;
         if (step == 0) {
             mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
@@ -89,7 +89,7 @@ public class Offhand extends Hack {
         if (step == 1) {
             mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
             switching = true;
-            last_slot = slot;
+            lastSlot = slot;
         }
         if (step == 2) {
             mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, mc.player);

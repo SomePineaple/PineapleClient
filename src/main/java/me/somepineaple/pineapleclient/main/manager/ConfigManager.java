@@ -159,9 +159,9 @@ public class ConfigManager {
 
     private void save_hacks() throws IOException {
 
-        for (Hack hack : PineapleClient.get_hack_manager().get_array_hacks()) {
+        for (Hack hack : PineapleClient.get_hack_manager().getArrayHacks()) {
 
-            final String file_name = ACTIVE_CONFIG_FOLDER + hack.get_tag() + ".txt";
+            final String file_name = ACTIVE_CONFIG_FOLDER + hack.getTag() + ".txt";
             final Path file_path = Paths.get(file_name);
             delete_file(file_name);
             verify_file(file_path);
@@ -169,22 +169,22 @@ public class ConfigManager {
             final File file = new File(file_name);
             final BufferedWriter br = new BufferedWriter(new FileWriter(file));
 
-            for (Setting setting : PineapleClient.get_setting_manager().get_settings_with_hack(hack)) {
+            for (Setting setting : PineapleClient.getSettingManager().get_settings_with_hack(hack)) {
                 switch (setting.get_type()) {
                     case "button":
-                        br.write(setting.get_tag() + ":" + setting.get_value(true) + "\r\n");
+                        br.write(setting.get_tag() + ":" + setting.getValue(true) + "\r\n");
                         break;
                     case "combobox":
                         br.write(setting.get_tag() + ":" + setting.get_current_value() + "\r\n");
                         break;
                     case "label":
-                        br.write(setting.get_tag() + ":" + setting.get_value("") + "\r\n");
+                        br.write(setting.get_tag() + ":" + setting.getValue("") + "\r\n");
                         break;
                     case "doubleslider":
-                        br.write(setting.get_tag() + ":" + setting.get_value(1.0) + "\r\n");
+                        br.write(setting.get_tag() + ":" + setting.getValue(1.0) + "\r\n");
                         break;
                     case "integerslider":
-                        br.write(setting.get_tag() + ":" + setting.get_value(1) + "\r\n");
+                        br.write(setting.get_tag() + ":" + setting.getValue(1) + "\r\n");
                         break;
                 }
             }
@@ -195,9 +195,9 @@ public class ConfigManager {
 
     private void load_hacks() throws IOException {
 
-        for (Hack hack : PineapleClient.get_hack_manager().get_array_hacks()) {
+        for (Hack hack : PineapleClient.get_hack_manager().getArrayHacks()) {
 
-            final String file_name = ACTIVE_CONFIG_FOLDER + hack.get_tag() + ".txt";
+            final String file_name = ACTIVE_CONFIG_FOLDER + hack.getTag() + ".txt";
             final File file = new File(file_name);
             final FileInputStream fi_stream = new FileInputStream(file.getAbsolutePath());
             final DataInputStream di_stream = new DataInputStream(fi_stream);
@@ -213,23 +213,23 @@ public class ConfigManager {
                     final String tag = colune.split(":")[0];
                     final String value = colune.split(":")[1];
 
-                    Setting setting = PineapleClient.get_setting_manager().get_setting_with_tag(hack, tag);
+                    Setting setting = PineapleClient.getSettingManager().getSettingWithTag(hack, tag);
 
                     // send_minecraft_log("Attempting to assign value '" + value + "' to setting '" + tag + "'");
 
                     try {
                         switch (setting.get_type()) {
                             case "button":
-                                setting.set_value(Boolean.parseBoolean(value));
+                                setting.setValue(Boolean.parseBoolean(value));
                                 break;
                             case "label":
-                                setting.set_value(value);
+                                setting.setValue(value);
                                 break;
                             case "doubleslider":
-                                setting.set_value(Double.parseDouble(value));
+                                setting.setValue(Double.parseDouble(value));
                                 break;
                             case "integerslider":
-                                setting.set_value(Integer.parseInt(value));
+                                setting.setValue(Integer.parseInt(value));
                                 break;
                             case "combobox":
                                 setting.set_current_value(value);
@@ -267,7 +267,7 @@ public class ConfigManager {
         config.add("name", new JsonPrimitive(PineapleClient.get_name()));
         config.add("version", new JsonPrimitive(PineapleClient.get_version()));
         config.add("user", new JsonPrimitive(PineapleClient.get_actual_user()));
-        config.add("prefix", new JsonPrimitive(CommandManager.get_prefix()));
+        config.add("prefix", new JsonPrimitive(CommandManager.getPrefix()));
 
         for (Frame frames_gui : PineapleClient.click_gui.get_array_frames()) {
             JsonObject frame_info = new JsonObject();
@@ -301,7 +301,7 @@ public class ConfigManager {
         JsonObject  json_config = json_client.get("configuration").getAsJsonObject();
         JsonObject  json_gui = json_client.get("gui").getAsJsonObject();
 
-        CommandManager.set_prefix(json_config.get("prefix").getAsString());
+        CommandManager.setPrefix(json_config.get("prefix").getAsString());
 
         for (Frame frames : PineapleClient.click_gui.get_array_frames()) {
             JsonObject frame_info = json_gui.get(frames.get_tag()).getAsJsonObject();
@@ -396,8 +396,8 @@ public class ConfigManager {
         this.verify_file(file_path);
         final File file = new File(file_name);
         final BufferedWriter br = new BufferedWriter(new FileWriter(file));
-        for (final Hack modules : PineapleClient.get_hack_manager().get_array_hacks()) {
-            br.write(modules.get_tag() + ":" + modules.get_bind(1) + ":" + modules.is_active() + "\r\n");
+        for (final Hack modules : PineapleClient.get_hack_manager().getArrayHacks()) {
+            br.write(modules.getTag() + ":" + modules.getBind(1) + ":" + modules.isActive() + "\r\n");
         }
         br.close();
     }
@@ -416,7 +416,7 @@ public class ConfigManager {
                 final String tag = colune.split(":")[0];
                 final String bind = colune.split(":")[1];
                 final String active = colune.split(":")[2];
-                final Hack module = PineapleClient.get_hack_manager().get_module_with_tag(tag);
+                final Hack module = PineapleClient.get_hack_manager().getModuleWithTag(tag);
                 module.set_bind(Integer.parseInt(bind));
                 module.set_active(Boolean.parseBoolean(active));
             } catch (Exception ignored) {}

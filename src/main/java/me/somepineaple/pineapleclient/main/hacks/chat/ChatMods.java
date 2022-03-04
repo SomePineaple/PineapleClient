@@ -40,7 +40,7 @@ public final class ChatMods extends Hack {
             if (packet.getChatComponent() instanceof TextComponentString) {
                 final TextComponentString component = (TextComponentString) packet.getChatComponent();
 
-              if (timestamps.get_value(true)) {
+              if (timestamps.getValue(true)) {
 
                     String date = "";
 
@@ -61,7 +61,7 @@ public final class ChatMods extends Hack {
 
                 if (text.contains("combat for")) return;
 
-                if (name_highlight.get_value(true) && mc.player != null) {
+                if (name_highlight.getValue(true) && mc.player != null) {
 
                     if (text.toLowerCase().contains(mc.player.getName().toLowerCase())) {
 
@@ -73,7 +73,7 @@ public final class ChatMods extends Hack {
 
                 event.cancel();
 
-                MessageUtil.client_message(text);
+                MessageUtil.clientMessage(text);
 
             }
         }

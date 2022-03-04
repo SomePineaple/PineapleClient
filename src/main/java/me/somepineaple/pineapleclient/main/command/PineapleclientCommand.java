@@ -11,19 +11,19 @@ public class PineapleclientCommand {
 		this.description = description;
 	}
 
-	public boolean get_message(String[] message) {
+	public boolean getMessage(String[] message) {
 		return false;
 	}
 
-	public String get_name() {
+	public String getName() {
 		return this.name;
 	}
 
-	public String get_description() {
+	public String getDescription() {
 		return this.description;
 	}
 
-	public String current_prefix() {
-		return CommandManager.get_prefix();
+	public String currentPrefix() {
+		return CommandManager.getPrefix();
 	}
 }

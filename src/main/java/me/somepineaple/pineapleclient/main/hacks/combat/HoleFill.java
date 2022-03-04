@@ -58,7 +58,7 @@ public class HoleFill extends Hack {
         }
 
         if (holes.isEmpty()) {
-            if (!hole_toggle.get_value(true)) {
+            if (!hole_toggle.getValue(true)) {
                 this.set_disable();
                 MessageUtil.toggle_message(this);
                 return;
@@ -90,7 +90,7 @@ public class HoleFill extends Hack {
         }
 
         if (pos_to_fill != null) {
-            if (BlockUtil.placeBlock(pos_to_fill, find_in_hotbar(), hole_rotate.get_value(true), hole_rotate.get_value(true), true, swing)) {
+            if (BlockUtil.placeBlock(pos_to_fill, find_in_hotbar(), hole_rotate.getValue(true), hole_rotate.getValue(true), true, swing)) {
                 holes.remove(pos_to_fill);
             }
         }
@@ -101,7 +101,7 @@ public class HoleFill extends Hack {
 
         holes.clear();
 
-        for (BlockPos pos : BlockInteractHelper.getSphere(PlayerUtil.GetLocalPlayerPosFloored(), hole_range.get_value(1), (int) hole_range.get_value(1), false, true, 0)) {
+        for (BlockPos pos : BlockInteractHelper.getSphere(PlayerUtil.GetLocalPlayerPosFloored(), hole_range.getValue(1), (int) hole_range.getValue(1), false, true, 0)) {
 
             if (!mc.world.getBlockState(pos).getBlock().equals(Blocks.AIR)) {
                 continue;

@@ -23,10 +23,10 @@ public class PlayerList extends Pinnable {
 
         int counter = 12;
 
-        int nl_r = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
-		int nl_g = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
-		int nl_b = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
-		int nl_a = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
+        int nl_r = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorR").getValue(1);
+		int nl_g = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorG").getValue(1);
+		int nl_b = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorB").getValue(1);
+		int nl_a = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorA").getValue(1);
 
         df_health.setRoundingMode(RoundingMode.HALF_UP);
 
@@ -65,7 +65,7 @@ public class PlayerList extends Pinnable {
 
         players = sortByValue(players);
 
-        int max = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDMaxPlayers").get_value(1);
+        int max = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDMaxPlayers").getValue(1);
         int count = 0;
 
         for (Map.Entry<String, Integer> player : players.entrySet()) {

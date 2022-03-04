@@ -93,7 +93,7 @@ public class Socks extends Hack {
 
         }
 
-        BlockUtil.placeBlock(pos_to_fill, find_in_hotbar(), rotate.get_value(true), rotate.get_value(true), true, swing);
+        BlockUtil.placeBlock(pos_to_fill, find_in_hotbar(), rotate.getValue(true), rotate.getValue(true), true, swing);
 
     }
 

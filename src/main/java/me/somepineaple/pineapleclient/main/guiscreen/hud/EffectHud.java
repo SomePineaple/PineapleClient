@@ -23,10 +23,10 @@ public class EffectHud extends Pinnable {
 
         int counter = 12;
 
-        int nl_r = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorR").get_value(1);
-        int nl_g = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorG").get_value(1);
-        int nl_b = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorB").get_value(1);
-        int nl_a = PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDStringsColorA").get_value(1);
+        int nl_r = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorR").getValue(1);
+        int nl_g = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorG").getValue(1);
+        int nl_b = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorB").getValue(1);
+        int nl_a = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorA").getValue(1);
 
         final List<PotionEffect> effects = new ArrayList<>(mc.player.getActivePotionEffects());
 
@@ -58,7 +58,7 @@ public class EffectHud extends Pinnable {
                 final String e = ChatFormatting.GREEN + get_friendly_potion_name(effect) + " " + ChatFormatting.RESET + Potion.getPotionDurationString(effect, 1.0f);
                 create_line(e, this.docking(1, e), counter, nl_r, nl_g, nl_b, nl_a);
                 counter += 12;
-            } else if (PineapleClient.get_setting_manager().get_setting_with_tag("HUD", "HUDAllPotions").get_value(true)) {
+            } else if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDAllPotions").getValue(true)) {
                 final String e = get_friendly_potion_name(effect) + " " + Potion.getPotionDurationString(effect, 1.0f);
                 create_line(e, this.docking(1, e), counter, nl_r, nl_g, nl_b, nl_a);
                 counter += 12;

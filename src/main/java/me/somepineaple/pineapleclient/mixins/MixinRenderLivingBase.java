@@ -25,9 +25,9 @@ public abstract class MixinRenderLivingBase<T extends EntityLivingBase> extends 
     private void renderModelHook(final ModelBase modelBase, final Entity entityIn, final float limbSwing, final float limbSwingAmount, final float ageInTicks, final float netHeadYaw, final float headPitch, final float scale) {
         EventRenderEntity.Head eventRenderEntity = new EventRenderEntity.Head(entityIn, EventRenderEntity.Type.COLOR);
         PineapleEventBus.EVENT_BUS.post(eventRenderEntity);
-        if (PineapleClient.get_hack_manager().get_module_with_tag("ESP").is_active()) {
+        if (PineapleClient.get_hack_manager().getModuleWithTag("ESP").isActive()) {
             final EventRenderEntityModel event = new EventRenderEntityModel(0, modelBase, entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-            PineapleClient.get_hack_manager().get_module_with_tag("ESP").on_render_model(event);
+            PineapleClient.get_hack_manager().getModuleWithTag("ESP").on_render_model(event);
             if (event.isCancelled()) {
                 return;
             }
