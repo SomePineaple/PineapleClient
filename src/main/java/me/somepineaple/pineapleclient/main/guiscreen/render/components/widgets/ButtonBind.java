@@ -180,15 +180,15 @@ public class ButtonBind extends AbstractWidget {
 
 		this.save_y = this.y + master_y;
 
-		int ns_r = PineapleClient.click_gui.theme_widget_name_r;
-		int ns_g = PineapleClient.click_gui.theme_widget_name_g;
-		int ns_b = PineapleClient.click_gui.theme_widget_name_b;
-		int ns_a = PineapleClient.click_gui.theme_widget_name_a;
+		int ns_r = PineapleClient.clickGui.themeWidgetNameR;
+		int ns_g = PineapleClient.clickGui.themeWidgetNameG;
+		int ns_b = PineapleClient.clickGui.themeWidgetNameB;
+		int ns_a = PineapleClient.clickGui.themeWidgetNameA;
 
-		int bg_r = PineapleClient.click_gui.theme_widget_background_r;
-		int bg_g = PineapleClient.click_gui.theme_widget_background_g;
-		int bg_b = PineapleClient.click_gui.theme_widget_background_b;
-		int bg_a = PineapleClient.click_gui.theme_widget_background_a;
+		int bg_r = PineapleClient.clickGui.themeWidgetBackgroundR;
+		int bg_g = PineapleClient.clickGui.themeWidgetBackgroundG;
+		int bg_b = PineapleClient.clickGui.themeWidgetBackgroundB;
+		int bg_a = PineapleClient.clickGui.themeWidgetBackgroundA;
 
 		if (this.waiting) {
 			Draw.draw_rect(get_x(), this.save_y, get_x() + this.width, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);

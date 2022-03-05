@@ -30,7 +30,7 @@ public class Bind extends PineapleclientCommand {
 			return true;
 		}
 
-		Hack module_requested = PineapleClient.get_hack_manager().getModuleWithTag(module);
+		Hack module_requested = PineapleClient.getHackManager().getModuleWithTag(module);
 
 		if (module_requested == null) {
 			MessageUtil.send_client_error_message("Module does not exist.");

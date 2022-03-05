@@ -49,39 +49,39 @@ public class ClickGUI extends Hack {
 	@Override
 	public void update() {
 		// Update frame colors.
-		PineapleClient.click_gui.theme_frame_name_r = name_frame_r.getValue(1);
-		PineapleClient.click_gui.theme_frame_name_g = name_frame_g.getValue(1);
-		PineapleClient.click_gui.theme_frame_name_b = name_frame_b.getValue(1);
+		PineapleClient.clickGui.themeFrameNameR = name_frame_r.getValue(1);
+		PineapleClient.clickGui.themeFrameNameG = name_frame_g.getValue(1);
+		PineapleClient.clickGui.themeFrameNameB = name_frame_b.getValue(1);
 
-		PineapleClient.click_gui.theme_frame_background_r = background_frame_r.getValue(1);
-		PineapleClient.click_gui.theme_frame_background_g = background_frame_g.getValue(1);
-		PineapleClient.click_gui.theme_frame_background_b = background_frame_b.getValue(1);
-		PineapleClient.click_gui.theme_frame_background_a = background_frame_a.getValue(1);
+		PineapleClient.clickGui.themeFrameBackgroundR = background_frame_r.getValue(1);
+		PineapleClient.clickGui.themeFrameBackgroundG = background_frame_g.getValue(1);
+		PineapleClient.clickGui.themeFrameBackgroundB = background_frame_b.getValue(1);
+		PineapleClient.clickGui.themeFrameBackgroundA = background_frame_a.getValue(1);
 
-		PineapleClient.click_gui.theme_frame_border_r = border_frame_r.getValue(1);
-		PineapleClient.click_gui.theme_frame_border_g = border_frame_g.getValue(1);
-		PineapleClient.click_gui.theme_frame_border_b = border_frame_b.getValue(1);
-		PineapleClient.click_gui.theme_frame_border_a = border_frame_a.getValue(1);
+		PineapleClient.clickGui.themeFrameBorderR = border_frame_r.getValue(1);
+		PineapleClient.clickGui.themeFrameBorderG = border_frame_g.getValue(1);
+		PineapleClient.clickGui.themeFrameBorderB = border_frame_b.getValue(1);
+		PineapleClient.clickGui.themeFrameBorderA = border_frame_a.getValue(1);
 
 		// Update widget colors.
-		PineapleClient.click_gui.theme_widget_name_r = name_widget_r.getValue(1);
-		PineapleClient.click_gui.theme_widget_name_g = name_widget_g.getValue(1);
-		PineapleClient.click_gui.theme_widget_name_b = name_widget_b.getValue(1);
+		PineapleClient.clickGui.themeWidgetNameR = name_widget_r.getValue(1);
+		PineapleClient.clickGui.themeWidgetNameG = name_widget_g.getValue(1);
+		PineapleClient.clickGui.themeWidgetNameB = name_widget_b.getValue(1);
 
-		PineapleClient.click_gui.theme_widget_background_r = background_widget_r.getValue(1);
-		PineapleClient.click_gui.theme_widget_background_g = background_widget_g.getValue(1);
-		PineapleClient.click_gui.theme_widget_background_b = background_widget_b.getValue(1);
-		PineapleClient.click_gui.theme_widget_background_a = background_widget_a.getValue(1);
+		PineapleClient.clickGui.themeWidgetBackgroundR = background_widget_r.getValue(1);
+		PineapleClient.clickGui.themeWidgetBackgroundG = background_widget_g.getValue(1);
+		PineapleClient.clickGui.themeWidgetBackgroundB = background_widget_b.getValue(1);
+		PineapleClient.clickGui.themeWidgetBackgroundA = background_widget_a.getValue(1);
 
-		PineapleClient.click_gui.theme_widget_border_r = border_widget_r.getValue(1);
-		PineapleClient.click_gui.theme_widget_border_g = border_widget_g.getValue(1);
-		PineapleClient.click_gui.theme_widget_border_b = border_widget_b.getValue(1);
+		PineapleClient.clickGui.themeWidgetBorderR = border_widget_r.getValue(1);
+		PineapleClient.clickGui.themeWidgetBorderG = border_widget_g.getValue(1);
+		PineapleClient.clickGui.themeWidgetBorderB = border_widget_b.getValue(1);
 	}
 
 	@Override
 	public void enable() {
 		if (mc.world != null && mc.player != null) {
-			mc.displayGuiScreen(PineapleClient.click_gui);
+			mc.displayGuiScreen(PineapleClient.clickGui);
 		}
 	}
 

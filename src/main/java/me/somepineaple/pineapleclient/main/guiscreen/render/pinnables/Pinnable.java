@@ -245,6 +245,6 @@ public class Pinnable {
 	}
 
 	protected boolean is_on_gui() {
-		return PineapleClient.click_hud.on_gui;
+		return PineapleClient.clickHud.on_gui;
 	}
 }

@@ -22,7 +22,7 @@ public abstract class MixinAbstractClientPlayer {
     @Inject(method={"getLocationCape"}, at={@At(value="HEAD")}, cancellable=true)
     public void getLocationCape(CallbackInfoReturnable<ResourceLocation> callbackInfoReturnable) {
 
-        if (PineapleClient.get_hack_manager().getModuleWithTag("Capes").isActive()) {
+        if (PineapleClient.getHackManager().getModuleWithTag("Capes").isActive()) {
             NetworkPlayerInfo info = this.getPlayerInfo();
             assert info != null;
             if (!CapeUtil.is_uuid_valid(info.getGameProfile().getId())) {

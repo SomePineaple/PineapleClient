@@ -49,7 +49,7 @@ public class MCP extends Hack {
     private void throwPearl() {
         if (!antiFriend.getValue(true) && mc.objectMouseOver != null &&
             mc.objectMouseOver.typeOfHit == Type.ENTITY && 
-            PineapleClient.get_hack_manager().getModuleWithTag("MiddleclickFriends").isActive()) {
+            PineapleClient.getHackManager().getModuleWithTag("MiddleclickFriends").isActive()) {
             return;
         }
         int pearlSlot = findPearlSlot();

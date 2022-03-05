@@ -45,7 +45,7 @@ public class Alert extends PineapleclientCommand {
 		module = module.toLowerCase();
 		state  = state.toLowerCase();
 
-		Hack module_requested = PineapleClient.get_hack_manager().getModuleWithTag(module);
+		Hack module_requested = PineapleClient.getHackManager().getModuleWithTag(module);
 
 		if (module_requested == null) {
 			MessageUtil.send_client_error_message("This module does not exist.");

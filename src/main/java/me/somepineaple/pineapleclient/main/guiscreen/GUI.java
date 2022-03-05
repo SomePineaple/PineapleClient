@@ -14,46 +14,44 @@ import java.util.ArrayList;
 public class GUI extends GuiScreen {
 	private final ArrayList<Frame> frame;
 
-	private int frame_x;
-
 	private Frame current;
 
 	// Frame.
-	public int theme_frame_name_r = 0;
-	public int theme_frame_name_g = 0;
-	public int theme_frame_name_b = 0;
-	public int theme_frame_name_a = 0;
+	public int themeFrameNameR = 0;
+	public int themeFrameNameG = 0;
+	public int themeFrameNameB = 0;
+	public int themeFrameNameA = 0;
 
-	public int theme_frame_background_r = 0;
-	public int theme_frame_background_g = 0;
-	public int theme_frame_background_b = 0;
-	public int theme_frame_background_a = 0;
+	public int themeFrameBackgroundR = 0;
+	public int themeFrameBackgroundG = 0;
+	public int themeFrameBackgroundB = 0;
+	public int themeFrameBackgroundA = 0;
 
-	public int theme_frame_border_r = 0;
-	public int theme_frame_border_g = 0;
-	public int theme_frame_border_b = 0;
-	public int theme_frame_border_a = 0;
+	public int themeFrameBorderR = 0;
+	public int themeFrameBorderG = 0;
+	public int themeFrameBorderB = 0;
+	public int themeFrameBorderA = 0;
 
 	// Module.
-	public int theme_widget_name_r = 0;
-	public int theme_widget_name_g = 0;
-	public int theme_widget_name_b = 0;
-	public int theme_widget_name_a = 0;
+	public int themeWidgetNameR = 0;
+	public int themeWidgetNameG = 0;
+	public int themeWidgetNameB = 0;
+	public int themeWidgetNameA = 0;
 
-	public int theme_widget_background_r = 0;
-	public int theme_widget_background_g = 0;
-	public int theme_widget_background_b = 0;
-	public int theme_widget_background_a = 0;
+	public int themeWidgetBackgroundR = 0;
+	public int themeWidgetBackgroundG = 0;
+	public int themeWidgetBackgroundB = 0;
+	public int themeWidgetBackgroundA = 0;
 
-	public int theme_widget_border_r = 0;
-	public int theme_widget_border_g = 0;
-	public int theme_widget_border_b = 0;
+	public int themeWidgetBorderR = 0;
+	public int themeWidgetBorderG = 0;
+	public int themeWidgetBorderB = 0;
 
 	private final Minecraft mc = Minecraft.getMinecraft();
 
 	public GUI() {
 		this.frame   = new ArrayList<>();
-		this.frame_x = 10;
+		int frame_x = 10;
 
 		for (Category categorys : Category.values()) {
 			if (categorys.is_hidden()) {
@@ -62,11 +60,11 @@ public class GUI extends GuiScreen {
 
 			Frame frames = new Frame(categorys);
 
-			frames.set_x(this.frame_x);
+			frames.set_x(frame_x);
 
 			this.frame.add(frames);
 
-			this.frame_x += frames.get_width() + 5;
+			frame_x += frames.get_width() + 5;
 
 			this.current = frames;
 		}
@@ -80,9 +78,9 @@ public class GUI extends GuiScreen {
 
 	@Override
 	public void onGuiClosed() {
-		PineapleClient.get_hack_manager().getModuleWithTag("GUI").set_active(false);
+		PineapleClient.getHackManager().getModuleWithTag("GUI").set_active(false);
 
-		PineapleClient.get_config_manager().save_settings();
+		PineapleClient.getConfigManager().save_settings();
 	}
 
 	@Override

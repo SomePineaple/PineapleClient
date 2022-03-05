@@ -153,10 +153,10 @@ public class Combobox extends AbstractWidget {
 
 		this.save_y = this.y + master_y;
 
-		int ns_r = PineapleClient.click_gui.theme_widget_name_r;
-		int ns_g = PineapleClient.click_gui.theme_widget_name_g;
-		int ns_b = PineapleClient.click_gui.theme_widget_name_b;
-		int ns_a = PineapleClient.click_gui.theme_widget_name_b;
+		int ns_r = PineapleClient.clickGui.themeWidgetNameR;
+		int ns_g = PineapleClient.clickGui.themeWidgetNameG;
+		int ns_b = PineapleClient.clickGui.themeWidgetNameB;
+		int ns_a = PineapleClient.clickGui.themeWidgetNameB;
 
 		Draw.draw_string(this.combobox_name + " " + this.setting.get_current_value(), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 

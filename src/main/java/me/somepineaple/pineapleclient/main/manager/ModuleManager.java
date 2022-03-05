@@ -63,7 +63,6 @@ public class ModuleManager {
 		addHack(new AutoGapple());
 		addHack(new AutoTotem());
 		addHack(new AutoMine());
-		addHack(new AutoPVP());
 
 		// Exploit.
 		addHack(new XCarry());

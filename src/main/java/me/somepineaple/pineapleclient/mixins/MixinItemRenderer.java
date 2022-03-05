@@ -33,13 +33,13 @@ public abstract class MixinItemRenderer {
             float yOffset = 0.0f;
             this.injection = false;
             if (hand == EnumHand.MAIN_HAND) {
-                if (PineapleClient.get_hack_manager().getModuleWithTag("CustomViewmodel").isActive()) {
+                if (PineapleClient.getHackManager().getModuleWithTag("CustomViewmodel").isActive()) {
                     xOffset = PineapleClient.getSettingManager().getSettingWithTag("CustomViewmodel", "FOVMainX").getValue(1);
                     yOffset = PineapleClient.getSettingManager().getSettingWithTag("CustomViewmodel", "FOVMainY").getValue(1);
                 }
             }
             else if (PineapleClient.getSettingManager().getSettingWithTag("CustomViewmodel", "FOVOffset").getValue(true) &&
-            PineapleClient.get_hack_manager().getModuleWithTag("CustomViewmodel").isActive()) {
+            PineapleClient.getHackManager().getModuleWithTag("CustomViewmodel").isActive()) {
                 xOffset = PineapleClient.getSettingManager().getSettingWithTag("CustomViewmodel", "FOVOffsetX").getValue(1);
                 yOffset = PineapleClient.getSettingManager().getSettingWithTag("CustomViewmodel", "FOVOffsetY").getValue(1);
             }
@@ -50,13 +50,13 @@ public abstract class MixinItemRenderer {
 
     @Redirect(method = "renderArmFirstPerson", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;translate(FFF)V", ordinal = 0))
     public void translateHook(final float x, final float y, final float z) {
-        GlStateManager.translate(x + (PineapleClient.get_hack_manager().getModuleWithTag("CustomViewmodel").isActive() ? PineapleClient.getSettingManager().getSettingWithTag("CustomViewmodel", "FOVMainX").getValue(1) : 0.0f),
-                y + (PineapleClient.get_hack_manager().getModuleWithTag("CustomViewmodel").isActive() ? PineapleClient.getSettingManager().getSettingWithTag("CustomViewmodel", "FOVMainX").getValue(1) : 0.0f), z);
+        GlStateManager.translate(x + (PineapleClient.getHackManager().getModuleWithTag("CustomViewmodel").isActive() ? PineapleClient.getSettingManager().getSettingWithTag("CustomViewmodel", "FOVMainX").getValue(1) : 0.0f),
+                y + (PineapleClient.getHackManager().getModuleWithTag("CustomViewmodel").isActive() ? PineapleClient.getSettingManager().getSettingWithTag("CustomViewmodel", "FOVMainX").getValue(1) : 0.0f), z);
     }
 
     @Inject(method = "renderFireInFirstPerson", at = @At("HEAD"), cancellable = true)
     private void renderFireInFirstPerson(final CallbackInfo info) {
-    	if (PineapleClient.get_hack_manager().getModuleWithTag("nofire").isActive()) {
+    	if (PineapleClient.getHackManager().getModuleWithTag("nofire").isActive()) {
     		info.cancel();
     	}
     }

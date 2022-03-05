@@ -66,16 +66,16 @@ public class HUD extends GuiScreen {
 	@Override
 	public void onGuiClosed() {
 		if (this.back) {
-			PineapleClient.get_hack_manager().getModuleWithTag("GUI").set_active(true);
-			PineapleClient.get_hack_manager().getModuleWithTag("HUD").set_active(false);
+			PineapleClient.getHackManager().getModuleWithTag("GUI").set_active(true);
+			PineapleClient.getHackManager().getModuleWithTag("HUD").set_active(false);
 		} else {
-			PineapleClient.get_hack_manager().getModuleWithTag("HUD").set_active(false);
-			PineapleClient.get_hack_manager().getModuleWithTag("GUI").set_active(false);
+			PineapleClient.getHackManager().getModuleWithTag("HUD").set_active(false);
+			PineapleClient.getHackManager().getModuleWithTag("GUI").set_active(false);
 		}
 
 		this.on_gui = false;
 
-		PineapleClient.get_config_manager().save_settings();
+		PineapleClient.getConfigManager().save_settings();
 	}
 
 	@Override

@@ -141,10 +141,10 @@ public class Label extends AbstractWidget {
 
 		this.save_y = this.y + master_y;
 
-		int ns_r = PineapleClient.click_gui.theme_widget_name_r;
-		int ns_g = PineapleClient.click_gui.theme_widget_name_g;
-		int ns_b = PineapleClient.click_gui.theme_widget_name_b;
-		int ns_a = PineapleClient.click_gui.theme_widget_name_a;
+		int ns_r = PineapleClient.clickGui.themeWidgetNameR;
+		int ns_g = PineapleClient.clickGui.themeWidgetNameG;
+		int ns_b = PineapleClient.clickGui.themeWidgetNameB;
+		int ns_a = PineapleClient.clickGui.themeWidgetNameA;
 
 		if (motion(absolute_x, absolute_y)) {
 			if (this.setting.get_master().using_widget()) {

@@ -66,10 +66,10 @@ public class Frame {
 
 		this.can = true;
 
-		int size  = PineapleClient.get_hud_manager().get_array_huds().size();
+		int size  = PineapleClient.getHudManager().get_array_huds().size();
 		int count = 0;
 
-		for (Pinnable pinnables : PineapleClient.get_hud_manager().get_array_huds()) {
+		for (Pinnable pinnables : PineapleClient.getHudManager().get_array_huds()) {
 			PinnableButton pinnables_buttons = new PinnableButton(this, pinnables.get_title(), pinnables.get_tag());
 
 			pinnables_buttons.set_y(this.height);

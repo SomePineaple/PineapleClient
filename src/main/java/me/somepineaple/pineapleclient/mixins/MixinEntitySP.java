@@ -58,7 +58,7 @@ public class MixinEntitySP extends MixinEntity {
 
     @Inject(method={"pushOutOfBlocks"}, at={@At(value="HEAD")}, cancellable=true)
     private void pushOutOfBlocksHook(double x, double y, double z, CallbackInfoReturnable<Boolean> info) {
-        if (PineapleClient.get_hack_manager().getModuleWithTag("Freecam").isActive()) {
+        if (PineapleClient.getHackManager().getModuleWithTag("Freecam").isActive()) {
             info.setReturnValue(false);
         }
     }

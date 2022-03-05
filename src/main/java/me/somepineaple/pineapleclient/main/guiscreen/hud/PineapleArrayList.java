@@ -33,7 +33,7 @@ public class PineapleArrayList extends Pinnable {
 		int nl_b = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorB").getValue(1);
 		int nl_a = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorA").getValue(1);
 
-		List<Hack> pretty_modules = PineapleClient.get_hack_manager().getArrayActiveHacks().stream()
+		List<Hack> pretty_modules = PineapleClient.getHackManager().getArrayActiveHacks().stream()
 			.sorted(Comparator.comparing(modules -> get(modules.array_detail() == null ? modules.getTag() : modules.getTag() + PineapleClient.g + " [" + PineapleClient.r + modules.array_detail() + PineapleClient.g + "]" + PineapleClient.r, "width")))
 			.collect(Collectors.toList());
 

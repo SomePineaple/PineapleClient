@@ -34,7 +34,7 @@ public class PinnableButton {
 	public PinnableButton(Frame master, String name, String tag) {
 		this.master = master;
 
-		this.pinnable = PineapleClient.get_hud_manager().get_pinnable_with_tag(tag);
+		this.pinnable = PineapleClient.getHudManager().get_pinnable_with_tag(tag);
 
 		this.x = master.get_x();
 		this.y = master.get_y();

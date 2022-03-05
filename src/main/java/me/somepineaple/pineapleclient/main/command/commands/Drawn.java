@@ -26,7 +26,7 @@ public class Drawn extends PineapleclientCommand {
 
             if (is_module(message[1])) {
                 DrawnUtil.add_remove_item(message[1]);
-                PineapleClient.get_config_manager().save_settings();
+                PineapleClient.getConfigManager().save_settings();
             } else {
                 MessageUtil.send_client_error_message("cannot find module by name: " + message[1]);
             }
@@ -38,7 +38,7 @@ public class Drawn extends PineapleclientCommand {
 
     public boolean is_module(String s) {
 
-        List<Hack> modules = PineapleClient.get_hack_manager().getArrayHacks();
+        List<Hack> modules = PineapleClient.getHackManager().getArrayHacks();
 
         for (Hack module : modules) {
             if (module.getTag().equalsIgnoreCase(s)) {

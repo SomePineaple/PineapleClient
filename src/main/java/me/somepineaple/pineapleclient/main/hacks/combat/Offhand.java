@@ -46,7 +46,7 @@ public class Offhand extends Hack {
             float hp = mc.player.getHealth() + mc.player.getAbsorptionAmount();
 
             if (hp > totemSwitch.getValue(1)) {
-                if (switchMode.in("Crystal") && PineapleClient.get_hack_manager().getModuleWithTag("AutoCrystal").isActive()) {
+                if (switchMode.in("Crystal") && PineapleClient.getHackManager().getModuleWithTag("AutoCrystal").isActive()) {
                     swapItems(get_item_slot(Items.END_CRYSTAL),0);
                     return;
                 }
@@ -62,7 +62,7 @@ public class Offhand extends Hack {
                     swapItems(get_item_slot(Items.GOLDEN_APPLE), delay.getValue(true) ? 1 : 0);
                     return;
                 }
-                if (switchMode.in("Crystal") && !PineapleClient.get_hack_manager().getModuleWithTag("AutoCrystal").isActive()) {
+                if (switchMode.in("Crystal") && !PineapleClient.getHackManager().getModuleWithTag("AutoCrystal").isActive()) {
                     swapItems(get_item_slot(Items.TOTEM_OF_UNDYING),0);
                     return;
                 }

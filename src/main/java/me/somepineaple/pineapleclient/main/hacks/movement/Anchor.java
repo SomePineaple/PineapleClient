@@ -30,7 +30,7 @@ public class Anchor extends Hack {
 
     public static boolean AnchorING;
     public boolean isBlockHole(BlockPos blockpos) {
-        HoleESP holeEspInstance = (HoleESP) PineapleClient.get_hack_manager().getModuleWithTag("HoleESP");
+        HoleESP holeEspInstance = (HoleESP) PineapleClient.getHackManager().getModuleWithTag("HoleESP");
         return holeEspInstance.isBlockHole(blockpos);
     }
     private Vec3d Center = Vec3d.ZERO;

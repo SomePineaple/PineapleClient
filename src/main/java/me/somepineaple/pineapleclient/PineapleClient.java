@@ -32,13 +32,13 @@ public class PineapleClient {
 
 	public static Logger register_log;
 
-	private static SettingManager setting_manager;
-	private static ConfigManager config_manager;
-	private static ModuleManager module_manager;
-	private static HUDManager hud_manager;
+	private static SettingManager settingManager;
+	private static ConfigManager configManager;
+	private static ModuleManager moduleManager;
+	private static HUDManager hudManager;
 
-	public static GUI click_gui;
-	public static HUD click_hud;
+	public static GUI clickGui;
+	public static HUD clickHud;
 
 	public static Turok turok;
 
@@ -47,103 +47,102 @@ public class PineapleClient {
 
 	@Mod.EventHandler
 	public void Starting(FMLInitializationEvent event) {
-
-		init_log(NAME);
+		initLog(NAME);
 
 		EventHandler.INSTANCE = new EventHandler();
 
-		send_minecraft_log("initialising managers");
+		sendMinecraftLog("initialising managers");
 
-		setting_manager = new SettingManager();
-		config_manager = new ConfigManager();
-		module_manager = new ModuleManager();
-		hud_manager = new HUDManager();
+		settingManager = new SettingManager();
+		configManager = new ConfigManager();
+		moduleManager = new ModuleManager();
+		hudManager = new HUDManager();
 
-		EventManager event_manager = new EventManager();
-		CommandManager command_manager = new CommandManager(); // hack
+		EventManager eventManager = new EventManager();
+		CommandManager commandManager = new CommandManager(); // hack
 
-		send_minecraft_log("done");
+		sendMinecraftLog("done");
 
-		send_minecraft_log("initialising guis");
+		sendMinecraftLog("initialising guis");
 
 		Display.setTitle("PineapleClient");
-		click_gui = new GUI();
-		click_hud = new HUD();
+		clickGui = new GUI();
+		clickHud = new HUD();
 
-		send_minecraft_log("done");
+		sendMinecraftLog("done");
 
-		send_minecraft_log("initialising skidded framework");
+		sendMinecraftLog("initialising skidded framework");
 
 		turok = new Turok("Turok");
 
-		send_minecraft_log("done");
+		sendMinecraftLog("done");
 
-		send_minecraft_log("initialising commands and events");
+		sendMinecraftLog("initialising commands and events");
 
 		// Register event modules and manager.
-		EventRegister.register_command_manager(command_manager);
-		EventRegister.register_module_manager(event_manager);
+		EventRegister.registerCommandManager(commandManager);
+		EventRegister.registerModuleManager(eventManager);
 
-		send_minecraft_log("done");
+		sendMinecraftLog("done");
 
-		send_minecraft_log("loading settings");
+		sendMinecraftLog("loading settings");
 
-		config_manager.load_settings();
+		configManager.loadSettings();
 
-		send_minecraft_log("done");
+		sendMinecraftLog("done");
 
-		if (module_manager.getModuleWithTag("GUI").isActive()) {
-			module_manager.getModuleWithTag("GUI").set_active(false);
+		if (moduleManager.getModuleWithTag("GUI").isActive()) {
+			moduleManager.getModuleWithTag("GUI").set_active(false);
 		}
 
-		if (module_manager.getModuleWithTag("HUD").isActive()) {
-			module_manager.getModuleWithTag("HUD").set_active(false);
+		if (moduleManager.getModuleWithTag("HUD").isActive()) {
+			moduleManager.getModuleWithTag("HUD").set_active(false);
 		}
 
-		send_minecraft_log("client started");
-		send_minecraft_log("we gaming");
+		sendMinecraftLog("client started");
+		sendMinecraftLog("we gaming");
 
 	}
 
-	public void init_log(String name) {
+	public void initLog(String name) {
 		register_log = LogManager.getLogger(name);
 
-		send_minecraft_log("starting PineapleClient");
+		sendMinecraftLog("starting PineapleClient");
 	}
 
-	public static void send_minecraft_log(String log) {
+	public static void sendMinecraftLog(String log) {
 		register_log.info(log);
 	}
 
-	public static String get_name() {
+	public static String getName() {
 		return NAME;
 	}
 
-	public static String get_version() {
+	public static String getVersion() {
 		return VERSION;
 	}
 
-	public static String get_actual_user() {
+	public static String getActualUser() {
 		return Minecraft.getMinecraft().getSession().getUsername();
 	}
 
-	public static ConfigManager get_config_manager() {
-		return config_manager;
+	public static ConfigManager getConfigManager() {
+		return configManager;
 	}
 
-	public static ModuleManager get_hack_manager() {
-		return module_manager;
+	public static ModuleManager getHackManager() {
+		return moduleManager;
 	}
 
 	public static SettingManager getSettingManager() {
-		return setting_manager;
+		return settingManager;
 	}
 
-	public static HUDManager get_hud_manager() {
-		return hud_manager;
+	public static HUDManager getHudManager() {
+		return hudManager;
 	}
 
-	public static ModuleManager getModuleManager() { return module_manager; }
+	public static ModuleManager getModuleManager() { return moduleManager; }
 
 	public static EventHandler getEventHandler() {
 		return EventHandler.INSTANCE;

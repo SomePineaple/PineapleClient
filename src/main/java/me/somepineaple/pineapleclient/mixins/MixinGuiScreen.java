@@ -34,7 +34,7 @@ public class MixinGuiScreen {
 
     @Inject(method = "renderToolTip", at = @At("HEAD"), cancellable = true)
     public void renderToolTip(ItemStack stack, int x, int y, CallbackInfo info) {
-        if (PineapleClient.get_hack_manager().getModuleWithTag("ShulkerPreview").isActive() && stack.getItem() instanceof ItemShulkerBox) {
+        if (PineapleClient.getHackManager().getModuleWithTag("ShulkerPreview").isActive() && stack.getItem() instanceof ItemShulkerBox) {
             NBTTagCompound tagCompound = stack.getTagCompound();
             if (tagCompound != null && tagCompound.hasKey("BlockEntityTag", 10)) {
                 NBTTagCompound blockEntityTag = tagCompound.getCompoundTag("BlockEntityTag");

@@ -601,7 +601,7 @@ public class AutoCrystal extends Hack {
             return true;
         }
 
-        Surround s = (Surround) PineapleClient.get_hack_manager().getModuleWithTag("Surround");
+        Surround s = (Surround) PineapleClient.getHackManager().getModuleWithTag("Surround");
         if (s.areBlocksLeftToSurrond()) {
             if (old_render.getValue(true)) {
                 render_block_init = null;
@@ -609,14 +609,14 @@ public class AutoCrystal extends Hack {
             return true;
         }
 
-        if (PineapleClient.get_hack_manager().getModuleWithTag("HoleFill").isActive()) {
+        if (PineapleClient.getHackManager().getModuleWithTag("HoleFill").isActive()) {
             if (old_render.getValue(true)) {
                 render_block_init = null;
             }
             return true;
         }
 
-        if (PineapleClient.get_hack_manager().getModuleWithTag("Trap").isActive()) {
+        if (PineapleClient.getHackManager().getModuleWithTag("Trap").isActive()) {
             if (old_render.getValue(true)) {
                 render_block_init = null;
             }

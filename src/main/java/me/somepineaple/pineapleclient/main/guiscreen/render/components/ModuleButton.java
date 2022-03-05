@@ -252,19 +252,19 @@ public class ModuleButton {
 
 		this.save_y = this.y + this.master.get_y() - 10;
 
-		int nm_r = PineapleClient.click_gui.theme_widget_name_r;
-		int nm_g = PineapleClient.click_gui.theme_widget_name_g;
-		int nm_b = PineapleClient.click_gui.theme_widget_name_b;
-		int nm_a = PineapleClient.click_gui.theme_widget_name_a;
+		int nm_r = PineapleClient.clickGui.themeWidgetNameR;
+		int nm_g = PineapleClient.clickGui.themeWidgetNameG;
+		int nm_b = PineapleClient.clickGui.themeWidgetNameB;
+		int nm_a = PineapleClient.clickGui.themeWidgetNameA;
 
-		int bg_r = PineapleClient.click_gui.theme_widget_background_r;
-		int bg_g = PineapleClient.click_gui.theme_widget_background_g;
-		int bg_b = PineapleClient.click_gui.theme_widget_background_b;
-		int bg_a = PineapleClient.click_gui.theme_widget_background_a;
+		int bg_r = PineapleClient.clickGui.themeWidgetBackgroundR;
+		int bg_g = PineapleClient.clickGui.themeWidgetBackgroundG;
+		int bg_b = PineapleClient.clickGui.themeWidgetBackgroundB;
+		int bg_a = PineapleClient.clickGui.themeWidgetBackgroundA;
 
-		int bd_r = PineapleClient.click_gui.theme_widget_border_r;
-		int bd_g = PineapleClient.click_gui.theme_widget_border_g;
-		int bd_b = PineapleClient.click_gui.theme_widget_border_b;
+		int bd_r = PineapleClient.clickGui.themeWidgetBorderR;
+		int bd_g = PineapleClient.clickGui.themeWidgetBorderG;
+		int bd_b = PineapleClient.clickGui.themeWidgetBorderB;
 
 		if (this.module.isActive()) {
 			Draw.draw_rect(this.x, this.save_y, this.x + this.width - separe, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);

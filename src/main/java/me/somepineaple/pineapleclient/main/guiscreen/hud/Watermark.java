@@ -15,7 +15,7 @@ public class Watermark extends Pinnable {
 		int nl_b = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorB").getValue(1);
 		int nl_a = PineapleClient.getSettingManager().getSettingWithTag("HUD", "HUDStringsColorA").getValue(1);
 
-		String line = "PineapleClient" + PineapleClient.g + " v" + PineapleClient.get_version();
+		String line = "PineapleClient" + PineapleClient.g + " v" + PineapleClient.getVersion();
 
 		create_line(line, this.docking(1, line), 2, nl_r, nl_g, nl_b, nl_a);
 

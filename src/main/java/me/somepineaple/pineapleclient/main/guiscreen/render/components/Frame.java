@@ -50,10 +50,10 @@ public class Frame {
 		this.move_x = 0;
 		this.move_y = 0;
 
-		int size  = PineapleClient.get_hack_manager().getModulesWithCategory(category).size();
+		int size  = PineapleClient.getHackManager().getModulesWithCategory(category).size();
 		int count = 0;
 
-		for (Hack modules : PineapleClient.get_hack_manager().getModulesWithCategory(category)) {
+		for (Hack modules : PineapleClient.getHackManager().getModulesWithCategory(category)) {
 			ModuleButton buttons = new ModuleButton(modules, this);
 
 			buttons.set_y(this.height);
@@ -77,7 +77,7 @@ public class Frame {
 
 		this.height = 25;
 
-		int size  = PineapleClient.get_hack_manager().getModulesWithCategory(this.category).size();
+		int size  = PineapleClient.getHackManager().getModulesWithCategory(this.category).size();
 		int count = 0;
 
 		for (ModuleButton buttons : this.module_button) {
@@ -250,20 +250,20 @@ public class Frame {
 			(System.currentTimeMillis() % (360 * 32)) / (360f * 32)
 		};
 
-		int nc_r = PineapleClient.click_gui.theme_frame_name_r;
-		int nc_g = PineapleClient.click_gui.theme_frame_name_g;
-		int nc_b = PineapleClient.click_gui.theme_frame_name_b;
-		int nc_a = PineapleClient.click_gui.theme_frame_name_a;
+		int nc_r = PineapleClient.clickGui.themeFrameNameR;
+		int nc_g = PineapleClient.clickGui.themeFrameNameG;
+		int nc_b = PineapleClient.clickGui.themeFrameNameB;
+		int nc_a = PineapleClient.clickGui.themeFrameNameA;
 
-		int bg_r = PineapleClient.click_gui.theme_frame_background_r;
-		int bg_g = PineapleClient.click_gui.theme_frame_background_g;
-		int bg_b = PineapleClient.click_gui.theme_frame_background_b;
-		int bg_a = PineapleClient.click_gui.theme_frame_background_a;
+		int bg_r = PineapleClient.clickGui.themeFrameBackgroundR;
+		int bg_g = PineapleClient.clickGui.themeFrameBackgroundG;
+		int bg_b = PineapleClient.clickGui.themeFrameBackgroundB;
+		int bg_a = PineapleClient.clickGui.themeFrameBackgroundA;
 
-		int bd_r = PineapleClient.click_gui.theme_frame_border_r;
-		int bd_g = PineapleClient.click_gui.theme_frame_border_g;
-		int bd_b = PineapleClient.click_gui.theme_frame_border_b;
-		int bd_a = PineapleClient.click_gui.theme_frame_border_a;
+		int bd_r = PineapleClient.clickGui.themeFrameBorderR;
+		int bd_g = PineapleClient.clickGui.themeFrameBorderG;
+		int bd_b = PineapleClient.clickGui.themeFrameBorderB;
+		int bd_a = PineapleClient.clickGui.themeFrameBorderA;
 
 		this.frame_name = this.category.get_name();
 

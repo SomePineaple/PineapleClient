@@ -19,6 +19,6 @@ public class MixinMinecraft {
 
 	@Inject(method = "shutdown", at = @At("HEAD"))
 	private void shutdown(CallbackInfo info) {
-		PineapleClient.get_config_manager().save_settings();
+		PineapleClient.getConfigManager().save_settings();
 	}
 }

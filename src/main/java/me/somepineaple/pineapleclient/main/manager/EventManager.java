@@ -43,7 +43,7 @@ public class EventManager {
 			return;
 		}
 
-		PineapleClient.get_hack_manager().update();
+		PineapleClient.getHackManager().update();
 	}
 
 	@SubscribeEvent
@@ -52,7 +52,7 @@ public class EventManager {
 			return;
 		}
 
-		PineapleClient.get_hack_manager().render(event);
+		PineapleClient.getHackManager().render(event);
 	}
 
 	@SubscribeEvent
@@ -71,10 +71,10 @@ public class EventManager {
 		}
 
 		if (event.getType() == target) {
-			PineapleClient.get_hack_manager().render();
+			PineapleClient.getHackManager().render();
 
-			if (!PineapleClient.get_hack_manager().getModuleWithTag("GUI").isActive()) {
-				PineapleClient.get_hud_manager().render();
+			if (!PineapleClient.getHackManager().getModuleWithTag("GUI").isActive()) {
+				PineapleClient.getHudManager().render();
 			}
 
 			GL11.glPushMatrix();
@@ -93,7 +93,7 @@ public class EventManager {
 	@SubscribeEvent(priority = EventPriority.NORMAL, receiveCanceled = true)
 	public void onKeyInput(InputEvent.KeyInputEvent event) {
 		if (Keyboard.getEventKeyState()) {
-			PineapleClient.get_hack_manager().bind(Keyboard.getEventKey());
+			PineapleClient.getHackManager().bind(Keyboard.getEventKey());
 		}
 	}
 
