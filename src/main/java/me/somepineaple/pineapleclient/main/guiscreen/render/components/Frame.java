@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Frame {
 	private final Category category;
 
-	private final ArrayList<ModuleButton> module_button;
+	private final ArrayList<ModuleButton> moduleButton;
 
 	private int x;
 	private int y;
@@ -19,15 +19,15 @@ public class Frame {
 	private int width;
 	private int height;
 
-	private String frame_name;
-	private final String frame_tag;
+	private String frameName;
+	private final String frameTag;
 
 	private final Draw font = new Draw(1);
 
 	private boolean move;
 
-	private int move_x;
-	private int move_y;
+	private int moveX;
+	private int moveY;
 	
 	private boolean can;
 
@@ -42,13 +42,13 @@ public class Frame {
 
 		this.category = category;
 
-		this.module_button = new ArrayList<>();
+		this.moduleButton = new ArrayList<>();
 
-		this.frame_name = category.get_name();
-		this.frame_tag  = category.get_tag();
+		this.frameName = category.get_name();
+		this.frameTag = category.get_tag();
 
-		this.move_x = 0;
-		this.move_y = 0;
+		this.moveX = 0;
+		this.moveY = 0;
 
 		int size  = PineapleClient.getHackManager().getModulesWithCategory(category).size();
 		int count = 0;
@@ -58,7 +58,7 @@ public class Frame {
 
 			buttons.set_y(this.height);
 
-			this.module_button.add(buttons);
+			this.moduleButton.add(buttons);
 
 			count++;
 
@@ -73,14 +73,14 @@ public class Frame {
 		this.can  = true;
 	}
 
-	public void refresh_frame(ModuleButton button, int combo_height) {
+	public void refreshFrame(ModuleButton button, int combo_height) {
 
 		this.height = 25;
 
 		int size  = PineapleClient.getHackManager().getModulesWithCategory(this.category).size();
 		int count = 0;
 
-		for (ModuleButton buttons : this.module_button) {
+		for (ModuleButton buttons : this.moduleButton) {
 			buttons.set_y(this.height);
 
 			count++;
@@ -104,63 +104,63 @@ public class Frame {
 		}
 	}
 
-	public void does_can(boolean value) {
+	public void doesCan(boolean value) {
 		this.can = value;
 	}
 
-	public void set_move(boolean value) {
+	public void setMove(boolean value) {
 		this.move = value;
 	}
 
-	public void set_move_x(int x) {
-		this.move_x = x;
+	public void setMoveX(int x) {
+		this.moveX = x;
 	}
 
-	public void set_move_y(int y) {
-		this.move_y = y;
+	public void setMoveY(int y) {
+		this.moveY = y;
 	}
 
-	public void set_width(int width) {
+	public void setWidth(int width) {
 		this.width = width;
 	}
 
-	public void set_height(int height) {
+	public void setHeight(int height) {
 		this.height = height;
 	}
 
-	public void set_x(int x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 
-	public void set_y(int y) {
+	public void setY(int y) {
 		this.y = y;
 	}
 
-	public String get_name() {
-		return this.frame_name;
+	public String getName() {
+		return this.frameName;
 	}
 
-	public String get_tag() {
-		return this.frame_tag;
+	public String getTag() {
+		return this.frameTag;
 	}
 
-	public boolean is_moving() {
+	public boolean isMoving() {
 		return this.move;
 	}
 
-	public int get_width() {
+	public int getWidth() {
 		return this.width;
 	}
 
-	public int get_height() {
+	public int getHeight() {
 		return this.height;
 	}
 
-	public int get_x() {
+	public int getX() {
 		return this.x;
 	}
 
-	public int get_y() {
+	public int getY() {
 		return this.y;
 	}
 
@@ -169,11 +169,11 @@ public class Frame {
 	}
 
 	public boolean motion(int mx, int my) {
-		return mx >= get_x() && my >= get_y() && mx <= get_x() + get_width() && my <= get_y() + get_height();
+		return mx >= getX() && my >= getY() && mx <= getX() + getWidth() && my <= getY() + getHeight();
 	}
 
 	public boolean motion(String tag, int mx, int my) {
-		return mx >= get_x() && my >= get_y() && mx <= get_x() + get_width() && my <= get_y() + font.get_string_height();
+		return mx >= getX() && my >= getY() && mx <= getX() + getWidth() && my <= getY() + font.get_string_height();
 	}
 
 	public void crush(int mx, int my) {
@@ -181,8 +181,8 @@ public class Frame {
 		int screen_x = (mc.displayWidth / 2);
 		int screen_y = (mc.displayHeight / 2);
 
-		set_x(mx - this.move_x);
-		set_y(my - this.move_y);
+		setX(mx - this.moveX);
+		setY(my - this.moveY);
 
 		if (this.x + this.width >= screen_x) {
 			this.x = screen_x - this.width - 1;
@@ -209,10 +209,10 @@ public class Frame {
 		}
 	}
 
-	public boolean is_binding() {
+	public boolean isBinding() {
 		boolean value_requested = false;
 
-		for (ModuleButton buttons : this.module_button) {
+		for (ModuleButton buttons : this.moduleButton) {
 			if (buttons.is_binding()) {
 				value_requested = true;
 			}
@@ -221,26 +221,26 @@ public class Frame {
 		return value_requested;
 	}
 
-	public void does_button_for_do_widgets_can(boolean can) {
-		for (ModuleButton buttons : this.module_button) {
+	public void doesButtonForDoWidgetsCan(boolean can) {
+		for (ModuleButton buttons : this.moduleButton) {
 			buttons.does_widgets_can(can);
 		}
 	}
 
 	public void bind(char char_, int key) {
-		for (ModuleButton buttons : this.module_button) {
+		for (ModuleButton buttons : this.moduleButton) {
 			buttons.bind(char_, key);
 		}
 	}
 
 	public void mouse(int mx, int my, int mouse) {
-		for (ModuleButton buttons : this.module_button) {
+		for (ModuleButton buttons : this.moduleButton) {
 			buttons.mouse(mx, my, mouse);
 		}
 	}
 
 	public void mouse_release(int mx, int my, int mouse) {
-		for (ModuleButton buttons : this.module_button) {
+		for (ModuleButton buttons : this.moduleButton) {
 			buttons.button_release(mx, my, mouse);
 		}
 	}
@@ -265,21 +265,21 @@ public class Frame {
 		int bd_b = PineapleClient.clickGui.themeFrameBorderB;
 		int bd_a = PineapleClient.clickGui.themeFrameBorderA;
 
-		this.frame_name = this.category.get_name();
+		this.frameName = this.category.get_name();
 
-		Draw.draw_rect(this.x, this.y, this.x + this.width, this.y + this.height, bg_r, bg_g, bg_b, bg_a);
+		Draw.drawRect(this.x, this.y, this.x + this.width, this.y + this.height, bg_r, bg_g, bg_b, bg_a);
 		int border_size = 1;
-		Draw.draw_rect(this.x - 1, this.y, this.width + 1, this.height, bd_r, bd_g, bd_b, bd_a, border_size, "left-right");
-		Draw.draw_rect(this.x, this.y, this.x + this.width, this.y + 14, bd_r, bd_g, bd_b, bd_a);
+		Draw.drawRect(this.x - 1, this.y, this.width + 1, this.height, bd_r, bd_g, bd_b, bd_a, border_size, "left-right");
+		Draw.drawRect(this.x, this.y, this.x + this.width, this.y + 14, bd_r, bd_g, bd_b, bd_a);
 		
-		Draw.draw_string(this.frame_name, this.x + 4, this.y + 4, nc_r, nc_g, nc_b, nc_a);
+		Draw.drawString(this.frameName, this.x + 4, this.y + 4, nc_r, nc_g, nc_b, nc_a);
 
-		if (is_moving()) {
+		if (isMoving()) {
 			crush(mx, my);
 		}
 
-		for (ModuleButton buttons : this.module_button) {
-			buttons.set_x(this.x + 2);
+		for (ModuleButton buttons : this.moduleButton) {
+			buttons.setX(this.x + 2);
 
 			buttons.render(mx, my, 2);
 		}

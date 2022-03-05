@@ -66,7 +66,7 @@ public class ModuleButton {
 
 		this.opened = false;
 
-		this.master_height_cache = master.get_height();
+		this.master_height_cache = master.getHeight();
 
 		this.settings_height = this.y + 10;
 
@@ -135,7 +135,7 @@ public class ModuleButton {
 		this.height = height;
 	}
 
-	public void set_x(int x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 
@@ -222,7 +222,7 @@ public class ModuleButton {
 
 		if (mouse == 0) {
 			if (motion(mx, my)) {
-				this.master.does_can(false);
+				this.master.doesCan(false);
 
 				set_pressed(!get_state());
 			}
@@ -230,11 +230,11 @@ public class ModuleButton {
 
 		if (mouse == 1) {
 			if (motion(mx, my)) {
-				this.master.does_can(false);
+				this.master.doesCan(false);
 
 				set_open(!is_open());
 
-				this.master.refresh_frame(this, 0);
+				this.master.refreshFrame(this, 0);
 			}
 		}
 	}
@@ -244,13 +244,13 @@ public class ModuleButton {
 			widgets.release(mx, my, mouse);
 		}
 
-		this.master.does_can(true);
+		this.master.doesCan(true);
 	}
 
 	public void render(int mx, int my, int separe) {
-		set_width(this.master.get_width() - separe);
+		set_width(this.master.getWidth() - separe);
 
-		this.save_y = this.y + this.master.get_y() - 10;
+		this.save_y = this.y + this.master.getY() - 10;
 
 		int nm_r = PineapleClient.clickGui.themeWidgetNameR;
 		int nm_g = PineapleClient.clickGui.themeWidgetNameG;
@@ -267,11 +267,11 @@ public class ModuleButton {
 		int bd_b = PineapleClient.clickGui.themeWidgetBorderB;
 
 		if (this.module.isActive()) {
-			Draw.draw_rect(this.x, this.save_y, this.x + this.width - separe, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
+			Draw.drawRect(this.x, this.save_y, this.x + this.width - separe, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 
-			Draw.draw_string(this.module_name, this.x + separe, this.save_y, nm_r, nm_g, nm_b, nm_a);
+			Draw.drawString(this.module_name, this.x + separe, this.save_y, nm_r, nm_g, nm_b, nm_a);
 		} else {
-			Draw.draw_string(this.module_name, this.x + separe, this.save_y, nm_r, nm_g, nm_b, nm_a);
+			Draw.drawString(this.module_name, this.x + separe, this.save_y, nm_r, nm_g, nm_b, nm_a);
 		}
 
 		for (AbstractWidget widgets : this.widget) {
@@ -280,7 +280,7 @@ public class ModuleButton {
 			boolean is_passing_in_widget = this.opened ? widgets.motion_pass(mx, my) : false;
 
 			if (motion(mx, my) || is_passing_in_widget) {
-				Draw.draw_rect(this.master.get_x() - 1, this.save_y, this.master.get_width() + 1, this.opened_height, bd_r, bd_g, bd_b, border_a, this.border_size, "right-left");
+				Draw.drawRect(this.master.getX() - 1, this.save_y, this.master.getWidth() + 1, this.opened_height, bd_r, bd_g, bd_b, border_a, this.border_size, "right-left");
 			}
 
 			if (this.opened) {

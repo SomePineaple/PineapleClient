@@ -144,7 +144,6 @@ public class AutoCrystal extends Hack {
     private int break_timeout;
     private int break_delay_counter;
     private int place_delay_counter;
-    private int prev_slot;
 
     @EventHandler
     private final Listener<EventEntityRemoved> on_entity_removed = new Listener<>(event -> {
@@ -157,7 +156,7 @@ public class AutoCrystal extends Hack {
     private final Listener<EventPacket.SendPacket> send_listener = new Listener<>(event -> {
         if (event.get_packet() instanceof CPacketPlayer && is_rotating && rotate_mode.in("Old")) {
             if (debug.getValue(true)) {
-                MessageUtil.send_client_message("Rotating");
+                MessageUtil.sendClientMessage("Rotating");
             }
             final CPacketPlayer p = (CPacketPlayer) event.get_packet();
             p.yaw = yaw;
@@ -166,7 +165,7 @@ public class AutoCrystal extends Hack {
         }
         if (event.get_packet() instanceof CPacketPlayerTryUseItemOnBlock && is_rotating && rotate_mode.in("Old")) {
             if (debug.getValue(true)) {
-                MessageUtil.send_client_message("Rotating");
+                MessageUtil.sendClientMessage("Rotating");
             }
             final CPacketPlayerTryUseItemOnBlock p = (CPacketPlayerTryUseItemOnBlock) event.get_packet();
             p.facingX = render_block_init.getX();
@@ -180,7 +179,7 @@ public class AutoCrystal extends Hack {
     private final Listener<EventMotionUpdate> on_movement = new Listener<>(event -> {
         if (event.stage == 0 && (rotate_mode.in("Good") || rotate_mode.in("Const"))) {
             if (debug.getValue(true)) {
-                MessageUtil.send_client_message("updating rotation");
+                MessageUtil.sendClientMessage("updating rotation");
             }
             PosManager.updatePosition();
             RotationUtil.updateRotations();
@@ -188,7 +187,7 @@ public class AutoCrystal extends Hack {
         }
         if (event.stage == 1 && (rotate_mode.in("Good") || rotate_mode.in("Const"))) {
             if (debug.getValue(true)) {
-                MessageUtil.send_client_message("resetting rotation");
+                MessageUtil.sendClientMessage("resetting rotation");
             }
             PosManager.restorePosition();
             RotationUtil.restoreRotations();
@@ -484,7 +483,7 @@ public class AutoCrystal extends Hack {
         already_attacking = false;
 
         boolean offhand_check = false;
-        prev_slot = mc.player.inventory.currentItem;
+        int prev_slot = mc.player.inventory.currentItem;
         int crystal_slot = find_crystals_hotbar();
         if (mc.player.getHeldItemOffhand().getItem() != Items.END_CRYSTAL) {
             if (mc.player.getHeldItemMainhand().getItem() != Items.END_CRYSTAL) {
@@ -503,7 +502,7 @@ public class AutoCrystal extends Hack {
         }
 
         if (debug.getValue(true)) {
-            MessageUtil.send_client_message("placing");
+            MessageUtil.sendClientMessage("placing");
         }
 
         chain_step++;
@@ -571,7 +570,7 @@ public class AutoCrystal extends Hack {
         }
 
         if (debug.getValue(true)) {
-            MessageUtil.send_client_message("attacking");
+            MessageUtil.sendClientMessage("attacking");
         }
 
         did_anything = true;

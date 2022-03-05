@@ -128,7 +128,7 @@ public class Label extends AbstractWidget {
 	public void mouse(int mx, int my, int mouse) {
 		if (mouse == 0) {
 			if (motion(mx, my) && this.master.is_open() && can()) {
-				this.frame.does_can(false);
+				this.frame.doesCan(false);
 			}
 		}
 	}
@@ -164,9 +164,9 @@ public class Label extends AbstractWidget {
 		}
 
 		if (this.info) {
-			Draw.draw_string(this.setting.getValue(s), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+			Draw.drawString(this.setting.getValue(s), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		} else {
-			Draw.draw_string(this.label_name + " \"" + this.setting.getValue(s) + "\"", this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+			Draw.drawString(this.label_name + " \"" + this.setting.getValue(s) + "\"", this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		}
 	}
 }

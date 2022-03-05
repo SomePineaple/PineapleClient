@@ -137,7 +137,7 @@ public class Slider extends AbstractWidget {
 	public void mouse(int mx, int my, int mouse) {
 		if (mouse == 0) {
 			if (motion(mx, my) && this.master.is_open() && can()) {
-				this.frame.does_can(false);
+				this.frame.doesCan(false);
 
 				this.click = true;
 			}
@@ -185,9 +185,9 @@ public class Slider extends AbstractWidget {
 
 		String slider_value = !this.compare ? java.lang.Double.toString(this.setting.getValue(this.double_)) : Integer.toString(this.setting.getValue(this.intenger));
 
-		Draw.draw_rect(this.x, this.save_y, this.x + (int)((this.width) * (this.setting.getValue(1.0) - this.setting.get_min(1.0)) / (this.setting.get_max(1.0) - this.setting.get_min(1.0))), this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
+		Draw.drawRect(this.x, this.save_y, this.x + (int)((this.width) * (this.setting.getValue(1.0) - this.setting.get_min(1.0)) / (this.setting.get_max(1.0) - this.setting.get_min(1.0))), this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 
-		Draw.draw_string(this.slider_name, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
-		Draw.draw_string(slider_value, this.x + this.width - separe - font.get_string_width(slider_value) + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+		Draw.drawString(this.slider_name, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+		Draw.drawString(slider_value, this.x + this.width - separe - font.get_string_width(slider_value) + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 	}
 }

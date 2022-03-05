@@ -125,11 +125,11 @@ public class PinnableButton {
 		this.save_y = this.y + this.master.get_y() - 10;
 
 		if (this.pinnable.is_active()) {
-			Draw.draw_rect(this.x, this.save_y, this.x + this.width - separate, this.save_y + this.height, PinnableButton.bg_r, PinnableButton.bg_g, PinnableButton.bg_b, PinnableButton.bg_a);
+			Draw.drawRect(this.x, this.save_y, this.x + this.width - separate, this.save_y + this.height, PinnableButton.bg_r, PinnableButton.bg_g, PinnableButton.bg_b, PinnableButton.bg_a);
 		
-			Draw.draw_string(this.pinnable.get_title(), this.x + separate, this.save_y, PinnableButton.nc_r, PinnableButton.nc_g, PinnableButton.nc_b, PinnableButton.nc_a);
+			Draw.drawString(this.pinnable.get_title(), this.x + separate, this.save_y, PinnableButton.nc_r, PinnableButton.nc_g, PinnableButton.nc_b, PinnableButton.nc_a);
 		} else {
-			Draw.draw_string(this.pinnable.get_title(), this.x + separate, this.save_y, PinnableButton.nc_r, PinnableButton.nc_g, PinnableButton.nc_b, PinnableButton.nc_a);
+			Draw.drawString(this.pinnable.get_title(), this.x + separate, this.save_y, PinnableButton.nc_r, PinnableButton.nc_g, PinnableButton.nc_b, PinnableButton.nc_a);
 		}
 
 		this.pinnable.render(mx, my, 0);

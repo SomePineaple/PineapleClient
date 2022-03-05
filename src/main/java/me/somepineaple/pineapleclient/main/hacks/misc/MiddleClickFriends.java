@@ -57,12 +57,12 @@ public class MiddleClickFriends extends Hack {
 
                 FriendUtil.Friend f = FriendUtil.friends.stream().filter(friend -> friend.getUsername().equalsIgnoreCase(player.getName())).findFirst().get();
                 FriendUtil.friends.remove(f);
-                MessageUtil.send_client_message("Player " + red + bold + player.getName() + reset + " is now not your friend :(");
+                MessageUtil.sendClientMessage("Player " + red + bold + player.getName() + reset + " is now not your friend :(");
                             
             } else {
                 FriendUtil.Friend f = FriendUtil.get_friend_object(player.getName());
                 FriendUtil.friends.add(f);
-                MessageUtil.send_client_message("Player " + green + bold + player.getName() + reset + " is now your friend :D");
+                MessageUtil.sendClientMessage("Player " + green + bold + player.getName() + reset + " is now your friend :D");
             }
         }
 	}

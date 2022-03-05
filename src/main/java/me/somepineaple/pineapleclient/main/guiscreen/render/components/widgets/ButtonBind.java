@@ -148,7 +148,7 @@ public class ButtonBind extends AbstractWidget {
 	public void mouse(int mx, int my, int mouse) {
 		if (mouse == 0) {
 			if (motion(mx, my) && this.master.is_open() && can()) {
-				this.frame.does_can(false);
+				this.frame.doesCan(false);
 
 				this.waiting = true;
 			}
@@ -191,13 +191,13 @@ public class ButtonBind extends AbstractWidget {
 		int bg_a = PineapleClient.clickGui.themeWidgetBackgroundA;
 
 		if (this.waiting) {
-			Draw.draw_rect(get_x(), this.save_y, get_x() + this.width, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
+			Draw.drawRect(get_x(), this.save_y, get_x() + this.width, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 
 			this.tick += 0.5f;
 
-			Draw.draw_string("Listening " + this.points, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+			Draw.drawString("Listening " + this.points, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		} else {
-			Draw.draw_string("Bind <" + this.master.get_module().getBind("string") + ">", this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+			Draw.drawString("Bind <" + this.master.get_module().getBind("string") + ">", this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		}
 
 		tick_color[0] += 5;

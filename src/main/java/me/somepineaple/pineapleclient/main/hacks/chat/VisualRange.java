@@ -44,9 +44,9 @@ public class VisualRange extends Hack {
 			for (String name : peoplenew) {
 				if (!people.contains(name)) {
 					if (FriendUtil.isFriend(name)) {
-						MessageUtil.send_client_message("I see an epic dude called " + ChatFormatting.RESET + ChatFormatting.GREEN + name + ChatFormatting.RESET + " :D");
+						MessageUtil.sendClientMessage("I see an epic dude called " + ChatFormatting.RESET + ChatFormatting.GREEN + name + ChatFormatting.RESET + " :D");
 					} else {
-						MessageUtil.send_client_message("I see a dude called " + ChatFormatting.RESET + ChatFormatting.RED + name + ChatFormatting.RESET + ". Yuk");
+						MessageUtil.sendClientMessage("I see a dude called " + ChatFormatting.RESET + ChatFormatting.RED + name + ChatFormatting.RESET + ". Yuk");
 					}
 					people.add(name);
 				}

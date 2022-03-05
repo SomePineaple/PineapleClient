@@ -19,9 +19,9 @@ public class Friend extends PineapleclientCommand {
     public boolean getMessage(String[] message) {
 
         if (message.length == 1) {
-            MessageUtil.send_client_message("Add - add friend");
-            MessageUtil.send_client_message("Del - delete friend");
-            MessageUtil.send_client_message("List - list friends");
+            MessageUtil.sendClientMessage("Add - add friend");
+            MessageUtil.sendClientMessage("Del - delete friend");
+            MessageUtil.sendClientMessage("List - list friends");
 
             return true;
         }
@@ -29,16 +29,16 @@ public class Friend extends PineapleclientCommand {
         if (message.length == 2) {
             if (message[1].equalsIgnoreCase("list")) {
                 if (FriendUtil.friends.isEmpty()) {
-                    MessageUtil.send_client_message("You appear to have " + red + bold + "no" + reset + " friends :(");
+                    MessageUtil.sendClientMessage("You appear to have " + red + bold + "no" + reset + " friends :(");
                 } else {
                     for (FriendUtil.Friend friend : FriendUtil.friends) {
-                        MessageUtil.send_client_message("" + green + bold +  friend.getUsername());
+                        MessageUtil.sendClientMessage("" + green + bold +  friend.getUsername());
                     }
                 }
                 return true;
             } else {
                 if (FriendUtil.isFriend(message[1])) {
-                    MessageUtil.send_client_message("Player " + green + bold + message[1] + reset + " is your friend :D");
+                    MessageUtil.sendClientMessage("Player " + green + bold + message[1] + reset + " is your friend :D");
                     return true;
                 } else {
                     MessageUtil.send_client_error_message("Player " + red + bold + message[1] + reset + " is not your friend :(");
@@ -50,7 +50,7 @@ public class Friend extends PineapleclientCommand {
         if (message.length >= 3) {
             if (message[1].equalsIgnoreCase("add")) {
                 if (FriendUtil.isFriend(message[2])) {
-                    MessageUtil.send_client_message("Player " + green + bold + message[2] + reset + " is already your friend :D");
+                    MessageUtil.sendClientMessage("Player " + green + bold + message[2] + reset + " is already your friend :D");
                     return true;
                 } else {
                     FriendUtil.Friend f = FriendUtil.get_friend_object(message[2]);
@@ -59,17 +59,17 @@ public class Friend extends PineapleclientCommand {
                         return true;
                     }
                     FriendUtil.friends.add(f);
-                    MessageUtil.send_client_message("Player " + green + bold + message[2] + reset + " is now your friend :D");
+                    MessageUtil.sendClientMessage("Player " + green + bold + message[2] + reset + " is now your friend :D");
                     return true;
                 }
             } else if (message[1].equalsIgnoreCase("del") || message[1].equalsIgnoreCase("remove") || message[1].equalsIgnoreCase("delete")) {
                 if (!FriendUtil.isFriend(message[2])) {
-                    MessageUtil.send_client_message("Player " + red + bold + message[2] + reset + " is already not your friend :/");
+                    MessageUtil.sendClientMessage("Player " + red + bold + message[2] + reset + " is already not your friend :/");
                     return true;
                 } else {
                     FriendUtil.Friend f = FriendUtil.friends.stream().filter(friend -> friend.getUsername().equalsIgnoreCase(message[2])).findFirst().get();
                     FriendUtil.friends.remove(f);
-                    MessageUtil.send_client_message("Player " + red + bold + message[2]  + reset + " is now not your friend :(");
+                    MessageUtil.sendClientMessage("Player " + red + bold + message[2]  + reset + " is now not your friend :(");
                     return true;
                 }
             }

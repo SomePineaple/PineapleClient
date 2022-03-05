@@ -50,21 +50,21 @@ public class GUI extends GuiScreen {
 	private final Minecraft mc = Minecraft.getMinecraft();
 
 	public GUI() {
-		this.frame   = new ArrayList<>();
-		int frame_x = 10;
+		this.frame = new ArrayList<>();
+		int frameX = 10;
 
 		for (Category categorys : Category.values()) {
-			if (categorys.is_hidden()) {
+			if (categorys.isHidden()) {
 				continue;
 			}
 
 			Frame frames = new Frame(categorys);
 
-			frames.set_x(frame_x);
+			frames.setX(frameX);
 
 			this.frame.add(frames);
 
-			frame_x += frames.get_width() + 5;
+			frameX += frames.getWidth() + 5;
 
 			this.current = frames;
 		}
@@ -80,7 +80,7 @@ public class GUI extends GuiScreen {
 	public void onGuiClosed() {
 		PineapleClient.getHackManager().getModuleWithTag("GUI").set_active(false);
 
-		PineapleClient.getConfigManager().save_settings();
+		PineapleClient.getConfigManager().saveSettings();
 	}
 
 	@Override
@@ -88,18 +88,17 @@ public class GUI extends GuiScreen {
 		for (Frame frame : this.frame) {
 			frame.bind(char_, key);
 
-			if (key == PineapleClient.KEY_GUI_ESCAPE && !frame.is_binding()) {
+			if (key == PineapleClient.KEY_GUI_ESCAPE && !frame.isBinding()) {
 				mc.displayGuiScreen(null);
 			}
 
 			if (key == Keyboard.KEY_DOWN || key == 200) {
-				frame.set_y(frame.get_y()-1);
+				frame.setY(frame.getY()-3);
 			}
 
 			if (key == Keyboard.KEY_UP || key == 208) {
-				frame.set_y(frame.get_y()+1);
+				frame.setY(frame.getY()+3);
 			}
-
 		}
 	}
 
@@ -111,14 +110,14 @@ public class GUI extends GuiScreen {
 			// If left click.
 			if (mouse == 0) {
 				if (frames.motion(mx, my) && frames.can()) {
-					frames.does_button_for_do_widgets_can(false);
+					frames.doesButtonForDoWidgetsCan(false);
 
 					this.current = frames;
 
-					this.current.set_move(true);
+					this.current.setMove(true);
 
-					this.current.set_move_x(mx - this.current.get_x());
-					this.current.set_move_y(my - this.current.get_y());
+					this.current.setMoveX(mx - this.current.getX());
+					this.current.setMoveY(my - this.current.getY());
 				}
 			}
 		}
@@ -127,9 +126,9 @@ public class GUI extends GuiScreen {
 	@Override
 	protected void mouseReleased(int mx, int my, int state) {
 		for (Frame frames : this.frame) {
-			frames.does_button_for_do_widgets_can(true);
+			frames.doesButtonForDoWidgetsCan(true);
 			frames.mouse_release(mx, my, state);
-			frames.set_move(false);
+			frames.setMove(false);
 		}
 
 		set_current(this.current);
@@ -161,7 +160,7 @@ public class GUI extends GuiScreen {
 		Frame frame_requested = null;
 
 		for (Frame frames : get_array_frames()) {
-			if (frames.get_tag().equals(tag)) {
+			if (frames.getTag().equals(tag)) {
 				frame_requested = frames;
 			}
 		}

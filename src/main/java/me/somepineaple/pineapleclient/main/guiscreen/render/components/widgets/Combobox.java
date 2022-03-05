@@ -138,7 +138,7 @@ public class Combobox extends AbstractWidget {
 	public void mouse(int mx, int my, int mouse) {
 		if (mouse == 0) {
 			if (motion(mx, my) && this.master.is_open() && can()) {
-				this.frame.does_can(false);
+				this.frame.doesCan(false);
 
 				this.setting.set_current_value(this.values.get(this.combobox_actual_value));
 
@@ -158,7 +158,7 @@ public class Combobox extends AbstractWidget {
 		int ns_b = PineapleClient.clickGui.themeWidgetNameB;
 		int ns_a = PineapleClient.clickGui.themeWidgetNameB;
 
-		Draw.draw_string(this.combobox_name + " " + this.setting.get_current_value(), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+		Draw.drawString(this.combobox_name + " " + this.setting.get_current_value(), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 
 		if (this.combobox_actual_value >= this.values.size()) {
 			this.combobox_actual_value = 0;

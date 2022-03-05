@@ -118,7 +118,7 @@ public class Button extends AbstractWidget {
 	public void mouse(int mx, int my, int mouse) {
 		if (mouse == 0) {
 			if (motion(mx, my) && this.master.is_open() && can()) {
-				this.frame.does_can(false);
+				this.frame.doesCan(false);
 
 				this.setting.setValue(!(this.setting.getValue(true)));
 			}
@@ -142,8 +142,8 @@ public class Button extends AbstractWidget {
 		int bg_a = PineapleClient.clickGui.themeWidgetBackgroundA;
 
 		if (this.setting.getValue(true)) { // filling in the button box if button is enabled
-			Draw.draw_rect(get_x(), this.save_y, get_x() + this.width, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
+			Draw.drawRect(get_x(), this.save_y, get_x() + this.width, this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 		}
-		Draw.draw_string(this.button_name, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+		Draw.drawString(this.button_name, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 	}
 }

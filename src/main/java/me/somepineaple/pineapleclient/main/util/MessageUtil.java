@@ -60,7 +60,7 @@ public class MessageUtil {
 		clientMessage(ChatFormatting.GOLD + PineapleClient.NAME + " " + r + message);
 	}
 
-	public static void send_client_message(String message) {
+	public static void sendClientMessage(String message) {
 		clientMessage(ChatFormatting.GOLD + "[" + PineapleClient.NAME + "] " + r + message);
 	}
 

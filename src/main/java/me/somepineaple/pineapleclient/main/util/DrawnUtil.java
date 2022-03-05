@@ -10,10 +10,10 @@ public class DrawnUtil {
     public static void add_remove_item(String s) {
         s = s.toLowerCase();
         if (hidden_tags.contains(s)) {
-            MessageUtil.send_client_message("Added " + s);
+            MessageUtil.sendClientMessage("Added " + s);
             hidden_tags.remove(s);
         } else {
-            MessageUtil.send_client_message("Removed " + s);
+            MessageUtil.sendClientMessage("Removed " + s);
             hidden_tags.add(s);
         }
     }

@@ -118,7 +118,7 @@ public class EventManager {
 			}
 
 			if (!true_command && CommandManager.command_list.has_prefix(event.getMessage())) {
-				MessageUtil.send_client_message("Try using " + CommandManager.getPrefix() + "help list to see all commands");
+				MessageUtil.sendClientMessage("Try using " + CommandManager.getPrefix() + "help list to see all commands");
 
 				true_command = false;
 			}

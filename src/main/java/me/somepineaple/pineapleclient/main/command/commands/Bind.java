@@ -41,7 +41,7 @@ public class Bind extends PineapleclientCommand {
 		if (key.equalsIgnoreCase("NONE")) {
 			module_requested.set_bind(0);
 
-			MessageUtil.send_client_message(module_requested.getTag() + " is bound to None.");
+			MessageUtil.sendClientMessage(module_requested.getTag() + " is bound to None.");
 
 			return true;
 		}
@@ -62,7 +62,7 @@ public class Bind extends PineapleclientCommand {
 
 		module_requested.set_bind(new_bind);
 
-		MessageUtil.send_client_message(module_requested.getTag() +  " is bound to " + module_requested.getBind(""));
+		MessageUtil.sendClientMessage(module_requested.getTag() +  " is bound to " + module_requested.getBind(""));
 
 		return true;
 	}

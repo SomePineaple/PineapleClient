@@ -26,13 +26,13 @@ public class Settings extends PineapleclientCommand {
 		ChatFormatting c = ChatFormatting.GRAY;
 
 		if (msg.equalsIgnoreCase("save")) {
-			PineapleClient.getConfigManager().save_settings();
+			PineapleClient.getConfigManager().saveSettings();
 
-			MessageUtil.send_client_message(ChatFormatting.GREEN + "Successfully " + c + "saved!");
+			MessageUtil.sendClientMessage(ChatFormatting.GREEN + "Successfully " + c + "saved!");
 		} else if (msg.equalsIgnoreCase("load")) {
 			PineapleClient.getConfigManager().loadSettings();
 
-			MessageUtil.send_client_message(ChatFormatting.GREEN + "Successfully " + c + "loaded!");
+			MessageUtil.sendClientMessage(ChatFormatting.GREEN + "Successfully " + c + "loaded!");
 		} else {
 			MessageUtil.send_client_error_message(currentPrefix() + "settings <save/load>");
 

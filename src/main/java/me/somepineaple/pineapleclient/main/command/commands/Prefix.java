@@ -32,7 +32,7 @@ public class Prefix extends PineapleclientCommand {
 
 		CommandManager.setPrefix(prefix);
 
-		MessageUtil.send_client_message("The new prefix is " + prefix);
+		MessageUtil.sendClientMessage("The new prefix is " + prefix);
 
 		return true;
 	}

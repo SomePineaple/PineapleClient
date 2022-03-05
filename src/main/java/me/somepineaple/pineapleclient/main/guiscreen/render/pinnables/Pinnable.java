@@ -205,21 +205,21 @@ public class Pinnable {
 			RenderHelp.releaseGl();
 
 			if (motion(mx, my)) {
-				Draw.draw_rect(this.x - 1, this.y - 1, this.width + 1, this.height + 1, 0, 0, 0, 90, 2, "right-left-down-up");
+				Draw.drawRect(this.x - 1, this.y - 1, this.width + 1, this.height + 1, 0, 0, 0, 90, 2, "right-left-down-up");
 			}
 		}
 	}
 
 	protected void create_line(String string, int pos_x, int pos_y) {
-		Draw.draw_string(string, this.x + pos_x, this.y + pos_y, 255, 255, 255, 255);
+		Draw.drawString(string, this.x + pos_x, this.y + pos_y, 255, 255, 255, 255);
 	}
 
 	protected void create_line(String string, int pos_x, int pos_y, int r, int g, int b, int a) {
-		Draw.draw_string(string, this.x + pos_x, this.y + pos_y, r, g, b, a);
+		Draw.drawString(string, this.x + pos_x, this.y + pos_y, r, g, b, a);
 	}
 
 	protected void create_rect(int pos_x, int pos_y, int width, int height, int r, int g, int b, int a) {
-		Draw.draw_rect(this.x + pos_x, this.y + pos_y, this.x + width, this.y + height, r, g, b, a);
+		Draw.drawRect(this.x + pos_x, this.y + pos_y, this.x + width, this.y + height, r, g, b, a);
 	}
 
 	protected int get(String string, String type) {

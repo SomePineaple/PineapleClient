@@ -21,7 +21,7 @@ public enum Category {
 		this.hidden = hidden;
 	}
 
-	public boolean is_hidden() {
+	public boolean isHidden() {
 		return this.hidden;
 	}
 

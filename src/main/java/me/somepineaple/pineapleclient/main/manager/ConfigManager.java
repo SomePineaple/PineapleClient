@@ -272,12 +272,12 @@ public class ConfigManager {
         for (Frame frames_gui : PineapleClient.clickGui.get_array_frames()) {
             JsonObject frame_info = new JsonObject();
 
-            frame_info.add("name", new JsonPrimitive(frames_gui.get_name()));
-            frame_info.add("tag", new JsonPrimitive(frames_gui.get_tag()));
-            frame_info.add("x", new JsonPrimitive(frames_gui.get_x()));
-            frame_info.add("y", new JsonPrimitive(frames_gui.get_y()));
+            frame_info.add("name", new JsonPrimitive(frames_gui.getName()));
+            frame_info.add("tag", new JsonPrimitive(frames_gui.getTag()));
+            frame_info.add("x", new JsonPrimitive(frames_gui.getX()));
+            frame_info.add("y", new JsonPrimitive(frames_gui.getY()));
 
-            gui.add(frames_gui.get_tag(), frame_info);
+            gui.add(frames_gui.getTag(), frame_info);
         }
 
         main_json.add("configuration", config);
@@ -304,12 +304,12 @@ public class ConfigManager {
         CommandManager.setPrefix(json_config.get("prefix").getAsString());
 
         for (Frame frames : PineapleClient.clickGui.get_array_frames()) {
-            JsonObject frame_info = json_gui.get(frames.get_tag()).getAsJsonObject();
+            JsonObject frame_info = json_gui.get(frames.getTag()).getAsJsonObject();
 
             Frame frame_requested = PineapleClient.clickGui.get_frame_with_tag(frame_info.get("tag").getAsString());
 
-            frame_requested.set_x(frame_info.get("x").getAsInt());
-            frame_requested.set_y(frame_info.get("y").getAsInt());
+            frame_requested.setX(frame_info.get("x").getAsInt());
+            frame_requested.setY(frame_info.get("y").getAsInt());
         }
 
         stream.close();
@@ -426,7 +426,7 @@ public class ConfigManager {
 
     // LOAD & SAVE SETTINGS
 
-    public void save_settings() {
+    public void saveSettings() {
         try {
             verify_dir(MAIN_FOLDER_PATH);
             verify_dir(CONFIGS_FOLDER_PATH);

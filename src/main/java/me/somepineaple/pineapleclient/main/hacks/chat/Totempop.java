@@ -61,10 +61,10 @@ public class Totempop extends Hack {
                 if (entity == mc.player) return;
 
                 if (FriendUtil.isFriend(entity.getName())) {
-                    MessageUtil.send_client_message( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + green + entity.getName() + reset + " has popped " + bold + count + reset + " totems. you should go help them");
+                    MessageUtil.sendClientMessage( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + green + entity.getName() + reset + " has popped " + bold + count + reset + " totems. you should go help them");
                     if (should_notify) NotificationUtil.send_notification(new Notification(entity.getName() + " has poped " + count + " totems, go help"));
                 } else {
-                    MessageUtil.send_client_message( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + red + entity.getName() + reset + " has popped " + bold + count + reset + " totems. what a loser");
+                    MessageUtil.sendClientMessage( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + red + entity.getName() + reset + " has popped " + bold + count + reset + " totems. what a loser");
                     if (should_notify) NotificationUtil.send_notification(new Notification(entity.getName() + " has poped " + count + " totems"));
                 }
 
@@ -90,10 +90,10 @@ public class Totempop extends Hack {
                 if (player == mc.player) continue;
 
                 if (FriendUtil.isFriend(player.getName())) {
-                    MessageUtil.send_client_message( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + green + player.getName() + reset + " just fucking DIED after popping " + bold + count + reset + " totems. RIP :pray:");
+                    MessageUtil.sendClientMessage( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + green + player.getName() + reset + " just fucking DIED after popping " + bold + count + reset + " totems. RIP :pray:");
                     if (should_notify) NotificationUtil.send_notification(new Notification(player.getName() + " died after poping " + count + " totems"));
                 } else {
-                    MessageUtil.send_client_message( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + red + player.getName() + reset + " just fucking DIED after popping " + bold + count + reset + " totems");
+                    MessageUtil.sendClientMessage( red + "" + bold + " TotemPop " + reset + grey + " > " + reset + "dude, " + bold + red + player.getName() + reset + " just fucking DIED after popping " + bold + count + reset + " totems");
                     if (should_notify) NotificationUtil.send_notification(new Notification(player.getName() + " died after poping " + count + " totems"));
                 }
 

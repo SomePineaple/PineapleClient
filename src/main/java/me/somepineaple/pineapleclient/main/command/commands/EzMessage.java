@@ -30,8 +30,8 @@ public class EzMessage extends PineapleclientCommand {
                 ez.append(word).append(" ");
             }
             EzMessageUtil.set_message(ez.toString());
-            MessageUtil.send_client_message("ez message changed to " + ChatFormatting.BOLD + ez.toString());
-            PineapleClient.getConfigManager().save_settings();
+            MessageUtil.sendClientMessage("ez message changed to " + ChatFormatting.BOLD + ez.toString());
+            PineapleClient.getConfigManager().saveSettings();
             return true;
         }
 

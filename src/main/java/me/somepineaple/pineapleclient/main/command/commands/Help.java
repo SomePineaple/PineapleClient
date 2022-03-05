@@ -35,7 +35,7 @@ public class Help extends PineapleclientCommand {
 		if (type.equalsIgnoreCase("list")) {
 
 			for (PineapleclientCommand commands : PineapleclientCommands.get_pure_command_list()) {
-				MessageUtil.send_client_message(commands.getName());
+				MessageUtil.sendClientMessage(commands.getName());
 
 			}
 
@@ -50,7 +50,7 @@ public class Help extends PineapleclientCommand {
 			return true;
 		}
 
-		MessageUtil.send_client_message(command_requested.getName() + " - " + command_requested.getDescription());
+		MessageUtil.sendClientMessage(command_requested.getName() + " - " + command_requested.getDescription());
 
 		return true;
 	}

@@ -75,7 +75,7 @@ public class HUD extends GuiScreen {
 
 		this.on_gui = false;
 
-		PineapleClient.getConfigManager().save_settings();
+		PineapleClient.getConfigManager().saveSettings();
 	}
 
 	@Override

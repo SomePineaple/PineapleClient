@@ -78,11 +78,11 @@ public class Auto32k extends Hack {
         }
 
         if ((hopper_slot == -1 || dispenser_slot == -1 || redstone_slot == -1 || shulker_slot == -1 || block_slot == -1) && !place_mode.in("Hopper")) {
-            MessageUtil.send_client_message("missing item");
+            MessageUtil.sendClientMessage("missing item");
             this.set_disable();
             return;
         } else if (hopper_slot == -1 || shulker_slot == -1) {
-            MessageUtil.send_client_message("missing item");
+            MessageUtil.sendClientMessage("missing item");
             this.set_disable();
             return;
         }
@@ -109,7 +109,7 @@ public class Auto32k extends Hack {
                 setup = true;
 
             } else {
-                MessageUtil.send_client_message("unable to place");
+                MessageUtil.sendClientMessage("unable to place");
                 this.set_disable();
             }
         } else if (place_mode.in("Auto")) {
@@ -135,7 +135,7 @@ public class Auto32k extends Hack {
                     }
                 }
             }
-            MessageUtil.send_client_message("unable to place");
+            MessageUtil.sendClientMessage("unable to place");
             this.set_disable();
         } else {
             for (int z = -2; z <= 2; z++) {
@@ -166,7 +166,7 @@ public class Auto32k extends Hack {
     public void update() {
 
         if (ticks_past > 50 && !(mc.currentScreen instanceof GuiHopper)) {
-            MessageUtil.send_client_message("inactive too long, disabling");
+            MessageUtil.sendClientMessage("inactive too long, disabling");
             this.set_disable();
             return;
         }
@@ -178,7 +178,7 @@ public class Auto32k extends Hack {
                     mc.playerController.windowClick(mc.player.openContainer.windowId, 36 + shulker_slot, 0, ClickType.QUICK_MOVE, mc.player);
                     dispenser_done = true;
                     if (debug.getValue(true)) {
-                        MessageUtil.send_client_message("sent item");
+                        MessageUtil.sendClientMessage("sent item");
                     }
                 } catch (Exception ignored) {
 
@@ -188,7 +188,7 @@ public class Auto32k extends Hack {
             if (!place_redstone) {
                 BlockUtil.placeBlock(pos.add(0, 2, 0), redstone_slot, rotate.getValue(true), false, true, swing);
                 if (debug.getValue(true)) {
-                    MessageUtil.send_client_message("placed redstone");
+                    MessageUtil.sendClientMessage("placed redstone");
                 }
                 place_redstone = true;
                 return;
@@ -200,7 +200,7 @@ public class Auto32k extends Hack {
                 BlockUtil.placeBlock(this.pos.add(this.rot[0], 0, this.rot[1]), hopper_slot, rotate.getValue(true), false, true, swing);
                 BlockUtil.openBlock(this.pos.add(this.rot[0], 0, this.rot[1]));
                 if (debug.getValue(true)) {
-                    MessageUtil.send_client_message("in the hopper");
+                    MessageUtil.sendClientMessage("in the hopper");
                 }
             }
 

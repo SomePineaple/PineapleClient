@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CrystalUtil {
-
     final static Minecraft mc = Minecraft.getMinecraft();
 
     public static List<BlockPos> possiblePlacePositions(final float placeRange, final boolean thirteen, final boolean specialEntityCheck) {
@@ -92,9 +91,7 @@ public class CrystalUtil {
         return true;
     }
 
-    public static boolean canPlaceCrystal(final BlockPos pos)
-    {
-
+    public static boolean canPlaceCrystal(final BlockPos pos) {
         final Block block = mc.world.getBlockState(pos).getBlock();
 
         if (block == Blocks.OBSIDIAN || block == Blocks.BEDROCK)
@@ -104,10 +101,7 @@ public class CrystalUtil {
 
             if (floor == Blocks.AIR && ceil == Blocks.AIR)
             {
-                if (mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(pos.add(0, 1, 0))).isEmpty() && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(pos.add(0, 2, 0))).isEmpty())
-                {
-                    return true;
-                }
+                return mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(pos.add(0, 1, 0))).isEmpty() && mc.world.getEntitiesWithinAABBExcludingEntity(null, new AxisAlignedBB(pos.add(0, 2, 0))).isEmpty();
             }
         }
 
@@ -166,8 +160,7 @@ public class CrystalUtil {
     }
 
 
-    public static float calculateDamage(EntityEnderCrystal crystal, Entity entity)
-    {
+    public static float calculateDamage(EntityEnderCrystal crystal, Entity entity) {
         return calculateDamage(crystal.posX, crystal.posY, crystal.posZ, entity);
     }
 }

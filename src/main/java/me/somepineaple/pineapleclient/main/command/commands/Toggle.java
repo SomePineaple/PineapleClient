@@ -35,7 +35,7 @@ public class Toggle extends PineapleclientCommand {
 		if (module_requested != null) {
 			module_requested.toggle();
 
-			MessageUtil.send_client_message("[" + module_requested.getTag() + "] - Toggled to " + module_requested.isActive() + ".");
+			MessageUtil.sendClientMessage("[" + module_requested.getTag() + "] - Toggled to " + module_requested.isActive() + ".");
 		} else {
 			MessageUtil.send_client_error_message("Module does not exist.");
 		}
