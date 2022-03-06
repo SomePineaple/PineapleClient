@@ -43,7 +43,7 @@ public class BlockUtil {
     }
 
     public static boolean rayTracePlaceCheck(final BlockPos pos, final boolean shouldCheck, final float height) {
-        return !shouldCheck || mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + mc.player.getEyeHeight(), mc.player.posZ), new Vec3d(pos.getX(), pos.getY() + height, pos.getZ()), false, true, false) == null;
+        return !shouldCheck || mc.world.rayTraceBlocks(new Vec3d(mc.player.posX, mc.player.posY + mc.player.getEyeHeight(), mc.player.posZ), new Vec3d(pos.getX() + 0.5, pos.getY() + height, pos.getZ() + 0.5), false, true, false) == null;
     }
 
     public static boolean rayTracePlaceCheck(final BlockPos pos, final boolean shouldCheck) {

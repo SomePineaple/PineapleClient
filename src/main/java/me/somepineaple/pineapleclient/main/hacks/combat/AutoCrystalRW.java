@@ -9,6 +9,8 @@ import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
 import me.somepineaple.pineapleclient.main.util.*;
+import me.somepineaple.pineapleclient.main.util.Timer;
+import me.somepineaple.pineapleclient.mixins.ICPacketUseEntity;
 import me.somepineaple.pineapleclient.mixins.IEntityPlayerSP;
 import me.somepineaple.pineapleclient.mixins.IPlayerControllerMP;
 import me.somepineaple.turok.draw.RenderHelp;
@@ -19,11 +21,15 @@ import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.*;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.network.play.client.CPacketUseEntity;
+import net.minecraft.network.play.server.SPacketDestroyEntities;
+import net.minecraft.network.play.server.SPacketSoundEffect;
+import net.minecraft.network.play.server.SPacketSpawnObject;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -33,10 +39,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -568,6 +571,13 @@ public class AutoCrystalRW extends Hack {
         }
     }
 
+    public void explodeCrystal(int entityID) {
+        CPacketUseEntity attackPacket = new CPacketUseEntity();
+        ((ICPacketUseEntity) attackPacket).setID(entityID);
+        ((ICPacketUseEntity) attackPacket).setAction(CPacketUseEntity.Action.ATTACK);
+        mc.player.connection.sendPacket(attackPacket);
+    }
+
     public void placeCrystal(BlockPos position, EnumFacing facing, Vec3d vector, boolean packet) {
         if (position != null) {
             if (packet) {
@@ -837,6 +847,165 @@ public class AutoCrystalRW extends Hack {
             Item switchItem = mc.player.inventory.getStackInSlot(((CPacketHeldItemChange) event.getPacket()).getSlotId()).getItem();
             if (!(switchItem instanceof ItemEndCrystal))
                 switchTicks = 0;
+        }
+    });
+
+    @EventHandler
+    private final Listener<EventPacket.ReceivePacket> receivePacketListener = new Listener<>(event -> {
+        if (event.getPacket() instanceof SPacketSpawnObject && ((SPacketSpawnObject) event.getPacket()).getType() == 51) {
+            // position of the placed crystal
+            BlockPos linearPosition = new BlockPos(((SPacketSpawnObject) event.getPacket()).getX(), ((SPacketSpawnObject) event.getPacket()).getY(), ((SPacketSpawnObject) event.getPacket()).getZ());
+
+            if (attemptedPlacements.containsKey(linearPosition.down())) {
+                startTime = System.currentTimeMillis();
+
+                if (timing.in("Sequential")) {
+                    if (!explodeTimer.passed(explodeDamage.getValue(1)))
+                        explodeTimer.setTimePassed(explodeDelay.getValue(1));
+                }
+
+                attemptedPlacements.clear();
+            }
+
+            if ((timing.in("Linear") || timing.in("Uniform")) && explode.getValue(true)) {
+                float rayTraceOffset = 0;
+                if (placeRaytrace.in("Base"))
+                    rayTraceOffset = 0.5f;
+                else if (placeRaytrace.in("Normal"))
+                    rayTraceOffset = 1.5f;
+                else if (placeRaytrace.in("Double"))
+                    rayTraceOffset = 2.5f;
+                else if (placeRaytrace.in("Triple"))
+                    rayTraceOffset = 3.5f;
+
+                boolean wallLinear = !BlockUtil.rayTracePlaceCheck(linearPosition, placeRaytrace.in("None"), rayTraceOffset);
+
+                double distance = mc.player.getDistance(linearPosition.getX() + 0.5, linearPosition.getY() + 1, linearPosition.getZ() + 0.5);
+                if (distance > explodeWall.getValue(1.0) && wallLinear)
+                    return;
+
+                float localDamage = CrystalUtil.calculateDamage(linearPosition.getX() + 0.5, linearPosition.getY() + 1, linearPosition.getZ(), mc.player);
+                if (localDamage > explodeLocal.getValue(1.0) || (localDamage + 1 > PlayerUtil.getHealth() && pauseSafety.getValue(true)))
+                    return;
+
+                TreeMap<Float, Integer> linearMap = new TreeMap<>();
+                for (EntityPlayer calculatedTarget : mc.world.playerEntities) {
+                    if (calculatedTarget.equals(mc.player) || calculatedTarget.isDead || calculatedTarget.getHealth() <= 0)
+                        continue;
+
+                    float targetDistance = mc.player.getDistance(calculatedTarget);
+                    if (targetDistance > targetRange.getValue(1.0))
+                        continue;
+
+                    float targetDamage = CrystalUtil.calculateDamage(linearPosition.getX() + 0.5, linearPosition.getY() + 1, linearPosition.getZ(), calculatedTarget);
+
+                    float damageHeuristic = 0;
+                    if (logic.in("Damage"))
+                        damageHeuristic = targetDamage;
+                    else if (logic.in("Minimax"))
+                        damageHeuristic = targetDamage - localDamage;
+                    else if (logic.in("Uniform"))
+                        damageHeuristic = (float) (targetDamage - localDamage - distance);
+
+                    linearMap.put(damageHeuristic, ((SPacketSpawnObject) event.getPacket()).getEntityID());
+                }
+
+                if (!linearMap.isEmpty()) {
+                    Map.Entry<Float, Integer> idealLinear = linearMap.lastEntry();
+
+                    if (idealLinear.getKey() > explodeDamage.getValue(1.0)) {
+                        if (!rotate.in("None") && (rotateWhen.in("Break") || rotateWhen.in("Both"))) {
+                            interactVector = new Vec3d(linearPosition).add(0.5, 0.5, 0.5);
+
+                            if (rotate.in("Client")) {
+                                float[] rotationAngles = MathUtil.calcAngle(mc.player.getPositionEyes(1), interactVector);
+                                mc.player.rotationYaw = rotationAngles[0];
+                                mc.player.rotationYawHead = rotationAngles[0];
+                                mc.player.rotationPitch = rotationAngles[1];
+                            }
+                        }
+
+                        if (!explodeWeakness.in("Off")) {
+                            // strength and weakness effects on the player
+                            PotionEffect weaknessEffect = mc.player.getActivePotionEffect(MobEffects.WEAKNESS);
+                            PotionEffect strengthEffect = mc.player.getActivePotionEffect(MobEffects.STRENGTH);
+
+                            if (weaknessEffect != null && (strengthEffect == null || strengthEffect.getAmplifier() < weaknessEffect.getAmplifier())) {
+                                int swordSlot = getSwordSlot();
+                                int pickSlot = getPickSlot();
+
+                                if (!(mc.player.inventory.getCurrentItem().getItem() instanceof ItemSword || mc.player.inventory.getCurrentItem().getItem() instanceof ItemPickaxe)) {
+                                    previousSlot = mc.player.inventory.currentItem;
+
+                                    if (swordSlot != -1) {
+                                        if (explodeWeakness.in("Normal"))
+                                            mc.player.inventory.currentItem = swordSlot;
+
+                                        mc.player.connection.sendPacket(new CPacketHeldItemChange(swordSlot));
+
+                                        if (placeSwitch.in("Packet"))
+                                            ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+                                    } else if (pickSlot != -1) {
+                                        if (explodeWeakness.in("Normal"))
+                                            mc.player.inventory.currentItem = pickSlot;
+
+                                        mc.player.connection.sendPacket(new CPacketHeldItemChange(pickSlot));
+
+                                        if (placeSwitch.in("Packet"))
+                                            ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+                                    }
+                                }
+                            }
+                        }
+
+                        explodeCrystal(idealLinear.getValue());
+                        swingCrystal(explodeHand);
+
+                        attemptedExplosions.put(((SPacketSpawnObject) event.getPacket()).getEntityID(), attemptedExplosions.containsKey(((SPacketSpawnObject) event.getPacket()).getEntityID()) ? attemptedExplosions.get(((SPacketSpawnObject) event.getPacket()).getEntityID()) + 1 : 1);
+
+                        if (sync.in("Instant"))
+                            mc.world.removeEntityFromWorld(idealLinear.getValue());
+
+                        if (explodeWeakness.in("Packet") && previousSlot != -1) {
+                            mc.player.connection.sendPacket(new CPacketHeldItemChange(previousSlot));
+                            previousSlot = -1;
+                        }
+                    }
+                }
+            }
+        } else if (event.getPacket() instanceof SPacketDestroyEntities) {
+            for (int entityId : ((SPacketDestroyEntities) event.getPacket()).getEntityIDs()) {
+                if (attemptedExplosions.containsKey(entityId)) {
+                    responseTime = System.currentTimeMillis() - startTime;
+
+                    if (timing.in("Sequential") || timing.in("Uniform")) {
+                        if (!placeTimer.passed(placeDelay.getValue(1)))
+                            placeTimer.setTimePassed(placeDelay.getValue(1));
+                    }
+
+                    attemptedExplosions.clear();
+                    break;
+                }
+            }
+        } else if (event.getPacket() instanceof SPacketSoundEffect && ((SPacketSoundEffect) event.getPacket()).getSound().equals(SoundEvents.ENTITY_GENERIC_EXPLODE)) {
+            inhibitExplosions.clear();
+
+            mc.addScheduledTask(() -> {
+                for (Entity entity : mc.world.loadedEntityList) {
+                    if (!(entity instanceof EntityEnderCrystal) || entity.isDead)
+                        continue;
+
+                    double soundDistance = entity.getDistance(((SPacketSoundEffect) event.getPacket()).getX(), ((SPacketSoundEffect) event.getPacket()).getY(), ((SPacketSoundEffect) event.getPacket()).getZ());
+                    if (soundDistance > 6)
+                        continue;
+
+                    if (explodeInhibit.getValue(true))
+                        inhibitExplosions.add((EntityEnderCrystal) entity);
+
+                    if (sync.in("Sound"))
+                        mc.world.removeEntityDangerously(entity);
+                }
+            });
         }
     });
 

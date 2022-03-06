@@ -15,6 +15,10 @@ public class Timer {
         this.time = System.nanoTime();
     }
 
+    public void setTimePassed(final long ms) {
+        time = System.nanoTime() - (ms * 1000000L);
+    }
+
     public long getTime(final long time) {
         return time / 1000000L;
     }

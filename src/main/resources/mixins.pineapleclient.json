@@ -21,6 +21,7 @@
 		"MixinAbstractClientPlayer",
 		"MixinRenderManager",
 		"IPlayerControllerMP",
-		"IEntityPlayerSP"
+		"IEntityPlayerSP",
+		"ICPacketUseEntity"
 	]
 }
