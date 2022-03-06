@@ -6,12 +6,14 @@ import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
 import me.somepineaple.pineapleclient.main.util.*;
+import me.somepineaple.turok.draw.RenderHelp;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
+import java.awt.*;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -342,11 +344,116 @@ public class AutoCrystalRW extends Hack {
 
     }
 
+    @Override
+    public void render() {
+        if (placePositon == null)
+            return;
+
+        boolean outline = false;
+        boolean solid = false;
+        boolean glow = false;
+        boolean glowLines = false;
+
+        if (renderMode.in("None")) return;
+
+        if (renderMode.in("Pretty")) {
+            outline = true;
+            solid = true;
+        }
+
+        if (renderMode.in("Solid")) {
+            outline = false;
+            solid = true;
+        }
+
+        if (renderMode.in("Outline")) {
+            outline = true;
+            solid = false;
+        }
+
+        if (renderMode.in("Glow")) {
+            outline = false;
+            solid = false;
+            glow = true;
+        }
+
+        if (renderMode.in("Glow 2")) {
+            outline = false;
+            solid = false;
+            glow = true;
+            glowLines = true;
+        }
+
+        BlockPos renderBlock = topBlock.getValue(true) ? placePositon.getPosition().up() : placePositon.getPosition();
+
+        renderBlock(renderBlock, solid, outline, glow, glowLines);
+        if (renderDamage.getValue(true))
+            RenderUtil.drawText(renderBlock, String.format("%.1f", placePositon.getTargetDamage()));
+    }
+
+    private void renderBlock(BlockPos pos, boolean solid, boolean outline, boolean glow, boolean glowLines) {
+        BlockPos render_block = (topBlock.getValue(true) ? pos.up() : pos);
+
+        float h = (float) height.getValue(1.0);
+
+        if (solid) {
+            RenderHelp.prepare("quads");
+            RenderHelp.draw_cube(RenderHelp.get_buffer_build(),
+                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    1, h, 1,
+                    r.getValue(1), g.getValue(1), b.getValue(1), a.getValue(1),
+                    "all"
+            );
+            RenderHelp.release();
+        }
+
+        if (outline) {
+            RenderHelp.prepare("lines");
+            RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
+                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    1, h, 1,
+                    r.getValue(1), g.getValue(1), b.getValue(1), aOutline.getValue(1),
+                    "all"
+            );
+            RenderHelp.release();
+        }
+
+        if (glow) {
+            RenderHelp.prepare("lines");
+            RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
+                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    1, 0, 1,
+                    r.getValue(1), g.getValue(1), b.getValue(1), aOutline.getValue(1),
+                    "all"
+            );
+            RenderHelp.release();
+            RenderHelp.prepare("quads");
+            RenderHelp.draw_gradiant_cube(RenderHelp.get_buffer_build(),
+                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    1, h, 1,  new Color(r.getValue(1), g.getValue(1), b.getValue(1), a.getValue(1)),
+                    new Color(0, 0, 0, 0),
+                    "all"
+            );
+            RenderHelp.release();
+        }
+
+        if (glowLines) {
+            RenderHelp.prepare("lines");
+            RenderHelp.draw_gradiant_outline(RenderHelp.get_buffer_build(),
+                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    h, new Color(r.getValue(1), g.getValue(1), b.getValue(1), aOutline.getValue(1)),
+                    new Color(0, 0, 0, 0),
+                    "all"
+            );
+            RenderHelp.release();
+        }
+    }
+
     private boolean checkTarget(Entity target) {
         if (target.equals(mc.player) || target.isDead)
             return true;
 
-        if ((target instanceof EntityPlayer && (!targetPlayers.getValue(true) || FriendUtil.isFriend(((EntityPlayer)target).getName()))) || (EntityUtil.isPassiveMob(target) && !targetPassives.getValue(true)) || (EntityUtil.isNeutralMob(target) && !targetNeutrals.getValue(true)) || (EntityUtil.isHostileMob(target) && !targetHostiles.getValue(true)))
+        if ((target instanceof EntityPlayer && (!targetPlayers.getValue(true) || FriendUtil.isFriend(target.getName()))) || (EntityUtil.isPassiveMob(target) && !targetPassives.getValue(true)) || (EntityUtil.isNeutralMob(target) && !targetNeutrals.getValue(true)) || (EntityUtil.isHostileMob(target) && !targetHostiles.getValue(true)))
             return true;
 
         float targetDistance = mc.player.getDistance(target);
