@@ -13,7 +13,6 @@ import me.somepineaple.pineapleclient.main.util.Timer;
 import me.somepineaple.pineapleclient.main.util.*;
 import me.somepineaple.pineapleclient.mixins.ICPacketUseEntity;
 import me.somepineaple.pineapleclient.mixins.IEntityPlayerSP;
-import me.somepineaple.pineapleclient.mixins.IPlayerControllerMP;
 import me.somepineaple.turok.draw.RenderHelp;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listener;
@@ -59,15 +58,14 @@ public class AutoCrystalRW extends Hack {
     private final Setting explodeWall = create("Explode Wall", "acrwexpwr", 3.5, 0.0, 8.0);
     private final Setting explodeDelay = create("Explode Delay", "acrwexpd", 60, 0, 500);
     private final Setting explodeRandom = create("Random Delay", "acrwexprd", 1, 1, 500);
-    private final Setting explodeSwitch = create("Switch Delay", "acrwswd", 0, 0, 500);
     private final Setting explodeTicksExisted = create("Ticks Existed", "acrwte", 0, 0, 5);
     private final Setting explodeDamage = create("Explode Damage", "acrwexpda", 5.0, 0.0, 36.0);
     private final Setting explodeLocal = create("Explode Local", "acrwexplda", 5.0, 0.0, 36.0);
     private final Setting explodeLimit = create("Limit", "acrwexpl", 10, 0, 10);
     private final Setting explodePacket = create("Explode Packets", "acrwexpwpk", true);
     private final Setting explodeInhibit = create("Inhibit", "acrwexpi", false);
-    private final Setting explodeHand = create("Hand", "acrweh", "Mainhand", combobox("Offhand", "Mainhand", "Packet", "None"));
-    private final Setting explodeWeakness = create("Anti Weakness", "acrwsw", "Off", combobox("Swap", "Silent", "Off"));
+    private final Setting explodeHand = create("Hand", "acrweh", "Mainhand", combobox("Sync", "Offhand", "Mainhand", "Packet", "None"));
+    private final Setting explodeWeakness = create("Anti Weakness", "acrwsw", "Off", combobox("Normal", "Packet", "Off"));
 
     // Place settings
     private final Setting place = create("Place", "acrwpl", true);
@@ -79,8 +77,8 @@ public class AutoCrystalRW extends Hack {
     private final Setting placePacket = create("Place Packet", "acrwplp", true);
     private final Setting placeInteract = create("Place Interact", "acrwpli", "Normal", combobox("Strict", "None", "Normal"));
     private final Setting placeRaytrace = create("Place Raytrace", "acrwplray", "Base", combobox("Normal", "Double", "Triple", "None", "Base"));
-    private final Setting placeHand = create("Place Hand", "acrwplh", "Mainhand", combobox("Offhand", "Mainhand", "Packet", "None"));
-    private final Setting placeSwitch = create("Switch", "acrwplsw", "Off", combobox("Normal", "Silent", "Off"));
+    private final Setting placeHand = create("Place Hand", "acrwplh", "Mainhand", combobox("Sync", "Offhand", "Mainhand", "Packet", "None"));
+    private final Setting placeSwitch = create("Switch", "acrwplsw", "Off", combobox("Normal", "Packet", "Off"));
 
     // Pause settings
     private final Setting pause = create("Pause", "acrwp", true);
@@ -107,11 +105,8 @@ public class AutoCrystalRW extends Hack {
     private final Setting onePointThirteenMode = create("1.13+ mode", "acrwc1.13", false);
     private final Setting logic = create("Logic", "acrwcl", "Damage", combobox("Minimax", "Uniform", "Damage"));
     private final Setting sync = create("Synchronize", "acrwcs", "Sound", combobox("Instant", "None", "Sound"));
-    private final Setting prediction = create("Prediction", "acrwcp", false);
-    private final Setting ignoreTerrain = create("Ignore Terrain", "acrwcit", false);
 
     // Target settings
-    private final Setting target = create("Target", "acrwt", "Closest", combobox("Min Health", "Min Armor", "Closest"));
     private final Setting targetRange = create("Target Range", "acrwtr", 10, 0, 16);
     private final Setting targetPlayers = create("Target Players", "acrwtpl", true);
     private final Setting targetPassives = create("Target Passives", "acrwtps", false);
@@ -132,7 +127,6 @@ public class AutoCrystalRW extends Hack {
     // Crystal info
     private Crystal explodeCrystal = new Crystal(null, null, 0, 0);
     private final Timer explodeTimer = new Timer();
-    private final Timer switchTimer = new Timer();
     private final Map<Integer, Integer> attemptedExplosions = new ConcurrentHashMap<>();
     private final Set<EntityEnderCrystal> inhibitExplosions = new ConcurrentSet<>();
 
@@ -141,16 +135,11 @@ public class AutoCrystalRW extends Hack {
     private final Timer placeTimer = new Timer();
     private final Map<BlockPos, Integer> attemptedPlacements = new ConcurrentHashMap<>();
 
-    // Tick clamp
-    private int switchTicks = 10;
     private int strictTicks;
 
     // Rotation info
     private boolean yawLimit;
     private Vec3d interactVector = Vec3d.ZERO;
-
-    // Switch info
-    private int previousSlot = -1;
 
     // Response time
     private long startTime = 0;
@@ -376,6 +365,9 @@ public class AutoCrystalRW extends Hack {
 
     private void explodeCrystal() {
         if (explodeCrystal != null) {
+            boolean silentSwapped = false;
+            int silentBefore = mc.player.inventory.currentItem;
+
             if (!rotate.in("None") && (rotateWhen.in("Break") || rotateWhen.in("Both"))) {
                 // our last interaction will be the attack on the crystal
                 interactVector = explodeCrystal.getCrystal().getPositionVector();
@@ -398,30 +390,27 @@ public class AutoCrystalRW extends Hack {
                     int pickSlot = getPickSlot();
 
                     if (!(mc.player.inventory.getCurrentItem().getItem() instanceof ItemSword || mc.player.inventory.getCurrentItem().getItem() instanceof ItemPickaxe)) {
-                        previousSlot = mc.player.inventory.currentItem;
-
                         if (swordSlot != -1) {
                             if (explodeWeakness.in("Normal"))
                                 mc.player.inventory.currentItem = swordSlot;
 
                             mc.player.connection.sendPacket(new CPacketHeldItemChange(swordSlot));
 
-                            if (placeSwitch.in("Packet"))
-                                ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+                            if (explodeWeakness.in("Packet"))
+                                silentSwapped = true;
                         } else if (pickSlot != -1) {
                             if (explodeWeakness.in("Normal"))
                                 mc.player.inventory.currentItem = pickSlot;
 
                             mc.player.connection.sendPacket(new CPacketHeldItemChange(pickSlot));
-
-                            if (placeSwitch.in("Packet"))
-                                ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+                            if (explodeWeakness.in("Packet"))
+                                silentSwapped = true;
                         }
                     }
                 }
             }
 
-            if (explodeTimer.passed(explodeDelay.getValue(1) + ThreadLocalRandom.current().nextInt(explodeRandom.getValue(1))) && switchTimer.passed(explodeSwitch.getValue((1)))) {
+            if (explodeTimer.passed(explodeDelay.getValue(1) + ThreadLocalRandom.current().nextInt(explodeRandom.getValue(1)))) {
                 explodeCrystal(explodeCrystal.getCrystal(), explodePacket.getValue(true));
                 swingCrystal(explodeHand);
 
@@ -432,9 +421,8 @@ public class AutoCrystalRW extends Hack {
                 if (sync.in("Instant"))
                     mc.world.removeEntityDangerously(explodeCrystal.getCrystal());
 
-                if (explodeWeakness.in("Packet") && previousSlot != -1) {
-                    mc.player.connection.sendPacket(new CPacketHeldItemChange(previousSlot));
-                    previousSlot = -1;
+                if (silentSwapped) {
+                    mc.player.connection.sendPacket(new CPacketHeldItemChange(silentBefore));
                 }
             }
         }
@@ -442,6 +430,9 @@ public class AutoCrystalRW extends Hack {
 
     private void placeCrystal() {
         if (placePosition != null) {
+            boolean silentSwapped = false;
+            int silentBefore = mc.player.inventory.currentItem;
+
             if (!rotate.in("None") && (rotateWhen.in("Place") || rotateWhen.in("Both"))) {
                 interactVector = new Vec3d(placePosition.getPosition()).add(0.5, 0.5, 0.5);
 
@@ -454,30 +445,16 @@ public class AutoCrystalRW extends Hack {
                 }
             }
 
-            if (placeSwitch.in("Packet"))
-                previousSlot = mc.player.inventory.currentItem;
-
-            if (PlayerUtil.isEating())
-                switchTicks = 0;
-
-            if (placeSwitch.in("Normal"))
-                ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
-
-            switchTicks++;
-
             if (!PlayerUtil.isHolding(Items.END_CRYSTAL)) {
-                if (switchTicks <= 10 && placeSwitch.in("Normal"))
-                    return;
-
                 int crystalSlot = getCrystalSlot();
                 if (crystalSlot != -1) {
-                    if (explodeWeakness.in("Normal"))
+                    if (placeSwitch.in("Normal")) {
                         mc.player.inventory.currentItem = crystalSlot;
+                        return;
+                    }
 
                     mc.player.connection.sendPacket(new CPacketHeldItemChange(crystalSlot));
-
-                    if (placeSwitch.in("Packet"))
-                        ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+                    silentSwapped = true;
                 }
             }
 
@@ -565,10 +542,8 @@ public class AutoCrystalRW extends Hack {
                 placeCrystal(placePosition.getPosition(), facingDirection, new Vec3d(facingX, facingY, facingZ), placePacket.getValue(true));
                 swingCrystal(placeHand);
 
-                if (placeSwitch.in("Packet")) {
-                    mc.player.connection.sendPacket(new CPacketHeldItemChange(previousSlot));
-                    previousSlot = -1;
-                }
+                if (silentSwapped)
+                    mc.player.connection.sendPacket(new CPacketHeldItemChange(silentBefore));
 
                 placeTimer.reset();
                 attemptedPlacements.put(placePosition.getPosition(), attemptedPlacements.containsKey(placePosition.getPosition()) ? attemptedPlacements.get(placePosition.getPosition()) + 1 : 1);
@@ -668,8 +643,7 @@ public class AutoCrystalRW extends Hack {
 
     private void renderBlock(BlockPos pos, boolean solid, boolean outline, boolean glow, boolean glowLines) {
         float h = (float) height.getValue(1.0);
-
-        MessageUtil.clientMessageSimple("rendering block at pos " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
+        //MessageUtil.clientMessageSimple("rendering block at pos " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
 
         if (solid) {
             RenderHelp.prepare("quads");
@@ -761,9 +735,7 @@ public class AutoCrystalRW extends Hack {
         placePosition = new CrystalPosition(BlockPos.ORIGIN, null, 0, 0);
         interactVector = Vec3d.ZERO;
         yawLimit = false;
-        previousSlot = -1;
         strictTicks = 0;
-        switchTicks = 10;
         startTime = 0;
         responseTime = 0;
         placeTimer.reset();
@@ -854,17 +826,6 @@ public class AutoCrystalRW extends Hack {
     });
 
     @EventHandler
-    private final Listener<EventPacket.SendPacket> send_listener = new Listener<>(event -> {
-        if (event.getPacket() instanceof CPacketHeldItemChange) {
-            switchTimer.reset();
-
-            Item switchItem = mc.player.inventory.getStackInSlot(((CPacketHeldItemChange) event.getPacket()).getSlotId()).getItem();
-            if (!(switchItem instanceof ItemEndCrystal))
-                switchTicks = 0;
-        }
-    });
-
-    @EventHandler
     private final Listener<EventPacket.ReceivePacket> receivePacketListener = new Listener<>(event -> {
         if (event.getPacket() instanceof SPacketSpawnObject && ((SPacketSpawnObject) event.getPacket()).getType() == 51) {
             // position of the placed crystal
@@ -928,6 +889,9 @@ public class AutoCrystalRW extends Hack {
                     Map.Entry<Float, Integer> idealLinear = linearMap.lastEntry();
 
                     if (idealLinear.getKey() > explodeDamage.getValue(1.0)) {
+                        boolean silentSwapped = false;
+                        int silentBefore = mc.player.inventory.currentItem;
+
                         if (!rotate.in("None") && (rotateWhen.in("Break") || rotateWhen.in("Both"))) {
                             interactVector = new Vec3d(linearPosition).add(0.5, 0.5, 0.5);
 
@@ -949,8 +913,6 @@ public class AutoCrystalRW extends Hack {
                                 int pickSlot = getPickSlot();
 
                                 if (!(mc.player.inventory.getCurrentItem().getItem() instanceof ItemSword || mc.player.inventory.getCurrentItem().getItem() instanceof ItemPickaxe)) {
-                                    previousSlot = mc.player.inventory.currentItem;
-
                                     if (swordSlot != -1) {
                                         if (explodeWeakness.in("Normal"))
                                             mc.player.inventory.currentItem = swordSlot;
@@ -958,7 +920,7 @@ public class AutoCrystalRW extends Hack {
                                         mc.player.connection.sendPacket(new CPacketHeldItemChange(swordSlot));
 
                                         if (placeSwitch.in("Packet"))
-                                            ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+                                            silentSwapped = true;
                                     } else if (pickSlot != -1) {
                                         if (explodeWeakness.in("Normal"))
                                             mc.player.inventory.currentItem = pickSlot;
@@ -966,7 +928,7 @@ public class AutoCrystalRW extends Hack {
                                         mc.player.connection.sendPacket(new CPacketHeldItemChange(pickSlot));
 
                                         if (placeSwitch.in("Packet"))
-                                            ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+                                            silentSwapped = true;
                                     }
                                 }
                             }
@@ -980,10 +942,8 @@ public class AutoCrystalRW extends Hack {
                         if (sync.in("Instant"))
                             mc.world.removeEntityFromWorld(idealLinear.getValue());
 
-                        if (explodeWeakness.in("Packet") && previousSlot != -1) {
-                            mc.player.connection.sendPacket(new CPacketHeldItemChange(previousSlot));
-                            previousSlot = -1;
-                        }
+                        if (silentSwapped)
+                            mc.player.connection.sendPacket(new CPacketHeldItemChange(silentBefore));
                     }
                 }
             }
