@@ -46,7 +46,7 @@ public class Offhand extends Hack {
             float hp = mc.player.getHealth() + mc.player.getAbsorptionAmount();
 
             if (hp > totemSwitch.getValue(1)) {
-                if (switchMode.in("Crystal") && PineapleClient.getHackManager().getModuleWithTag("AutoCrystal").isActive()) {
+                if (switchMode.in("Crystal") && (PineapleClient.getHackManager().getModuleWithTag("AutoCrystal").isActive() || PineapleClient.getHackManager().getModuleWithTag("AutoCrystalRW").isActive())) {
                     swapItems(get_item_slot(Items.END_CRYSTAL),0);
                     return;
                 }
