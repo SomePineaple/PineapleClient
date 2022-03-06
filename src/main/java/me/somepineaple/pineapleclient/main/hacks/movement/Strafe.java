@@ -24,7 +24,7 @@ public class Strafe extends Hack {
 		this.description = "its like running, but faster";
 	}
 
-	Setting speed_mode = create("Mode", "StrafeMode", "Strafe", combobox("Strafe", "On Ground"));
+	Setting speedMode = create("Mode", "StrafeMode", "Strafe", combobox("Strafe", "On Ground"));
 	Setting speed = create("Strafe Speed", "StrafeSpeed", 1.0d, 1.0d, 2.0d);
 	Setting timerSpeed = create("Timer", "Strafe timer speed", 1.0, 1.0, 5.0);
 	Setting auto_sprint = create("Auto Sprint", "StrafeSprint", true);
@@ -51,19 +51,19 @@ public class Strafe extends Hack {
 				mc.player.setSprinting(true);
 			}
 
-			if (mc.player.onGround && speed_mode.in("Strafe")) {
+			if (mc.player.onGround && speedMode.in("Strafe")) {
 
 				if (auto_jump.getValue(true)) {
 					mc.player.motionY = 0.405f;
 				}
 
-				final float yaw = get_rotation_yaw() * 0.017453292F;
+				final float yaw = getRotationYaw() * 0.017453292F;
 				mc.player.motionX -= MathHelper.sin(yaw) * 0.2f * speed.getValue(1.0d);
 				mc.player.motionZ += MathHelper.cos(yaw) * 0.2f * speed.getValue(1.0d);
 
-			} else if (mc.player.onGround && speed_mode.in("On Ground")) {
+			} else if (mc.player.onGround && speedMode.in("On Ground")) {
 
-				final float yaw = get_rotation_yaw();
+				final float yaw = getRotationYaw();
                 mc.player.motionX -= MathHelper.sin(yaw) * 0.2f;
                 mc.player.motionZ += MathHelper.cos(yaw) * 0.2f;
 				mc.player.connection.sendPacket(new CPacketPlayer.Position(mc.player.posX, mc.player.posY+0.4, mc.player.posZ, false));
@@ -78,7 +78,7 @@ public class Strafe extends Hack {
 
 	@EventHandler
 	private final Listener<EventPlayerJump> on_jump = new Listener<>(event -> {
-		if (speed_mode.in("Strafe")) {
+		if (speedMode.in("Strafe")) {
 			event.cancel();
 		}
 	});
@@ -86,10 +86,10 @@ public class Strafe extends Hack {
 	@EventHandler
 	private final Listener<EventMove> player_move = new Listener<>(event -> {
 
-		if (speed_mode.in("On Ground")) return;
+		if (speedMode.in("On Ground")) return;
 
 		if (mc.player.isInWater() || mc.player.isInLava()) {
-			if (!speed_mode.getValue(true)) return;
+			if (!speedMode.getValue(true)) return;
 		}
 
 		if (mc.player.isSneaking() || mc.player.isOnLadder() || mc.player.isInWeb || mc.player.isInLava() || mc.player.isInWater() || mc.player.capabilities.isFlying) return;
@@ -137,11 +137,54 @@ public class Strafe extends Hack {
 
 	@Override
 	protected void disable() {
-		mc.player.motionX = 0;
-		mc.player.motionY = 0;
+		if (speedMode.in("On Ground")) return;
+
+		if (mc.player.isInWater() || mc.player.isInLava()) {
+			if (!speedMode.getValue(true)) return;
+		}
+
+		if (mc.player.isSneaking() || mc.player.isOnLadder() || mc.player.isInWeb || mc.player.isInLava() || mc.player.isInWater() || mc.player.capabilities.isFlying) return;
+
+
+		float playerSpeed = (float) (0.2873f * speed.getValue(1.0d));
+		float moveForward = mc.player.movementInput.moveForward;
+		float moveStrafe = mc.player.movementInput.moveStrafe;
+		float rotationYaw = mc.player.rotationYaw;
+
+		if (moveStrafe == 0 && moveForward == 0)
+			return;
+
+		if (mc.player.isPotionActive(MobEffects.SPEED)) {
+			final int amp = Objects.requireNonNull(mc.player.getActivePotionEffect(MobEffects.SPEED)).getAmplifier();
+			playerSpeed *= (1.2f * (amp+1));
+		}
+
+		if (!bypass.getValue(true)) {
+			playerSpeed *= 1.0064f;
+		}
+
+		if (moveForward != 0.0f) {
+			if (moveStrafe > 0.0f) {
+				rotationYaw += ((moveForward > 0.0f) ? -45 : 45);
+			} else if (moveStrafe < 0.0f) {
+				rotationYaw += ((moveForward > 0.0f) ? 45 : -45);
+			}
+			moveStrafe = 0.0f;
+			if (moveForward > 0.0f) {
+				moveForward = 1.0f;
+			} else if (moveForward < 0.0f) {
+				moveForward = -1.0f;
+			}
+		}
+
+		double cos = Math.cos(Math.toRadians((rotationYaw + 90.0f)));
+		double sin = Math.sin(Math.toRadians((rotationYaw + 90.0f)));
+
+		mc.player.motionX = (moveForward * playerSpeed) * cos + (moveStrafe * playerSpeed) * sin;
+		mc.player.motionZ = (moveForward * playerSpeed) * sin - (moveStrafe * playerSpeed) * cos;
 	}
 
-	private float get_rotation_yaw() {
+	private float getRotationYaw() {
 		float rotation_yaw = mc.player.rotationYaw;
         if (mc.player.moveForward < 0.0f) {
             rotation_yaw += 180.0f;
