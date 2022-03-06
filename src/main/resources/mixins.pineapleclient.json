@@ -19,6 +19,7 @@
 		"MixinGuiPlayerTabOverlay",
 		"MixinRenderLivingBase",
 		"MixinAbstractClientPlayer",
-		"MixinRenderManager"
+		"MixinRenderManager",
+		"IPlayerControllerMP"
 	]
 }

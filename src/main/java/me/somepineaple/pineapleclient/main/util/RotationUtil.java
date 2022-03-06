@@ -73,12 +73,4 @@ public class RotationUtil {
    public void setPitch(final float pitch) {
       RotationUtil.pitch = pitch;
    }
-
-   public int getDirection4D() {
-      return getDirection4D();
-   }
-
-   public String getDirection4D(final boolean northRed) {
-      return getDirection4D(northRed);
-   }
 }

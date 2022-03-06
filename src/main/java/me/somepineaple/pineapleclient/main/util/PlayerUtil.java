@@ -150,4 +150,9 @@ public class PlayerUtil {
     public static float getHealth() {
         return mc.player.getHealth() + mc.player.getAbsorptionAmount();
     }
+
+    public static int getSlotForItem(Item item) {
+
+        return -1;
+    }
 }

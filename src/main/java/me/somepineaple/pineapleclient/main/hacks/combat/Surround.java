@@ -158,7 +158,6 @@ public class Surround extends Hack {
 	}
 
 	private int find_in_hotbar() {
-
         for (int i = 0; i < 9; ++i) {
 
             final ItemStack stack = mc.player.inventory.getStackInSlot(i);

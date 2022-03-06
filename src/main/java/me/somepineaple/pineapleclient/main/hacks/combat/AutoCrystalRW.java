@@ -6,10 +6,21 @@ import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
 import me.somepineaple.pineapleclient.main.util.*;
+import me.somepineaple.pineapleclient.mixins.IPlayerControllerMP;
 import me.somepineaple.turok.draw.RenderHelp;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.network.play.client.CPacketAnimation;
+import net.minecraft.network.play.client.CPacketHeldItemChange;
+import net.minecraft.network.play.client.CPacketUseEntity;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -18,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 // Yoinked from cosmos: https://github.com/momentumdevelopment/cosmos/blob/main/src/main/java/cope/cosmos/client/features/modules/combat/AutoCrystalModule.java
 public class AutoCrystalRW extends Hack {
@@ -41,7 +53,7 @@ public class AutoCrystalRW extends Hack {
     private final Setting explodeLimit = create("Limit", "acrwexpl", 10, 0, 10);
     private final Setting explodePacket = create("Explode w/ Packets", "acrwexpwpk", true);
     private final Setting explodeInhibit = create("Inhibit", "acrwexpi", false);
-    private final Setting explodeHand = create("Hand", "acrweh", "Mainhand", combobox("Offhand", "Mainhand", "Both", "None"));
+    private final Setting explodeHand = create("Hand", "acrweh", "Mainhand", combobox("Offhand", "Mainhand", "Packet", "None"));
     private final Setting explodeWeakness = create("Anti Weakness", "acrwsw", "Off", combobox("Swap", "Silent", "Off"));
 
     // Place settings
@@ -54,7 +66,7 @@ public class AutoCrystalRW extends Hack {
     private final Setting placePacket = create("Place Packet", "acrwplp", true);
     private final Setting placeInteract = create("Place Interact", "acrwpli", "Normal", combobox("Strict", "None", "Normal"));
     private final Setting placeRaytrace = create("Place Raytrace", "acrwplr", "Base", combobox("Normal", "Double", "Triple", "None", "Base"));
-    private final Setting placeHand = create("Place Hand", "acrwplh", "Mainhand", combobox("Offhand", "Mainhand", "Both", "None"));
+    private final Setting placeHand = create("Place Hand", "acrwplh", "Mainhand", combobox("Offhand", "Mainhand", "Packet", "None"));
     private final Setting placeSwitch = create("Switch", "acrwplsw", "Off", combobox("Swap", "Silent", "Off"));
 
     // Pause settings
@@ -112,7 +124,7 @@ public class AutoCrystalRW extends Hack {
     private final Set<EntityEnderCrystal> inhibitExplosions = new ConcurrentSet<>();
 
     // Placement info
-    private static CrystalPosition placePositon = new CrystalPosition(BlockPos.ORIGIN, null, 0, 0);
+    private static CrystalPosition placePosition = new CrystalPosition(BlockPos.ORIGIN, null, 0, 0);
     private final Timer placeTimer = new Timer();
     private final Map<BlockPos, Integer> attemptedPlacements = new ConcurrentHashMap<>();
 
@@ -176,7 +188,7 @@ public class AutoCrystalRW extends Hack {
             }
 
             explodeCrystal = searchCrystal();
-            placePositon = searchPosition();
+            placePosition = searchPosition();
         }
     }
 
@@ -337,16 +349,102 @@ public class AutoCrystalRW extends Hack {
     }
 
     private void explodeCrystal() {
+        if (explodeCrystal != null) {
+            if (!rotate.in("None") && (rotateWhen.in("Break") || rotateWhen.in("Both"))) {
+                // our last interaction will be the attack on the crystal
+                interactVector = explodeCrystal.getCrystal().getPositionVector();
 
+                if (rotate.in("Client")) {
+                    float[] angles = MathUtil.calcAngle(mc.player.getPositionEyes(mc.getRenderPartialTicks()), interactVector);
+                    mc.player.rotationYaw = angles[0];
+                    mc.player.rotationYawHead = angles[0];
+                    mc.player.rotationPitch = angles[1];
+                }
+            }
+
+            if (!explodeWeakness.in("Off")) {
+                // strength and weakness effects on the player
+                PotionEffect weaknessEffect = mc.player.getActivePotionEffect(MobEffects.WEAKNESS);
+                PotionEffect strengthEffect = mc.player.getActivePotionEffect(MobEffects.STRENGTH);
+
+                if (weaknessEffect != null && (strengthEffect == null || strengthEffect.getAmplifier() < weaknessEffect.getAmplifier())) {
+                    int swordSlot = getSwordSlot();
+                    int pickSlot = getPickSlot();
+
+                    if (!(mc.player.inventory.getCurrentItem().getItem() instanceof ItemSword || mc.player.inventory.getCurrentItem().getItem() instanceof ItemPickaxe)) {
+                        previousSlot = mc.player.inventory.currentItem;
+
+                        if (swordSlot != -1) {
+                            if (explodeWeakness.in("Normal"))
+                                mc.player.inventory.currentItem = swordSlot;
+
+                            mc.player.connection.sendPacket(new CPacketHeldItemChange(swordSlot));
+
+                            if (placeSwitch.in("Packet"))
+                                ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+                        } else if (pickSlot != -1) {
+                            if (explodeWeakness.in("Normal"))
+                                mc.player.inventory.currentItem = pickSlot;
+
+                            mc.player.connection.sendPacket(new CPacketHeldItemChange(pickSlot));
+
+                            if (placeSwitch.in("Packet"))
+                                ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+                        }
+                    }
+                }
+            }
+
+            if (explodeTimer.passed(explodeDelay.getValue(1) + ThreadLocalRandom.current().nextInt(explodeRandom.getValue(1))) && switchTimer.passed(explodeSwitch.getValue((1)))) {
+                explodeCrystal(explodeCrystal.getCrystal(), explodePacket.getValue(true));
+                swingCrystal(explodeHand);
+
+                explodeTimer.reset();
+
+                attemptedExplosions.put(explodeCrystal.getCrystal().getEntityId(), attemptedExplosions.containsKey(explodeCrystal.getCrystal().getEntityId()) ? attemptedExplosions.get(explodeCrystal.getCrystal().getEntityId()) + 1 : 1);
+
+                if (sync.in("Instant"))
+                    mc.world.removeEntityDangerously(explodeCrystal.getCrystal());
+
+                if (explodeWeakness.in("Packet") && previousSlot != -1) {
+                    mc.player.connection.sendPacket(new CPacketHeldItemChange(previousSlot));
+                    previousSlot = -1;
+                }
+            }
+        }
     }
 
     private void placeCrystal() {
 
     }
 
+    private void explodeCrystal(EntityEnderCrystal crystal, boolean packet) {
+        if (crystal != null) {
+            if (packet)
+                mc.player.connection.sendPacket(new CPacketUseEntity(crystal));
+            else
+                mc.playerController.attackEntity(mc.player, crystal);
+        }
+    }
+
+    private void swingCrystal(Setting hand) {
+        if (hand.in("Sync")) {
+            if (mc.player.getHeldItemMainhand().getItem().equals(Items.END_CRYSTAL) || placeSwitch.in("Packet"))
+                mc.player.swingArm(EnumHand.MAIN_HAND);
+            else if (mc.player.getHeldItemOffhand().getItem().equals(Items.END_CRYSTAL))
+                mc.player.swingArm(EnumHand.OFF_HAND);
+        }
+        else if (hand.in("Mainhand"))
+            mc.player.swingArm(EnumHand.MAIN_HAND);
+        else if (hand.in("Offhand"))
+            mc.player.swingArm(EnumHand.OFF_HAND);
+        else if (hand.in("Packet"))
+            mc.player.connection.sendPacket(new CPacketAnimation(mc.player.getHeldItemMainhand().getItem().equals(Items.END_CRYSTAL) || placeSwitch.in("Packet") ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND));
+    }
+
     @Override
     public void render() {
-        if (placePositon == null)
+        if (placePosition == null)
             return;
 
         boolean outline = false;
@@ -384,11 +482,11 @@ public class AutoCrystalRW extends Hack {
             glowLines = true;
         }
 
-        BlockPos renderBlock = topBlock.getValue(true) ? placePositon.getPosition().up() : placePositon.getPosition();
+        BlockPos renderBlock = topBlock.getValue(true) ? placePosition.getPosition().up() : placePosition.getPosition();
 
         renderBlock(renderBlock, solid, outline, glow, glowLines);
         if (renderDamage.getValue(true))
-            RenderUtil.drawText(renderBlock, String.format("%.1f", placePositon.getTargetDamage()));
+            RenderUtil.drawText(renderBlock, String.format("%.1f", placePosition.getTargetDamage()));
     }
 
     private void renderBlock(BlockPos pos, boolean solid, boolean outline, boolean glow, boolean glowLines) {
@@ -483,7 +581,7 @@ public class AutoCrystalRW extends Hack {
 
     private void reset() {
         explodeCrystal = new Crystal(null, null, 0, 0);
-        placePositon = new CrystalPosition(BlockPos.ORIGIN, null, 0, 0);
+        placePosition = new CrystalPosition(BlockPos.ORIGIN, null, 0, 0);
         interactVector = Vec3d.ZERO;
         yawLimit = false;
         previousSlot = -1;
@@ -496,6 +594,36 @@ public class AutoCrystalRW extends Hack {
         attemptedExplosions.clear();
         attemptedPlacements.clear();
         inhibitExplosions.clear();
+    }
+
+    private int getSwordSlot() {
+        int swordSlot = -1;
+
+        for (int i = 0; i < 9; i++) {
+            ItemStack stack = mc.player.inventory.getStackInSlot(i);
+            if (stack.getItem() instanceof ItemSword) {
+                swordSlot = i;
+                mc.playerController.updateController();
+                break;
+            }
+        }
+
+        return swordSlot;
+    }
+
+    private int getPickSlot() {
+        int pickSlot = -1;
+
+        for (int i = 0; i < 9; i++) {
+            ItemStack stack = mc.player.inventory.getStackInSlot(i);
+            if (stack.getItem() instanceof ItemPickaxe) {
+                pickSlot = i;
+                mc.playerController.updateController();
+                break;
+            }
+        }
+
+        return pickSlot;
     }
 
     // Utility classes
