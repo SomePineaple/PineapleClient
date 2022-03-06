@@ -126,13 +126,13 @@ public class AutoCrystalRW extends Hack {
     private final Setting renderDamage = create("Render Damage", "acrwrda",true);
 
     // Crystal info
-    private Crystal explodeCrystal = new Crystal(null, null, 0, 0);
+    private Crystal explodeCrystal = new Crystal(null, null, 0);
     private final Timer explodeTimer = new Timer();
     private final Map<Integer, Integer> attemptedExplosions = new ConcurrentHashMap<>();
     private final Set<EntityEnderCrystal> inhibitExplosions = new ConcurrentSet<>();
 
     // Placement info
-    private static CrystalPosition placePosition = new CrystalPosition(BlockPos.ORIGIN, null, 0, 0);
+    private static CrystalPosition placePosition = new CrystalPosition(BlockPos.ORIGIN, null, 0);
     private final Timer placeTimer = new Timer();
     private final Map<BlockPos, Integer> attemptedPlacements = new ConcurrentHashMap<>();
 
@@ -141,10 +141,6 @@ public class AutoCrystalRW extends Hack {
     // Rotation info
     private boolean yawLimit;
     private Vec3d interactVector = Vec3d.ZERO;
-
-    // Response time
-    private long startTime = 0;
-    private static double  responseTime = 0;
 
     // For speeedy execution
     private Thread thinkerThread = null;
@@ -250,7 +246,7 @@ public class AutoCrystalRW extends Hack {
                     else if (logic.in("Uniform"))
                         damageHeuristic = targetDamage - localDamage - distance;
 
-                    crystalMap.put(damageHeuristic, new Crystal(crystal, calculatedTarget, targetDamage, localDamage));
+                    crystalMap.put(damageHeuristic, new Crystal(crystal, calculatedTarget, targetDamage));
                 }
             }
 
@@ -330,7 +326,7 @@ public class AutoCrystalRW extends Hack {
                     else if (logic.in("Uniform"))
                         damageHeuristic = (float) (targetDamage - localDamage - distance);
 
-                    positionMap.put(damageHeuristic, new CrystalPosition(calculatedPosition, calculatedTarget, targetDamage, localDamage));
+                    positionMap.put(damageHeuristic, new CrystalPosition(calculatedPosition, calculatedTarget, targetDamage));
                 }
             }
 
@@ -731,13 +727,11 @@ public class AutoCrystalRW extends Hack {
     }
 
     private void reset() {
-        explodeCrystal = new Crystal(null, null, 0, 0);
-        placePosition = new CrystalPosition(BlockPos.ORIGIN, null, 0, 0);
+        explodeCrystal = new Crystal(null, null, 0);
+        placePosition = new CrystalPosition(BlockPos.ORIGIN, null, 0);
         interactVector = Vec3d.ZERO;
         yawLimit = false;
         strictTicks = 0;
-        startTime = 0;
-        responseTime = 0;
         placeTimer.reset();
         explodeTimer.reset();
         attemptedExplosions.clear();
@@ -832,7 +826,6 @@ public class AutoCrystalRW extends Hack {
             BlockPos linearPosition = new BlockPos(((SPacketSpawnObject) event.getPacket()).getX(), ((SPacketSpawnObject) event.getPacket()).getY(), ((SPacketSpawnObject) event.getPacket()).getZ());
 
             if (attemptedPlacements.containsKey(linearPosition.down())) {
-                startTime = System.currentTimeMillis();
 
                 if (timing.in("Sequential")) {
                     if (!explodeTimer.passed(explodeDamage.getValue(1)))
@@ -950,7 +943,6 @@ public class AutoCrystalRW extends Hack {
         } else if (event.getPacket() instanceof SPacketDestroyEntities) {
             for (int entityId : ((SPacketDestroyEntities) event.getPacket()).getEntityIDs()) {
                 if (attemptedExplosions.containsKey(entityId)) {
-                    responseTime = System.currentTimeMillis() - startTime;
 
                     if (timing.in("Sequential") || timing.in("Uniform")) {
                         if (!placeTimer.passed(placeDelay.getValue(1)))
@@ -1002,13 +994,11 @@ public class AutoCrystalRW extends Hack {
 
         // damage info
         private final double targetDamage;
-        private final double localDamage;
 
-        public CrystalPosition(BlockPos blockPos, Entity placeTarget, double targetDamage, double localDamage) {
+        public CrystalPosition(BlockPos blockPos, Entity placeTarget, double targetDamage) {
             this.blockPos = blockPos;
             this.placeTarget = placeTarget;
             this.targetDamage = targetDamage;
-            this.localDamage = localDamage;
         }
 
         /**
@@ -1034,14 +1024,6 @@ public class AutoCrystalRW extends Hack {
         public double getTargetDamage() {
             return targetDamage;
         }
-
-        /**
-         * Gets the damage to the player
-         * @return The damage to the player
-         */
-        public double getLocalDamage() {
-            return localDamage;
-        }
     }
 
     public static class Crystal {
@@ -1052,13 +1034,11 @@ public class AutoCrystalRW extends Hack {
 
         // damage info
         private final double targetDamage;
-        private final double localDamage;
 
-        public Crystal(EntityEnderCrystal crystal, Entity explodeTarget, double targetDamage, double localDamage) {
+        public Crystal(EntityEnderCrystal crystal, Entity explodeTarget, double targetDamage) {
             this.crystal = crystal;
             this.explodeTarget = explodeTarget;
             this.targetDamage = targetDamage;
-            this.localDamage = localDamage;
         }
 
         /**
@@ -1083,14 +1063,6 @@ public class AutoCrystalRW extends Hack {
          */
         public double getTargetDamage() {
             return targetDamage;
-        }
-
-        /**
-         * Gets the damage to the player
-         * @return The damage to the player
-         */
-        public double getLocalDamage() {
-            return localDamage;
         }
     }
 }
