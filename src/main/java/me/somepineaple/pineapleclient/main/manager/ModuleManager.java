@@ -226,7 +226,7 @@ public class ModuleManager {
 					modules.render();
 				} catch (Exception e) {
 					if (mc.world != null && mc.player != null) {
-						MessageUtil.clientMessage("Error at " + modules.getName() + " render method " + e.getMessage());
+						//MessageUtil.clientMessage("Error at " + modules.getName() + " render method " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
