@@ -40,6 +40,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -146,31 +147,54 @@ public class AutoCrystalRW extends Hack {
     private static double  responseTime = 0;
 
     // For speeedy execution
-    //private Thread thinkerThread = null;
+    private Thread thinkerThread = null;
+
+    private final List<Entity> loadedEntityList = Collections.synchronizedList(new ArrayList<>());
 
     @Override
     protected void enable() {
-        //thinkerThread = new Thread(this::runMultiThread);
-        //thinkerThread.start();
+        thinkerThread = new Thread(this::updateBestCrystals);
+        thinkerThread.start();
     }
 
     @Override
     protected void disable(){
-        /*if (thinkerThread != null) {
+        if (thinkerThread != null) {
             try {
                 thinkerThread.join();
             } catch (InterruptedException e) {
                 System.err.println("Failed to join autocrystalrw thinker thread");
                 e.printStackTrace();
             }
-        }*/
+        }
 
         reset();
     }
 
     @Override
     public void update() {
-        // Check tick clearance
+        try {
+            thinkerThread.join();
+        } catch (InterruptedException e) {
+            System.err.println("Failed to join autocrystalrw thinker thread");
+            e.printStackTrace();
+        }
+
+        if (strictTicks > 0)
+            strictTicks--;
+        else {
+            explodeCrystal();
+            placeCrystal();
+        }
+
+        loadedEntityList.clear();
+        loadedEntityList.addAll(mc.world.loadedEntityList);
+
+        thinkerThread = new Thread(this::updateBestCrystals);
+        thinkerThread.start();
+    }
+
+    private void updateBestCrystals() {
         if (pause.getValue(true)) {
             if (checkPause()) {
                 reset();
@@ -181,37 +205,13 @@ public class AutoCrystalRW extends Hack {
 
         explodeCrystal = searchCrystal();
         placePosition = searchPosition();
-
-        if (strictTicks > 0)
-            strictTicks--;
-        else {
-            explodeCrystal();
-            placeCrystal();
-        }
-    }
-
-    private void runMultiThread() {
-        while (moduleState) {
-            if (pause.getValue(true)) {
-                if (checkPause()) {
-                    reset();
-                    strictTicks = 2;
-                    continue;
-                }
-            }
-
-            explodeCrystal = searchCrystal();
-            placePosition = searchPosition();
-
-            System.out.println("Ran multi thread");
-        }
     }
 
     private Crystal searchCrystal() {
         if (explode.getValue(true)) {
             TreeMap<Float, Crystal> crystalMap = new TreeMap<>();
 
-            for (Entity calculatedCrystal : mc.world.loadedEntityList) {
+            for (Entity calculatedCrystal : loadedEntityList) {
                 if (!(calculatedCrystal instanceof EntityEnderCrystal) || calculatedCrystal.isDead)
                     continue;
 
@@ -237,7 +237,7 @@ public class AutoCrystalRW extends Hack {
                         continue;
                 }
 
-                for (Entity calculatedTarget : mc.world.loadedEntityList) {
+                for (Entity calculatedTarget : loadedEntityList) {
                     if (checkTarget(calculatedTarget))
                         continue;
 
@@ -317,7 +317,7 @@ public class AutoCrystalRW extends Hack {
                 if (wallPlacement && distance > placeWall.getValue(1.0))
                     continue;
 
-                for (Entity calculatedTarget : mc.world.loadedEntityList) {
+                for (Entity calculatedTarget : loadedEntityList) {
                     if (checkTarget(calculatedTarget))
                         continue;
 

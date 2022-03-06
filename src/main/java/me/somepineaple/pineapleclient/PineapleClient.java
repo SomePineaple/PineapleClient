@@ -16,6 +16,8 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
+import java.util.Collections;
+
 @Mod(modid = "pineapleclient", version = PineapleClient.VERSION)
 public class PineapleClient {
 
