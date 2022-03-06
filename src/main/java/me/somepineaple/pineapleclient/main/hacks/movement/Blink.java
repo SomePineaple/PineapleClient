@@ -8,7 +8,8 @@ import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketPlayer;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Blink extends Hack {
     public Blink() {
@@ -18,20 +19,18 @@ public class Blink extends Hack {
         description = "Fake lag";
     }
 
-    private final ArrayList<Packet<?>> packets = new ArrayList<>();
+    private final Queue<Packet<?>> packetQueue = new LinkedList<>();
 
     @EventHandler
     public Listener<EventPacket.SendPacket> sendPacketListener = new Listener<>(event -> {
         if (!(event.getPacket() instanceof CPacketPlayer)) return;
-        packets.add(event.getPacket());
+        packetQueue.add(event.getPacket());
         event.cancel();
     });
 
     @Override
     protected void disable() {
-        for (Packet<?> p : packets) {
-            mc.player.connection.sendPacket(p);
-        }
-        packets.clear();
+        while (!packetQueue.isEmpty())
+            mc.player.connection.sendPacket(packetQueue.poll());
     }
 }
