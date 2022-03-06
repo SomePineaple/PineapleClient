@@ -29,7 +29,7 @@ public class Button extends AbstractWidget {
 	public Button(Frame frame, ModuleButton master, String tag, int update_postion) {
 		this.frame   = frame;
 		this.master  = master;
-		this.setting = PineapleClient.getSettingManager().getSettingWithTag(master.get_module(), tag);
+		this.setting = PineapleClient.getSettingManager().getSettingWithTag(master.getModule(), tag);
 
 		this.x = master.get_x();
 		this.y = update_postion;

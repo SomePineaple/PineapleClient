@@ -2,13 +2,14 @@ package me.somepineaple.pineapleclient.main.guiscreen.settings;
 
 import me.somepineaple.pineapleclient.main.hacks.Hack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Setting {
-	private Hack master;
+	private final Hack master;
 
-	private String name;
-	private String tag;
+	private final String name;
+	private final String tag;
 
 	private boolean button;
 
@@ -21,7 +22,7 @@ public class Setting {
 	private double min;
 	private double max;
 
-	private String type;
+	private final String type;
 
 	public Setting(Hack master, String name, String tag, boolean value) {
 		this.master = master;
@@ -117,6 +118,9 @@ public class Setting {
 	}
 
 	public List<String> getValues() {
+		if (combobox == null)
+			return new ArrayList<>();
+
 		return this.combobox;
 	}
 

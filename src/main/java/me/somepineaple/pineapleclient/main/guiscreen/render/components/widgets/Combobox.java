@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 
 public class Combobox extends AbstractWidget {
-	private ArrayList<String> values;
+	private final ArrayList<String> values;
 
-	private Frame frame;
-	private ModuleButton master;
-	private Setting setting;
+	private final Frame frame;
+	private final ModuleButton master;
+	private final Setting setting;
 
-	private String combobox_name;
+	private final String comboboxName;
 
 	private int x;
 	private int y;
@@ -31,31 +31,28 @@ public class Combobox extends AbstractWidget {
 
 	private boolean can;
 
-	private Draw font = new Draw(1);
-
-	public Combobox(Frame frame, ModuleButton master, String tag, int update_postion) {
+	public Combobox(Frame frame, ModuleButton master, String tag, int updatePostion) {
 		this.values  = new ArrayList<>();
 		this.frame   = frame;
 		this.master  = master;
-		this.setting = PineapleClient.getSettingManager().getSettingWithTag(master.get_module(), tag);
+		this.setting = PineapleClient.getSettingManager().getSettingWithTag(master.getModule(), tag);
 
 		this.x = master.get_x();
-		this.y = update_postion;
+		this.y = updatePostion;
 
 		this.save_y = this.y;
 
 		this.width  = master.get_width();
+		Draw font = new Draw(1);
 		this.height = font.get_string_height();
 
-		this.combobox_name = this.setting.get_name();
+		this.comboboxName = this.setting.get_name();
 
 		this.can = true;
 
-		for (String values : this.setting.getValues()) {
-			this.values.add(values);
-		}
+		this.values.addAll(this.setting.getValues());
 
-		for (int i = 0; i >= this.values.size(); i++) {
+		for (int i = 0; i <= this.values.size(); i++) {
 			if (this.values.get(i).equals(this.setting.getCurrentValue())) {
 				this.combobox_actual_value = i;
 
@@ -64,7 +61,7 @@ public class Combobox extends AbstractWidget {
 		}
 	}
 
-	public Setting get_setting() {
+	public Setting getSetting() {
 		return this.setting;
 	}
 
@@ -123,11 +120,7 @@ public class Combobox extends AbstractWidget {
 	}
 
 	public boolean motion(int mx, int my) {
-		if (mx >= get_x() && my >= get_save_y() && mx <= get_x() + get_width() && my <= get_save_y() + get_height()) {
-			return true;
-		}
-
-		return false;
+		return mx >= get_x() && my >= get_save_y() && mx <= get_x() + get_width() && my <= get_save_y() + get_height();
 	}
 
 	public boolean can() {
@@ -158,7 +151,7 @@ public class Combobox extends AbstractWidget {
 		int ns_b = PineapleClient.clickGui.themeWidgetNameB;
 		int ns_a = PineapleClient.clickGui.themeWidgetNameB;
 
-		Draw.drawString(this.combobox_name + " " + this.setting.getCurrentValue(), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+		Draw.drawString(this.comboboxName + " " + this.setting.getCurrentValue(), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 
 		if (this.combobox_actual_value >= this.values.size()) {
 			this.combobox_actual_value = 0;

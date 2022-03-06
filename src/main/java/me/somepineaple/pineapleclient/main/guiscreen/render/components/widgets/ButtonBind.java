@@ -126,7 +126,7 @@ public class ButtonBind extends AbstractWidget {
 				}
 
 				case PineapleClient.KEY_DELETE: {
-					this.master.get_module().setBind(0);
+					this.master.getModule().setBind(0);
 
 					this.waiting = false;
 
@@ -134,7 +134,7 @@ public class ButtonBind extends AbstractWidget {
 				}
 
 				default : {
-					this.master.get_module().setBind(key);
+					this.master.getModule().setBind(key);
 
 					this.waiting = false;
 
@@ -197,7 +197,7 @@ public class ButtonBind extends AbstractWidget {
 
 			Draw.drawString("Listening " + this.points, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		} else {
-			Draw.drawString("Bind <" + this.master.get_module().getBind("string") + ">", this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+			Draw.drawString("Bind <" + this.master.getModule().getBind("string") + ">", this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		}
 
 		tick_color[0] += 5;

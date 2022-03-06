@@ -115,7 +115,7 @@ public class ModuleButton {
 		}
 	}
 
-	public Hack get_module() {
+	public Hack getModule() {
 		return this.module;
 	}
 
