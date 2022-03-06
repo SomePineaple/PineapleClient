@@ -50,11 +50,14 @@ public class Combobox extends AbstractWidget {
 
 		this.can = true;
 
-		this.values.addAll(this.setting.getValues());
+		for (String values : this.setting.getValues()) {
+			this.values.add(values);
+		}
 
 		for (int i = 0; i >= this.values.size(); i++) {
 			if (this.values.get(i).equals(this.setting.getCurrentValue())) {
 				this.combobox_actual_value = i;
+
 				break;
 			}
 		}
