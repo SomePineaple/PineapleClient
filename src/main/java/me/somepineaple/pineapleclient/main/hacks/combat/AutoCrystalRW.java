@@ -57,7 +57,7 @@ public class AutoCrystalRW extends Hack {
     private final Setting explodeRange = create("Explode Range", "acrwexpr", 6.0, 0.0, 8.0);
     private final Setting explodeWall = create("Explode Wall", "acrwexpwr", 3.5, 0.0, 8.0);
     private final Setting explodeDelay = create("Explode Delay", "acrwexpd", 60, 0, 500);
-    private final Setting explodeRandom = create("Random Delay", "acrwexprd", 0, 0, 500);
+    private final Setting explodeRandom = create("Random Delay", "acrwexprd", 1, 1, 500);
     private final Setting explodeSwitch = create("Switch Delay", "acrwswd", 0, 0, 500);
     private final Setting explodeTicksExisted = create("Ticks Existed", "acrwte", 0, 0, 5);
     private final Setting explodeDamage = create("Explode Damage", "acrwexpda", 5.0, 0.0, 36.0);
@@ -1002,23 +1002,20 @@ public class AutoCrystalRW extends Hack {
             }
         } else if (event.getPacket() instanceof SPacketSoundEffect && ((SPacketSoundEffect) event.getPacket()).getSound().equals(SoundEvents.ENTITY_GENERIC_EXPLODE)) {
             inhibitExplosions.clear();
+            for (Entity entity : mc.world.loadedEntityList) {
+                if (!(entity instanceof EntityEnderCrystal) || entity.isDead)
+                    continue;
 
-            mc.addScheduledTask(() -> {
-                for (Entity entity : mc.world.loadedEntityList) {
-                    if (!(entity instanceof EntityEnderCrystal) || entity.isDead)
-                        continue;
+                double soundDistance = entity.getDistance(((SPacketSoundEffect) event.getPacket()).getX(), ((SPacketSoundEffect) event.getPacket()).getY(), ((SPacketSoundEffect) event.getPacket()).getZ());
+                if (soundDistance > 6)
+                    continue;
 
-                    double soundDistance = entity.getDistance(((SPacketSoundEffect) event.getPacket()).getX(), ((SPacketSoundEffect) event.getPacket()).getY(), ((SPacketSoundEffect) event.getPacket()).getZ());
-                    if (soundDistance > 6)
-                        continue;
+                if (explodeInhibit.getValue(true))
+                    inhibitExplosions.add((EntityEnderCrystal) entity);
 
-                    if (explodeInhibit.getValue(true))
-                        inhibitExplosions.add((EntityEnderCrystal) entity);
-
-                    if (sync.in("Sound"))
-                        mc.world.removeEntityDangerously(entity);
-                }
-            });
+                if (sync.in("Sound"))
+                    mc.world.removeEntityDangerously(entity);
+            }
         }
     });
 
