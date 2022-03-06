@@ -53,7 +53,7 @@ public class Enemy extends PineapleclientCommand {
                     MessageUtil.sendClientMessage("Player " + green + bold + message[2] + reset + " is already your Enemy D:");
                     return true;
                 } else {
-                    EnemyUtil.Enemy f = EnemyUtil.get_enemy_object(message[2]);
+                    EnemyUtil.Enemy f = EnemyUtil.getEnemyObject(message[2]);
                     if (f == null) {
                         MessageUtil.send_client_error_message("Cannot find " + red + bold + "UUID" + reset + " for that player :(");
                         return true;

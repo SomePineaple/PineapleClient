@@ -5,13 +5,20 @@ import com.google.gson.JsonParser;
 import com.mojang.util.UUIDTypeAdapter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 public class EnemyUtil {
@@ -36,8 +43,8 @@ public class EnemyUtil {
         }
     }
 
-    public static Enemy get_enemy_object(String name) {
-        ArrayList<NetworkPlayerInfo> infoMap = new ArrayList<>(Minecraft.getMinecraft().getConnection().getPlayerInfoMap());
+    public static Enemy getEnemyObject(String name) {
+        ArrayList<NetworkPlayerInfo> infoMap = new ArrayList<>(Objects.requireNonNull(Minecraft.getMinecraft().getConnection()).getPlayerInfoMap());
         NetworkPlayerInfo profile = infoMap.stream().filter(networkPlayerInfo -> networkPlayerInfo.getGameProfile().getName().equalsIgnoreCase(name)).findFirst().orElse(null);
         if (profile == null) {
             String s = request_ids("[\"" + name + "\"]");
@@ -61,7 +68,7 @@ public class EnemyUtil {
     }
 
     private static String request_ids(String data) {
-        try{
+        try {
             String query = "https://api.mojang.com/profiles/minecraft";
 
             URL url = new URL(query);
@@ -73,7 +80,7 @@ public class EnemyUtil {
             conn.setRequestMethod("POST");
 
             OutputStream os = conn.getOutputStream();
-            os.write(data.getBytes("UTF-8"));
+            os.write(data.getBytes(StandardCharsets.UTF_8));
             os.close();
 
             // read the response
@@ -93,5 +100,43 @@ public class EnemyUtil {
         String r = s.hasNext() ? s.next() : "/";
         s.close();
         return r;
+    }
+
+    public static float getHealth(Entity entity) {
+        // player
+        if (entity instanceof EntityPlayer) {
+            return ((EntityPlayer) entity).getHealth() + ((EntityPlayer) entity).getAbsorptionAmount();
+        }
+
+        // living
+        else if (entity instanceof EntityLivingBase) {
+            return ((EntityLivingBase) entity).getHealth() + ((EntityLivingBase) entity).getAbsorptionAmount();
+        }
+
+        return 0;
+    }
+
+    public static float getLowestArmor(Entity target) {
+        if (target instanceof EntityPlayer) {
+            // total durability
+            float lowestDurability = 100;
+
+            // check durability for each piece of armor
+            for (ItemStack armor : target.getArmorInventoryList()) {
+                if (armor != null && !armor.getItem().equals(Items.AIR)) {
+                    // durability of the armor
+                    float armorDurability = (armor.getMaxDamage() - armor.getItemDamage() / (float) armor.getMaxDamage()) * 100;
+
+                    // find lowest durability
+                    if (armorDurability < lowestDurability) {
+                        lowestDurability = armorDurability;
+                    }
+                }
+            }
+
+            return lowestDurability;
+        }
+
+        return 0;
     }
 }

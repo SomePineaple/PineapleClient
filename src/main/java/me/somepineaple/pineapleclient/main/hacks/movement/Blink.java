@@ -29,7 +29,7 @@ public class Blink extends Hack {
 
     @Override
     protected void disable() {
-        for (Packet<?> p: packets) {
+        for (Packet<?> p : packets) {
             mc.player.connection.sendPacket(p);
         }
         packets.clear();

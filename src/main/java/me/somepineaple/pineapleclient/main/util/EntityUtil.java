@@ -3,7 +3,16 @@ package me.somepineaple.pineapleclient.main.util;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntitySpider;
+import net.minecraft.entity.passive.EntityAmbientCreature;
+import net.minecraft.entity.passive.EntitySquid;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.network.play.client.CPacketUseEntity;
@@ -97,5 +106,28 @@ public class EntityUtil {
         }
 
         return null;
+    }
+
+    public static boolean isPassiveMob(Entity entity) {
+        // check if its a wolf that isn't angry
+        if (entity instanceof EntityWolf) {
+            return !((EntityWolf) entity).isAngry();
+        }
+
+        // check if it's an iron golem that isn't angry
+        if (entity instanceof EntityIronGolem) {
+            return ((EntityIronGolem) entity).getRevengeTarget() == null;
+        }
+
+        // check it's entity properties
+        return entity instanceof EntityAgeable || entity instanceof EntityAmbientCreature || entity instanceof EntitySquid;
+    }
+
+    public static boolean isNeutralMob(Entity entity) {
+        return entity instanceof EntityPigZombie || entity instanceof EntityWolf  || entity instanceof EntityEnderman;
+    }
+
+    public static boolean isHostileMob(Entity entity) {
+        return (entity.isCreatureType(EnumCreatureType.MONSTER, false) && !EntityUtil.isNeutralMob(entity)) || entity instanceof EntitySpider;
     }
 }

@@ -5,15 +5,16 @@ import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
-import me.somepineaple.pineapleclient.main.util.PlayerUtil;
-import me.somepineaple.pineapleclient.main.util.Timer;
+import me.somepineaple.pineapleclient.main.util.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 // Yoinked from cosmos: https://github.com/momentumdevelopment/cosmos/blob/main/src/main/java/cope/cosmos/client/features/modules/combat/AutoCrystalModule.java
@@ -31,8 +32,8 @@ public class AutoCrystalRW extends Hack {
     private final Setting explodeWall = create("Explode Wall Range", "acrwexpwr", 3.5, 0.0, 8.0);
     private final Setting explodeDelay = create("Explode Delay", "acrwexpd", 60, 0, 500);
     private final Setting explodeRandom = create("Explode Random Delay", "acrwexprd", 0, 0, 500);
-    private final Setting explodeSwitch = create("Switch Delay", "acrwswd", 0.0, 0.0, 500.0);
-    private final Setting explodeTicksExisted = create("Ticks Existed", "acrwte", 0.0, 0.0, 5.0);
+    private final Setting explodeSwitch = create("Switch Delay", "acrwswd", 0, 0, 500);
+    private final Setting explodeTicksExisted = create("Ticks Existed", "acrwte", 0, 0, 5);
     private final Setting explodeDamage = create("Explode Damage", "acrwexpda", 5.0, 0.0, 36.0);
     private final Setting explodeLocal = create("Explode Local Damage", "acrwexplda", 5.0, 0.0, 36.0);
     private final Setting explodeLimit = create("Limit", "acrwexpl", 10, 0, 10);
@@ -64,7 +65,7 @@ public class AutoCrystalRW extends Hack {
 
     // Override settings
     private final Setting override = create("Override", "acrwo", true);
-    private final Setting overrdeHealth = create("Override HP", "acrwoh", 10.0, 0.0, 36.0);
+    private final Setting overrideHealth = create("Override HP", "acrwoh", 10.0, 0.0, 36.0);
     private final Setting overrideThreshold = create("Override Threshold", "acrwoth", 0, 0, 4);
     private final Setting overrideArmor = create("Override Armor", "acrwoa", 20.0, 0.0, 100.0);
 
@@ -143,10 +144,12 @@ public class AutoCrystalRW extends Hack {
             try {
                 thinkerThread.join();
             } catch (InterruptedException e) {
-                System.out.println("Failed to join autocrystalrw thinker thread");
+                System.err.println("Failed to join autocrystalrw thinker thread");
                 e.printStackTrace();
             }
         }
+
+        reset();
     }
 
     @Override
@@ -176,6 +179,85 @@ public class AutoCrystalRW extends Hack {
     }
 
     private Crystal searchCrystal() {
+        if (explode.getValue(true)) {
+            TreeMap<Float, Crystal> crystalMap = new TreeMap<>();
+
+            for (Entity calculatedCrystal : mc.world.loadedEntityList) {
+                if (!(calculatedCrystal instanceof EntityEnderCrystal) || calculatedCrystal.isDead)
+                    continue;
+
+                EntityEnderCrystal crystal = (EntityEnderCrystal) calculatedCrystal;
+
+                float distance = mc.player.getDistance(crystal);
+                if (distance > explodeRange.getValue(1.0) || (!mc.player.canEntityBeSeen(crystal) && distance > explodeWall.getValue(1.0)))
+                    continue;
+
+                if (explodeInhibit.getValue(true) && inhibitExplosions.contains(crystal))
+                    continue;
+
+                if (crystal.ticksExisted < explodeTicksExisted.getValue(1))
+                    continue;
+
+                float localDamage = CrystalUtil.calculateDamage(crystal, mc.player);
+                if (localDamage > explodeLocal.getValue(1.0) || (localDamage + 1 > PlayerUtil.getHealth() && pauseSafety.getValue(true)))
+                    continue;
+
+                // Check if we've attacked this crystal too many times
+                if (explodeLocal.getValue(1) < 10 && attemptedExplosions.containsKey(crystal.getEntityId())) {
+                    if (attemptedExplosions.get(crystal.getEntityId()) > explodeLimit.getValue(1))
+                        continue;
+                }
+
+                for (Entity calculatedTarget : mc.world.loadedEntityList) {
+                    if (calculatedTarget.equals(mc.player) || calculatedTarget.isDead)
+                        continue;
+
+                    if ((calculatedTarget instanceof EntityPlayer && (!targetPlayers.getValue(true) || FriendUtil.isFriend(((EntityPlayer)calculatedTarget).getName()))) || (EntityUtil.isPassiveMob(calculatedTarget) && !targetPassives.getValue(true)) || (EntityUtil.isNeutralMob(calculatedTarget) && !targetNeutrals.getValue(true)) || (EntityUtil.isHostileMob(calculatedTarget) && !targetHostiles.getValue(true)))
+                        continue;
+
+                    float targetDistance = mc.player.getDistance(calculatedTarget);
+                    if (targetDistance > targetRange.getValue(1.0))
+                        continue;
+
+                    float targetDamage = CrystalUtil.calculateDamage(crystal, calculatedTarget);
+                    float damageHeuristic = 0;
+                    if (logic.in("Damage"))
+                        damageHeuristic = targetDamage;
+                    else if (logic.in("Minimax"))
+                        damageHeuristic = targetDamage - localDamage;
+                    else if (logic.in("Uniform"))
+                        damageHeuristic = targetDamage - localDamage - distance;
+
+                    crystalMap.put(damageHeuristic, new Crystal(crystal, calculatedTarget, targetDamage, localDamage));
+                }
+            }
+
+            if (!crystalMap.isEmpty()) {
+                // In this map, the best crystal will be the last entry
+                Crystal idealCrystal = crystalMap.lastEntry().getValue();
+
+                // Required damage for the crystal to be continued
+                double requiredDamage = explodeDamage.getValue(1.0);
+
+                // Find out if we need to override the required damage
+                if (override.getValue(true)) {
+                    if (idealCrystal.getTargetDamage() * overrideThreshold.getValue(1) >= EnemyUtil.getHealth(idealCrystal.getExplodeTarget()))
+                        requiredDamage = idealCrystal.getTargetDamage();
+
+                    // Critical health
+                    if (EnemyUtil.getHealth(idealCrystal.getExplodeTarget()) < overrideHealth.getValue(1.0))
+                        requiredDamage = 1.5;
+
+                    // Critical armor
+                    if (EnemyUtil.getLowestArmor(idealCrystal.getExplodeTarget()) <= overrideArmor.getValue(1.0))
+                        requiredDamage = 1.5;
+                }
+
+                if (idealCrystal.getTargetDamage() >= requiredDamage)
+                    return idealCrystal;
+            }
+        }
+
         return null;
     }
 
