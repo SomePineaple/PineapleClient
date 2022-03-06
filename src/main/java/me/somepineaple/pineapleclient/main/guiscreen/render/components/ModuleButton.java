@@ -52,12 +52,12 @@ public class ModuleButton {
 
 		this.widget = new ArrayList<>();
 
-		this.module_name = module.get_name();
+		this.module_name = module.getName();
 
 		this.x = 0;
 		this.y = 0;
 
-		this.width  = font.get_string_width(module.get_name()) + 5;
+		this.width  = font.get_string_width(module.getName()) + 5;
 		this.height = font.get_string_height();
 
 		this.opened_height = this.height;

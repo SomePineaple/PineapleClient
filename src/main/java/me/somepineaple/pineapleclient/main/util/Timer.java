@@ -1,7 +1,6 @@
 package me.somepineaple.pineapleclient.main.util;
 
 public class Timer {
-
     private long time;
 
     public Timer() {

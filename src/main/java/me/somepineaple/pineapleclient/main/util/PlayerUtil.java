@@ -1,6 +1,9 @@
 package me.somepineaple.pineapleclient.main.util;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.network.play.client.CPacketEntityAction;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -75,27 +78,24 @@ public class PlayerUtil {
             mc.player.serverSneakState = l_IsSneaking;
         }
 
-        float l_Pitch = p_Pitch;
-        float l_Yaw = p_Yaw;
-
         AxisAlignedBB axisalignedbb = mc.player.getEntityBoundingBox();
         double l_PosXDifference = mc.player.posX - mc.player.lastReportedPosX;
         double l_PosYDifference = axisalignedbb.minY - mc.player.lastReportedPosY;
         double l_PosZDifference = mc.player.posZ - mc.player.lastReportedPosZ;
-        double l_YawDifference = (double)(l_Yaw - mc.player.lastReportedYaw);
-        double l_RotationDifference = (double)(l_Pitch - mc.player.lastReportedPitch);
+        double l_YawDifference = (double)(p_Yaw - mc.player.lastReportedYaw);
+        double l_RotationDifference = (double)(p_Pitch - mc.player.lastReportedPitch);
         ++mc.player.positionUpdateTicks;
         boolean l_MovedXYZ = l_PosXDifference * l_PosXDifference + l_PosYDifference * l_PosYDifference + l_PosZDifference * l_PosZDifference > 9.0E-4D || mc.player.positionUpdateTicks >= 20;
         boolean l_MovedRotation = l_YawDifference != 0.0D || l_RotationDifference != 0.0D;
 
         if (mc.player.isRiding())
         {
-            mc.player.connection.sendPacket(new CPacketPlayer.PositionRotation(mc.player.motionX, -999.0D, mc.player.motionZ, l_Yaw, l_Pitch, mc.player.onGround));
+            mc.player.connection.sendPacket(new CPacketPlayer.PositionRotation(mc.player.motionX, -999.0D, mc.player.motionZ, p_Yaw, p_Pitch, mc.player.onGround));
             l_MovedXYZ = false;
         }
         else if (l_MovedXYZ && l_MovedRotation)
         {
-            mc.player.connection.sendPacket(new CPacketPlayer.PositionRotation(mc.player.posX, axisalignedbb.minY, mc.player.posZ, l_Yaw, l_Pitch, mc.player.onGround));
+            mc.player.connection.sendPacket(new CPacketPlayer.PositionRotation(mc.player.posX, axisalignedbb.minY, mc.player.posZ, p_Yaw, p_Pitch, mc.player.onGround));
         }
         else if (l_MovedXYZ)
         {
@@ -103,7 +103,7 @@ public class PlayerUtil {
         }
         else if (l_MovedRotation)
         {
-            mc.player.connection.sendPacket(new CPacketPlayer.Rotation(l_Yaw, l_Pitch, mc.player.onGround));
+            mc.player.connection.sendPacket(new CPacketPlayer.Rotation(p_Yaw, p_Pitch, mc.player.onGround));
         }
         else if (mc.player.prevOnGround != mc.player.onGround)
         {
@@ -120,11 +120,34 @@ public class PlayerUtil {
 
         if (l_MovedRotation)
         {
-            mc.player.lastReportedYaw = l_Yaw;
-            mc.player.lastReportedPitch = l_Pitch;
+            mc.player.lastReportedYaw = p_Yaw;
+            mc.player.lastReportedPitch = p_Pitch;
         }
 
         mc.player.prevOnGround = mc.player.onGround;
         mc.player.autoJumpEnabled = mc.player.mc.gameSettings.autoJump;
+    }
+
+    public static boolean isEating() {
+        if (mc.player.isHandActive()) {
+            return mc.player.getActiveItemStack().getItemUseAction().equals(EnumAction.EAT) || mc.player.getActiveItemStack().getItemUseAction().equals(EnumAction.DRINK);
+        }
+        return false;
+    }
+
+    public static boolean isMending() {
+        return mc.player.isHandActive() && mc.player.getActiveItemStack().getItem().equals(Items.EXPERIENCE_BOTTLE) && mc.gameSettings.keyBindUseItem.isKeyDown();
+    }
+
+    public static boolean isMining() {
+        return isHolding(Items.DIAMOND_PICKAXE) && mc.playerController.getIsHittingBlock();
+    }
+
+    public static boolean isHolding(Item item) {
+        return mc.player.getHeldItemMainhand().getItem().equals(item) || mc.player.getHeldItemOffhand().getItem().equals(item);
+    }
+
+    public static float getHealth() {
+        return mc.player.getHealth() + mc.player.getAbsorptionAmount();
     }
 }

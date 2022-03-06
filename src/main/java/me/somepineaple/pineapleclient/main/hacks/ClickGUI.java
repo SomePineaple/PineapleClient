@@ -12,7 +12,7 @@ public class ClickGUI extends Hack {
 		this.tag         = "GUI";
 		this.description = "The main gui";
 
-		set_bind(PineapleClient.KEY_GUI);
+		setBind(PineapleClient.KEY_GUI);
 	}
 
 	Setting label_frame = create("info", "ClickGUIInfoFrame", "Frames");

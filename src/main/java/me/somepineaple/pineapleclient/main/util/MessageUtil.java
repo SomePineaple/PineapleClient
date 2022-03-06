@@ -29,16 +29,16 @@ public class MessageUtil {
 				client_message_simple(opener + "we" + ChatFormatting.DARK_GREEN + " gaming ");
 				if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationenable").getValue(true)) NotificationUtil.send_notification(new Notification("We Gaming"));
 			} else {
-				client_message_simple(opener + r + module.get_name() + ChatFormatting.DARK_GREEN + " Enabled");
-				if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationenable").getValue(true)) NotificationUtil.send_notification(new Notification(module.get_name() + " Enabled"));
+				client_message_simple(opener + r + module.getName() + ChatFormatting.DARK_GREEN + " Enabled");
+				if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationenable").getValue(true)) NotificationUtil.send_notification(new Notification(module.getName() + " Enabled"));
 			}			
 		} else {
 			if (module.getTag().equals("AutoCrystal")) {
 				client_message_simple(opener + "we aint" + ChatFormatting.RED + " gaming " + r + "no more");
 				if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationenable").getValue(true)) NotificationUtil.send_notification(new Notification("We aint gaming no more"));
 			} else {
-				client_message_simple(opener + r + module.get_name() + ChatFormatting.RED + " Disabled");
-				if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationenable").getValue(true)) NotificationUtil.send_notification(new Notification(module.get_name() + " Disabled"));
+				client_message_simple(opener + r + module.getName() + ChatFormatting.RED + " Disabled");
+				if (PineapleClient.getSettingManager().getSettingWithTag("HUD", "notificationenable").getValue(true)) NotificationUtil.send_notification(new Notification(module.getName() + " Disabled"));
 			}
 		}
 	}

@@ -73,7 +73,7 @@ public class Surround extends Hack {
 	@Override
 	public void enable() {
 		if (find_in_hotbar() == -1) {
-			this.set_disable();
+			this.setDisable();
 			return;
 		}
 
@@ -112,13 +112,13 @@ public class Surround extends Hack {
 			}
 
 			if ((int) Math.round(mc.player.posY) != y_level && this.hybrid.getValue(true)) {
-				this.set_disable();
+				this.setDisable();
 				return;
 			}
 
 			if (!this.triggerable.getValue(true) && this.tick_runs >= this.tick_timeout.getValue(1)) { // timeout time
 				this.tick_runs = 0;
-				this.set_disable();
+				this.setDisable();
 				return;
 			}
 

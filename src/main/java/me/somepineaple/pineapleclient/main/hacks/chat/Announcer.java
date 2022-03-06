@@ -136,13 +136,13 @@ public class Announcer extends Hack {
     @Override
     public void update() {
         if (mc.player == null || mc.world == null) {
-            this.set_disable();
+            this.setDisable();
             return;
         }
         try {
             get_tick_data();
         } catch (Exception ignored) {
-            this.set_disable();
+            this.setDisable();
             return;
         }
 

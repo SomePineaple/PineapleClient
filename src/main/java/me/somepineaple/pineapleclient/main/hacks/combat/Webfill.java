@@ -54,7 +54,7 @@ public class Webfill extends Hack {
 
             if (!web_toggle.getValue(true)) {
 
-                this.set_disable();
+                this.setDisable();
                 MessageUtil.toggle_message(this);
                 return;
 

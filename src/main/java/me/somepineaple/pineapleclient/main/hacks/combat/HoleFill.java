@@ -39,7 +39,7 @@ public class HoleFill extends Hack {
     @Override
 	public void enable() {
 		if (find_in_hotbar() == -1) {
-		    this.set_disable();
+		    this.setDisable();
         }
         find_new_holes();
 	}
@@ -59,7 +59,7 @@ public class HoleFill extends Hack {
 
         if (holes.isEmpty()) {
             if (!hole_toggle.getValue(true)) {
-                this.set_disable();
+                this.setDisable();
                 MessageUtil.toggle_message(this);
                 return;
 

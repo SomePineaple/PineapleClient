@@ -336,7 +336,7 @@ public class AutoCrystal extends Hack {
 
                 final double self_damage = CrystalUtil.calculateDamage(crystal, mc.player);
 
-                if (self_damage > maximum_damage_self || (anti_suicide.getValue(true) && (mc.player.getHealth() + mc.player.getAbsorptionAmount()) - self_damage <= 0.5)) continue;
+                if (self_damage > maximum_damage_self || (anti_suicide.getValue(true) && PlayerUtil.getHealth() - self_damage <= 0.5)) continue;
 
                 if (target_damage > best_damage && !jumpy_mode.getValue(true)) {
                     autoez_target = target;
@@ -410,7 +410,7 @@ public class AutoCrystal extends Hack {
 
                 final double self_damage = CrystalUtil.calculateDamage((double) block.getX() + 0.5, (double) block.getY() + 1, (double) block.getZ() + 0.5, mc.player);
 
-                if (self_damage > maximum_damage_self || (anti_suicide.getValue(true) && (mc.player.getHealth() + mc.player.getAbsorptionAmount()) - self_damage <= 0.5)) continue;
+                if (self_damage > maximum_damage_self || (anti_suicide.getValue(true) && PlayerUtil.getHealth() - self_damage <= 0.5)) continue;
 
                 if (target_damage > best_damage) {
                     best_damage = target_damage;

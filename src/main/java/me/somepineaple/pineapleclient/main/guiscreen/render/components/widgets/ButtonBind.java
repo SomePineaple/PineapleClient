@@ -126,7 +126,7 @@ public class ButtonBind extends AbstractWidget {
 				}
 
 				case PineapleClient.KEY_DELETE: {
-					this.master.get_module().set_bind(0);
+					this.master.get_module().setBind(0);
 
 					this.waiting = false;
 
@@ -134,7 +134,7 @@ public class ButtonBind extends AbstractWidget {
 				}
 
 				default : {
-					this.master.get_module().set_bind(key);
+					this.master.get_module().setBind(key);
 
 					this.waiting = false;
 

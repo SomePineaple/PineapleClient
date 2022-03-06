@@ -82,7 +82,7 @@ public class AutoWeb extends Hack {
             mc.playerController.updateController();
             place_blocks(PlayerUtil.GetLocalPlayerPosFloored());
             mc.player.inventory.currentItem = last_slot;
-            this.set_disable();
+            this.setDisable();
         }
 
     }

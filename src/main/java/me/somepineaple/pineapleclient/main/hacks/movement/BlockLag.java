@@ -8,8 +8,8 @@ import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
 import me.somepineaple.pineapleclient.main.util.BlockInteractHelper;
 import me.somepineaple.pineapleclient.main.util.BlockUtil;
-import me.somepineaple.pineapleclient.main.util.MSTimer;
 import me.somepineaple.pineapleclient.main.util.PlayerUtil;
+import me.somepineaple.pineapleclient.main.util.Timer;
 import me.zero.alpine.fork.listener.EventHandler;
 import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.item.ItemBlock;
@@ -29,9 +29,9 @@ public class BlockLag extends Hack {
     Setting rotate = create("Rotate", "BlockLagRotate", true);
     Setting arm = create("Swing:", "BlockLagArm", "Mainhand", combobox("Offhand", "Mainhand"));
 
-    private final MSTimer _timer = new MSTimer();
-    private final MSTimer _towerPauseTimer = new MSTimer();
-    private final MSTimer _towerTimer = new MSTimer();
+    private final Timer _timer = new Timer();
+    private final Timer _towerPauseTimer = new Timer();
+    private final Timer _towerTimer = new Timer();
 
     @EventHandler
     private final Listener<EventMotionUpdate> onMotionUpdate = new Listener<>(event -> {

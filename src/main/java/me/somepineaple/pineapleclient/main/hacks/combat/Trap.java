@@ -131,7 +131,7 @@ public class Trap extends Hack {
         first_run = true;
 
         if (find_obi_in_hotbar() == -1) {
-            this.set_disable();
+            this.setDisable();
         }
 
 	}
@@ -142,20 +142,20 @@ public class Trap extends Hack {
         int timeout_ticks = 20;
         if (timeout_ticker > timeout_ticks && chad_mode.getValue(true)) {
             timeout_ticker =  0;
-            this.set_disable();
+            this.setDisable();
             return;
         }
 
         EntityPlayer closest_target = find_closest_target();
 
         if (closest_target == null) {
-            this.set_disable();
+            this.setDisable();
             MessageUtil.toggle_message(this);
             return;
         }
 
         if (chad_mode.getValue(true) && (int) Math.round(mc.player.posY) != y_level) {
-            this.set_disable();
+            this.setDisable();
             MessageUtil.toggle_message(this);
             return;
         }

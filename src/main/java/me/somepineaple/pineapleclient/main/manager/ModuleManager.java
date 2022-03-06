@@ -50,6 +50,7 @@ public class ModuleManager {
 		addHack(new Surround());
 		addHack(new Velocity());
 		addHack(new AutoCrystal());
+		addHack(new AutoCrystalRW());
 		addHack(new HoleFill());
 		addHack(new Trap());
 		addHack(new Socks());
@@ -120,7 +121,7 @@ public class ModuleManager {
 		// Dev
 		addHack(new FakePlayer());
 
-		arrayHacks.sort(Comparator.comparing(Hack::get_name));
+		arrayHacks.sort(Comparator.comparing(Hack::getName));
 	}
 
 	public void addHack(Hack module) {
@@ -211,7 +212,7 @@ public class ModuleManager {
 				try {
 					modules.update();
 				} catch (Exception e) {
-					MessageUtil.clientMessage("Error at " + modules.get_name() + " update method " + e.getMessage());
+					MessageUtil.clientMessage("Error at " + modules.getName() + " update method " + e.getMessage());
 					e.printStackTrace();
 				}
 			}
@@ -225,7 +226,7 @@ public class ModuleManager {
 					modules.render();
 				} catch (Exception e) {
 					if (mc.world != null && mc.player != null) {
-						MessageUtil.clientMessage("Error at " + modules.get_name() + " render method " + e.getMessage());
+						MessageUtil.clientMessage("Error at " + modules.getName() + " render method " + e.getMessage());
 						e.printStackTrace();
 					}
 				}

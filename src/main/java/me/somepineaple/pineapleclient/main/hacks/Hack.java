@@ -23,9 +23,9 @@ public class Hack implements Listenable {
 
 	public int bind;
 
-	public boolean state_module;
-	public boolean toggle_message;
-	public boolean widget_usage;
+	public boolean moduleState;
+	public boolean toggleMessage;
+	public boolean widgetUsage;
 
 	public static final Minecraft mc = Minecraft.getMinecraft();
 
@@ -34,28 +34,28 @@ public class Hack implements Listenable {
 		this.tag            = "";
 		this.description    = "";
 		this.bind           = -1;
-		this.toggle_message = true;
-		this.widget_usage   = false;
+		this.toggleMessage  = true;
+		this.widgetUsage    = false;
 		this.category 		= category;
 	}
 
-	public void set_bind(int key) {
+	public void setBind(int key) {
 		this.bind = (key);
 	}
 
-	public void set_if_can_send_message_toggle(boolean value) {
-		this.toggle_message = value;
+	public void setIfCanSendMessageToggle(boolean value) {
+		this.toggleMessage = value;
 	}
 
 	public boolean isActive() {
-		return this.state_module;
+		return this.moduleState;
 	}
 
-	public boolean using_widget() {
-		return this.widget_usage;
+	public boolean usingWidget() {
+		return this.widgetUsage;
 	}
 
-	public String get_name() {
+	public String getName() {
 		return this.name;
 	}
 
@@ -63,7 +63,7 @@ public class Hack implements Listenable {
 		return this.tag;
 	}
 
-	public String get_description() {
+	public String getDescription() {
 		return this.description;
 	}
 
@@ -92,12 +92,12 @@ public class Hack implements Listenable {
 		return this.category;
 	}
 
-	public boolean can_send_message_when_toggle() {
-		return this.toggle_message;
+	public boolean canSendMessageWhenToggle() {
+		return this.toggleMessage;
 	}
 
-	public void set_disable() {
-		this.state_module = false;
+	public void setDisable() {
+		this.moduleState = false;
 
 		disable();
 
@@ -105,7 +105,7 @@ public class Hack implements Listenable {
 	}
 
 	public void set_enable() {
-		this.state_module = true;
+		this.moduleState = true;
 
 		enable();
 
@@ -113,15 +113,15 @@ public class Hack implements Listenable {
 	}
 
 	public void set_active(boolean value) {
-		if (this.state_module != value) {
+		if (this.moduleState != value) {
 			if (value) {
 				set_enable();
 			} else {
-				set_disable();
+				setDisable();
 			}
 		}
 
-		if (!(this.tag.equals("GUI") || this.tag.equals("HUD")) && this.toggle_message) {
+		if (!(this.tag.equals("GUI") || this.tag.equals("HUD")) && this.toggleMessage) {
 			MessageUtil.toggle_message(this);
 		}
 	}

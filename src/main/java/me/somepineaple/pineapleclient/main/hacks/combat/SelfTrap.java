@@ -37,7 +37,7 @@ public class SelfTrap extends Hack {
     @Override
     protected void enable() {
         if (find_in_hotbar() == -1) {
-            this.set_disable();
+            this.setDisable();
             return;
         }
     }

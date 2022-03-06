@@ -417,7 +417,7 @@ public class ConfigManager {
                 final String bind = colune.split(":")[1];
                 final String active = colune.split(":")[2];
                 final Hack module = PineapleClient.getHackManager().getModuleWithTag(tag);
-                module.set_bind(Integer.parseInt(bind));
+                module.setBind(Integer.parseInt(bind));
                 module.set_active(Boolean.parseBoolean(active));
             } catch (Exception ignored) {}
         }

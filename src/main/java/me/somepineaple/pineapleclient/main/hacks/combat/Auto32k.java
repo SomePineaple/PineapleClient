@@ -79,11 +79,11 @@ public class Auto32k extends Hack {
 
         if ((hopper_slot == -1 || dispenser_slot == -1 || redstone_slot == -1 || shulker_slot == -1 || block_slot == -1) && !place_mode.in("Hopper")) {
             MessageUtil.sendClientMessage("missing item");
-            this.set_disable();
+            this.setDisable();
             return;
         } else if (hopper_slot == -1 || shulker_slot == -1) {
             MessageUtil.sendClientMessage("missing item");
-            this.set_disable();
+            this.setDisable();
             return;
         }
 
@@ -110,7 +110,7 @@ public class Auto32k extends Hack {
 
             } else {
                 MessageUtil.sendClientMessage("unable to place");
-                this.set_disable();
+                this.setDisable();
             }
         } else if (place_mode.in("Auto")) {
             for (int x = -2; x <= 2; x++) {
@@ -136,7 +136,7 @@ public class Auto32k extends Hack {
                 }
             }
             MessageUtil.sendClientMessage("unable to place");
-            this.set_disable();
+            this.setDisable();
         } else {
             for (int z = -2; z <= 2; z++) {
                 for (int y = -1; y <= 2; y++) {
@@ -167,7 +167,7 @@ public class Auto32k extends Hack {
 
         if (ticks_past > 50 && !(mc.currentScreen instanceof GuiHopper)) {
             MessageUtil.sendClientMessage("inactive too long, disabling");
-            this.set_disable();
+            this.setDisable();
             return;
         }
 

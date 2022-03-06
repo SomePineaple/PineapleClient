@@ -65,9 +65,9 @@ public class Alert extends PineapleclientCommand {
 			return true;
 		}
 
-		module_requested.set_if_can_send_message_toggle(value);
+		module_requested.setIfCanSendMessageToggle(value);
 
-		MessageUtil.sendClientMessage("The actual value of " + module_requested.get_name() +  " is " + Boolean.toString(module_requested.can_send_message_when_toggle()) + ".");
+		MessageUtil.sendClientMessage("The actual value of " + module_requested.getName() +  " is " + Boolean.toString(module_requested.canSendMessageWhenToggle()) + ".");
 
 		return true;
 	}

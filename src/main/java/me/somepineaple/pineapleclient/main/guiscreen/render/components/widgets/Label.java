@@ -147,7 +147,7 @@ public class Label extends AbstractWidget {
 		int ns_a = PineapleClient.clickGui.themeWidgetNameA;
 
 		if (motion(absolute_x, absolute_y)) {
-			if (this.setting.get_master().using_widget()) {
+			if (this.setting.get_master().usingWidget()) {
 				this.setting.get_master().event_widget();
 
 				GL11.glPushMatrix();

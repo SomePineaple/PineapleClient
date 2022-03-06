@@ -1,11 +1,20 @@
 package me.somepineaple.pineapleclient.main.hacks.combat;
 
+import io.netty.util.internal.ConcurrentSet;
+import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
+import me.somepineaple.pineapleclient.main.util.PlayerUtil;
+import me.somepineaple.pineapleclient.main.util.Timer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 // Yoinked from cosmos: https://github.com/momentumdevelopment/cosmos/blob/main/src/main/java/cope/cosmos/client/features/modules/combat/AutoCrystalModule.java
 public class AutoCrystalRW extends Hack {
@@ -91,6 +100,133 @@ public class AutoCrystalRW extends Hack {
     private final Setting aOutline = create("Outline A", "acrwoutlinea", 255, 0, 255);
     private final Setting height = create("Glow Height", "acrwheight", 1.0, 0.0, 1.0);
     private final Setting renderDamage = create("Render Damage", "acrwrda",true);
+
+    // Crystal info
+    private Crystal explodeCrystal = new Crystal(null, null, 0, 0);
+    private final Timer explodeTimer = new Timer();
+    private final Timer switchTimer = new Timer();
+    private final Map<Integer, Integer> attemptedExplosions = new ConcurrentHashMap<>();
+    private final Set<EntityEnderCrystal> inhibitExplosions = new ConcurrentSet<>();
+
+    // Placement info
+    private static CrystalPosition placePositon = new CrystalPosition(BlockPos.ORIGIN, null, 0, 0);
+    private final Timer placeTimer = new Timer();
+    private final Map<BlockPos, Integer> attemptedPlacements = new ConcurrentHashMap<>();
+
+    // Tick clamp
+    private int switchTicks = 10;
+    private int strictTicks;
+
+    // Rotation info
+    private boolean yawLimit;
+    private Vec3d interactVector = Vec3d.ZERO;
+
+    // Switch info
+    private int previousSlot = -1;
+
+    // Response time
+    private long startTime = 0;
+    private static double  responseTime = 0;
+
+    // For speeedy execution
+    private Thread thinkerThread = null;
+
+    @Override
+    protected void enable() {
+        thinkerThread = new Thread(this::runMultiThread);
+        thinkerThread.start();
+    }
+
+    @Override
+    protected void disable(){
+        if (thinkerThread != null) {
+            try {
+                thinkerThread.join();
+            } catch (InterruptedException e) {
+                System.out.println("Failed to join autocrystalrw thinker thread");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void update() {
+        // Check tick clearance
+        if (strictTicks > 0)
+            strictTicks--;
+        else {
+            explodeCrystal();
+            placeCrystal();
+        }
+    }
+
+    private void runMultiThread() {
+        while (moduleState) {
+            if (pause.getValue(true)) {
+                if (checkPause()) {
+                    reset();
+                    strictTicks = 2;
+                    continue;
+                }
+            }
+
+            explodeCrystal = searchCrystal();
+            placePositon = searchPosition();
+        }
+    }
+
+    private Crystal searchCrystal() {
+        return null;
+    }
+
+    private CrystalPosition searchPosition() {
+        return null;
+    }
+
+    private void explodeCrystal() {
+
+    }
+
+    private void placeCrystal() {
+
+    }
+
+    private boolean checkPause() {
+        if ((PlayerUtil.isEating() && pauseEating.getValue(true)) || (PlayerUtil.isMining() && pauseMining.getValue(true)) || (PlayerUtil.isMending() && pauseMending.getValue(true)))
+            return true;
+
+        if (PlayerUtil.getHealth() < pauseHealth.getValue(1.0) && !mc.player.capabilities.isCreativeMode)
+            return true;
+
+        Surround s = (Surround) PineapleClient.getHackManager().getModuleWithTag("Surround");
+        if (s.areBlocksLeftToSurrond())
+            return true;
+
+        if (PineapleClient.getHackManager().getModuleWithTag("HoleFill").isActive())
+            return true;
+
+        if (PineapleClient.getHackManager().getModuleWithTag("BlockLag").isActive())
+            return true;
+
+        return PineapleClient.getHackManager().getModuleWithTag("Trap").isActive();
+    }
+
+    private void reset() {
+        explodeCrystal = new Crystal(null, null, 0, 0);
+        placePositon = new CrystalPosition(BlockPos.ORIGIN, null, 0, 0);
+        interactVector = Vec3d.ZERO;
+        yawLimit = false;
+        previousSlot = -1;
+        strictTicks = 0;
+        switchTicks = 10;
+        startTime = 0;
+        responseTime = 0;
+        placeTimer.reset();
+        explodeTimer.reset();
+        attemptedExplosions.clear();
+        attemptedPlacements.clear();
+        inhibitExplosions.clear();
+    }
 
     // Utility classes
     public static class CrystalPosition {
