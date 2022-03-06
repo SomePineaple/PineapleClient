@@ -373,13 +373,13 @@ public class AutoCrystal extends Hack {
 
         List<BlockPos> blocks = CrystalUtil.possiblePlacePositions((float) place_range.getValue(1), endcrystal.getValue(true), true);
 
-        for (Entity player : mc.world.playerEntities) {
+        for (EntityPlayer player : mc.world.playerEntities) {
 
             if (FriendUtil.isFriend(player.getName()) || player.getName().equals(mc.player.getName())) continue;
 
             for (BlockPos block : blocks) {
 
-                if (player == mc.player || !(player instanceof EntityPlayer)) continue;
+                if (player == mc.player) continue;
 
                 if (player.getDistance(mc.player) >= 11) continue;
 
@@ -391,20 +391,18 @@ public class AutoCrystal extends Hack {
                     continue;
                 }
 
-                final EntityPlayer target = (EntityPlayer) player;
+                ca_target = player;
 
-                ca_target = target;
-
-                if (target.isDead || target.getHealth() <= 0) continue;
+                if (player.isDead || player.getHealth() <= 0) continue;
 
                 boolean no_place = faceplace_check.getValue(true) && mc.player.getHeldItemMainhand().getItem() == Items.DIAMOND_SWORD;
-                if ((target.getHealth() < faceplace_mode_damage.getValue(1) && faceplace_mode.getValue(true)&& !no_place) || (get_armor_fucker(target) && !no_place)) {
+                if ((player.getHealth() < faceplace_mode_damage.getValue(1) && faceplace_mode.getValue(true)&& !no_place) || (get_armor_fucker(player) && !no_place)) {
                     minimum_damage = 2;
                 } else {
                     minimum_damage = this.min_player_place.getValue(1);
                 }
 
-                final double target_damage = CrystalUtil.calculateDamage((double) block.getX() + 0.5, (double) block.getY() + 1, (double) block.getZ() + 0.5, target);
+                final double target_damage = CrystalUtil.calculateDamage((double) block.getX() + 0.5, (double) block.getY() + 1, (double) block.getZ() + 0.5, player);
 
                 if (target_damage < minimum_damage) continue;
 
@@ -416,12 +414,12 @@ public class AutoCrystal extends Hack {
                     best_damage = target_damage;
                     best_block = block;
                     bestBlockSelfDamage = self_damage;
-                    autoez_target = target;
+                    autoez_target = player;
                 } else if (target_damage == best_damage && self_damage < bestBlockSelfDamage) {
                     best_damage = target_damage;
                     best_block = block;
                     bestBlockSelfDamage = self_damage;
-                    autoez_target = target;
+                    autoez_target = player;
                 }
             }
             if (best_block == null) ca_target = null;

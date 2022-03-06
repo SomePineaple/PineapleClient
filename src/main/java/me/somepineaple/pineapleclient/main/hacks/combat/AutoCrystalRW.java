@@ -51,7 +51,7 @@ public class AutoCrystalRW extends Hack {
     private final Setting placeLocal = create("Place Local Damage", "acrwpllda", 5.0, 0.0, 36.0);
     private final Setting placePacket = create("Place Packet", "acrwplp", true);
     private final Setting placeInteract = create("Place Interact", "acrwpli", "Normal", combobox("Strict", "None", "Normal"));
-    private final Setting placeRaytrace = create("Place Raytrace", "acrwplr", "Base", combobox("Normal", "Double", "Triple", "None"));
+    private final Setting placeRaytrace = create("Place Raytrace", "acrwplr", "Base", combobox("Normal", "Double", "Triple", "None", "Base"));
     private final Setting placeHand = create("Place Hand", "acrwplh", "Mainhand", combobox("Offhand", "Mainhand", "Both", "None"));
     private final Setting placeSwitch = create("Switch", "acrwplsw", "Off", combobox("Swap", "Silent", "Off"));
 
@@ -77,7 +77,7 @@ public class AutoCrystalRW extends Hack {
 
     // Calculations settings
     private final Setting timing = create("Timing", "acrwc", "Linear", combobox("Uniform", "Sequential", "Tick", "Linear"));
-    private final Setting placements = create("1.13+ mode", "acrwc1.13", false);
+    private final Setting onePointThirteenMode = create("1.13+ mode", "acrwc1.13", false);
     private final Setting logic = create("Logic", "acrwcl", "Damage", combobox("Minimax", "Uniform", "Damage"));
     private final Setting sync = create("Synchronize", "acrwcs", "Sound", combobox("Instant", "None", "Sound"));
     private final Setting prediction = create("Prediction", "acrwcp", false);
@@ -209,14 +209,7 @@ public class AutoCrystalRW extends Hack {
                 }
 
                 for (Entity calculatedTarget : mc.world.loadedEntityList) {
-                    if (calculatedTarget.equals(mc.player) || calculatedTarget.isDead)
-                        continue;
-
-                    if ((calculatedTarget instanceof EntityPlayer && (!targetPlayers.getValue(true) || FriendUtil.isFriend(((EntityPlayer)calculatedTarget).getName()))) || (EntityUtil.isPassiveMob(calculatedTarget) && !targetPassives.getValue(true)) || (EntityUtil.isNeutralMob(calculatedTarget) && !targetNeutrals.getValue(true)) || (EntityUtil.isHostileMob(calculatedTarget) && !targetHostiles.getValue(true)))
-                        continue;
-
-                    float targetDistance = mc.player.getDistance(calculatedTarget);
-                    if (targetDistance > targetRange.getValue(1.0))
+                    if (checkTarget(calculatedTarget))
                         continue;
 
                     float targetDamage = CrystalUtil.calculateDamage(crystal, calculatedTarget);
@@ -262,6 +255,82 @@ public class AutoCrystalRW extends Hack {
     }
 
     private CrystalPosition searchPosition() {
+        if (place.getValue(true)) {
+            TreeMap<Float, CrystalPosition> positionMap = new TreeMap<>();
+
+            for (BlockPos calculatedPosition : CrystalUtil.possiblePlacePositions((float) placeRange.getValue(1.0), onePointThirteenMode.getValue(true), true)) {
+                // Make sure it doesn't do too much damage
+                float localDamage = CrystalUtil.calculateDamage(calculatedPosition.getX() + 0.5, calculatedPosition.getY() + 1, calculatedPosition.getZ() + 0.5, mc.player);
+                if (localDamage > placeLocal.getValue(1.0) || (localDamage + 1 > PlayerUtil.getHealth() && pauseSafety.getValue(true)))
+                    continue;
+
+                float rayTraceOffset = 0;
+                if (placeRaytrace.in("Base"))
+                    rayTraceOffset = 0.5f;
+                else if (placeRaytrace.in("Normal"))
+                    rayTraceOffset = 1.5f;
+                else if (placeRaytrace.in("Double"))
+                    rayTraceOffset = 2.5f;
+                else if (placeRaytrace.in("Triple"))
+                    rayTraceOffset = 3.5f;
+
+                boolean wallPlacement = !BlockUtil.rayTracePlaceCheck(calculatedPosition, placeRaytrace.in("None"), rayTraceOffset);
+
+                Vec3d distancePosition = new Vec3d(calculatedPosition.getX() + 0.5, calculatedPosition.getY() + 1, calculatedPosition.getZ() + 0.5);
+
+                if (calculatedPosition.getY() > mc.player.posY + mc.player.getEyeHeight())
+                    distancePosition = new Vec3d(calculatedPosition.getX() + 0.5, calculatedPosition.getY(), calculatedPosition.getZ() + 0.5);
+
+                double distance = mc.player.getDistance(distancePosition.x, distancePosition.y, distancePosition.z);
+                if (distance > placeRange.getValue(1.0))
+                    continue;
+
+                if (wallPlacement && distance > placeWall.getValue(1.0))
+                    continue;
+
+                for (Entity calculatedTarget : mc.world.loadedEntityList) {
+                    if (checkTarget(calculatedTarget))
+                        continue;
+
+                    float targetDamage = CrystalUtil.calculateDamage(calculatedPosition.getX() + 0.5, calculatedPosition.getY() + 1, calculatedPosition.getZ() + 0.5, calculatedTarget);
+                    float damageHeuristic = 0;
+                    if (logic.in("Damage"))
+                        damageHeuristic = targetDamage;
+                    else if (logic.in("Minimax"))
+                        damageHeuristic = targetDamage - localDamage;
+                    else if (logic.in("Uniform"))
+                        damageHeuristic = (float) (targetDamage - localDamage - distance);
+
+                    positionMap.put(damageHeuristic, new CrystalPosition(calculatedPosition, calculatedTarget, targetDamage, localDamage));
+                }
+            }
+
+            if (!positionMap.isEmpty()) {
+                // In this map, the best crystal will be the last entry
+                CrystalPosition idealPos = positionMap.lastEntry().getValue();
+
+                // Required damage for the crystal to be continued
+                double requiredDamage = explodeDamage.getValue(1.0);
+
+                // Find out if we need to override the required damage
+                if (override.getValue(true)) {
+                    if (idealPos.getTargetDamage() * overrideThreshold.getValue(1) >= EnemyUtil.getHealth(idealPos.getPlaceTarget()))
+                        requiredDamage = idealPos.getTargetDamage();
+
+                    // Critical health
+                    if (EnemyUtil.getHealth(idealPos.getPlaceTarget()) < overrideHealth.getValue(1.0))
+                        requiredDamage = 1.5;
+
+                    // Critical armor
+                    if (EnemyUtil.getLowestArmor(idealPos.getPlaceTarget()) <= overrideArmor.getValue(1.0))
+                        requiredDamage = 1.5;
+                }
+
+                if (idealPos.getTargetDamage() >= requiredDamage)
+                    return idealPos;
+            }
+        }
+
         return null;
     }
 
@@ -271,6 +340,18 @@ public class AutoCrystalRW extends Hack {
 
     private void placeCrystal() {
 
+    }
+
+    private boolean checkTarget(Entity target) {
+        if (target.equals(mc.player) || target.isDead)
+            return true;
+
+        if ((target instanceof EntityPlayer && (!targetPlayers.getValue(true) || FriendUtil.isFriend(((EntityPlayer)target).getName()))) || (EntityUtil.isPassiveMob(target) && !targetPassives.getValue(true)) || (EntityUtil.isNeutralMob(target) && !targetNeutrals.getValue(true)) || (EntityUtil.isHostileMob(target) && !targetHostiles.getValue(true)))
+            return true;
+
+        float targetDistance = mc.player.getDistance(target);
+
+        return targetDistance > targetRange.getValue(1.0);
     }
 
     private boolean checkPause() {
