@@ -39,8 +39,8 @@ public class AutoEz extends Hack {
 
         if (mc.player == null) return;
 
-        if (event.get_packet() instanceof CPacketUseEntity) {
-            CPacketUseEntity cPacketUseEntity = (CPacketUseEntity) event.get_packet();
+        if (event.getPacket() instanceof CPacketUseEntity) {
+            CPacketUseEntity cPacketUseEntity = (CPacketUseEntity) event.getPacket();
             if (cPacketUseEntity.getAction().equals(CPacketUseEntity.Action.ATTACK)) {
                 Entity target_entity = cPacketUseEntity.getEntityFromWorld(mc.world);
                 if (target_entity instanceof EntityPlayer) {

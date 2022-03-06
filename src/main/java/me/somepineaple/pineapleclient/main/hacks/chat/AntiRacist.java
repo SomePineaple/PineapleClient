@@ -107,13 +107,13 @@ public class AntiRacist extends Hack {
     @EventHandler
     private Listener<EventPacket.SendPacket> listener = new Listener<>(event -> {
 
-        if (!(event.get_packet() instanceof CPacketChatMessage)) {
+        if (!(event.getPacket() instanceof CPacketChatMessage)) {
             return;
         }
 
         if(anti_nword.getValue(true)) {
 
-            String message = ((CPacketChatMessage) event.get_packet()).getMessage().toLowerCase();
+            String message = ((CPacketChatMessage) event.getPacket()).getMessage().toLowerCase();
 
             if (message.contains(nigger) || message.contains(nigga)) {
 
@@ -127,7 +127,7 @@ public class AntiRacist extends Hack {
 
             }
 
-            ((CPacketChatMessage) event.get_packet()).message = message;
+            ((CPacketChatMessage) event.getPacket()).message = message;
         }
     });
 }

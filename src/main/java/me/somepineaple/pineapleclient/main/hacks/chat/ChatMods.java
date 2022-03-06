@@ -33,9 +33,9 @@ public final class ChatMods extends Hack {
     @EventHandler
     private Listener<EventPacket.ReceivePacket> PacketEvent = new Listener<>(event -> {
 
-        if (event.get_packet() instanceof SPacketChat) {
+        if (event.getPacket() instanceof SPacketChat) {
 
-            final SPacketChat packet = (SPacketChat) event.get_packet();
+            final SPacketChat packet = (SPacketChat) event.getPacket();
 
             if (packet.getChatComponent() instanceof TextComponentString) {
                 final TextComponentString component = (TextComponentString) packet.getChatComponent();

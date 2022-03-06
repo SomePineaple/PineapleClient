@@ -32,7 +32,7 @@ public class AlwaysNight extends Hack {
     
     @EventHandler
     private Listener<EventPacket.ReceivePacket> recieve_packet = new Listener<>(event -> {
-    	if (event.get_packet() instanceof SPacketTimeUpdate) {
+    	if (event.getPacket() instanceof SPacketTimeUpdate) {
     		event.cancel();
     	}
     });

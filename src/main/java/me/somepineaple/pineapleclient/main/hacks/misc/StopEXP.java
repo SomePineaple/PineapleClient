@@ -30,7 +30,7 @@ public class StopEXP extends Hack {
 
 	@EventHandler
     private Listener<EventPacket.SendPacket> packet_event = new Listener<>(event -> {
-		if (event.get_packet() instanceof CPacketPlayerTryUseItem && should_cancel) {
+		if (event.getPacket() instanceof CPacketPlayerTryUseItem && should_cancel) {
 			event.cancel();
 		}
 	});

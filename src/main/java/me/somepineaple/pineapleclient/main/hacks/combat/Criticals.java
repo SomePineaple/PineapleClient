@@ -23,8 +23,8 @@ public class Criticals extends Hack {
 
 	@EventHandler
 	private Listener<EventPacket.SendPacket> listener = new Listener<>(event -> {
-		if (event.get_packet() instanceof CPacketUseEntity) {
-			CPacketUseEntity event_entity = ((CPacketUseEntity) event.get_packet());
+		if (event.getPacket() instanceof CPacketUseEntity) {
+			CPacketUseEntity event_entity = ((CPacketUseEntity) event.getPacket());
 
 			if (event_entity.getAction() == CPacketUseEntity.Action.ATTACK && mc.player.onGround) {
 				if (mode.in("Packet")) {

@@ -22,8 +22,8 @@ public class Blink extends Hack {
 
     @EventHandler
     public Listener<EventPacket.SendPacket> sendPacketListener = new Listener<>(event -> {
-        if (!(event.get_packet() instanceof CPacketPlayer)) return;
-        packets.add(event.get_packet());
+        if (!(event.getPacket() instanceof CPacketPlayer)) return;
+        packets.add(event.getPacket());
         event.cancel();
     });
 

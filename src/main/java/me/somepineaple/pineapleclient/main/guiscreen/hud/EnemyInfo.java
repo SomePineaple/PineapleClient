@@ -163,9 +163,9 @@ public class EnemyInfo extends Pinnable implements Listenable {
 
     @EventHandler
     private final Listener<EventPacket.ReceivePacket> packet_event = new Listener<>(event -> {
-        if (event.get_packet() instanceof SPacketEntityStatus) {
+        if (event.getPacket() instanceof SPacketEntityStatus) {
 
-            SPacketEntityStatus packet = (SPacketEntityStatus) event.get_packet();
+            SPacketEntityStatus packet = (SPacketEntityStatus) event.getPacket();
 
             if (packet.getOpCode() == 35) {
 

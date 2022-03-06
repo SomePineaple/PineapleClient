@@ -154,20 +154,20 @@ public class AutoCrystal extends Hack {
 
     @EventHandler
     private final Listener<EventPacket.SendPacket> send_listener = new Listener<>(event -> {
-        if (event.get_packet() instanceof CPacketPlayer && is_rotating && rotate_mode.in("Old")) {
+        if (event.getPacket() instanceof CPacketPlayer && is_rotating && rotate_mode.in("Old")) {
             if (debug.getValue(true)) {
                 MessageUtil.sendClientMessage("Rotating");
             }
-            final CPacketPlayer p = (CPacketPlayer) event.get_packet();
+            final CPacketPlayer p = (CPacketPlayer) event.getPacket();
             p.yaw = yaw;
             p.pitch = pitch;
             is_rotating = false;
         }
-        if (event.get_packet() instanceof CPacketPlayerTryUseItemOnBlock && is_rotating && rotate_mode.in("Old")) {
+        if (event.getPacket() instanceof CPacketPlayerTryUseItemOnBlock && is_rotating && rotate_mode.in("Old")) {
             if (debug.getValue(true)) {
                 MessageUtil.sendClientMessage("Rotating");
             }
-            final CPacketPlayerTryUseItemOnBlock p = (CPacketPlayerTryUseItemOnBlock) event.get_packet();
+            final CPacketPlayerTryUseItemOnBlock p = (CPacketPlayerTryUseItemOnBlock) event.getPacket();
             p.facingX = render_block_init.getX();
             p.facingY = render_block_init.getY();
             p.facingZ = render_block_init.getZ();
@@ -196,8 +196,8 @@ public class AutoCrystal extends Hack {
 
     @EventHandler
     private final Listener<EventPacket.ReceivePacket> receive_listener = new Listener<>(event -> {
-        if (event.get_packet() instanceof SPacketSoundEffect) {
-            final SPacketSoundEffect packet = (SPacketSoundEffect) event.get_packet();
+        if (event.getPacket() instanceof SPacketSoundEffect) {
+            final SPacketSoundEffect packet = (SPacketSoundEffect) event.getPacket();
 
             if (packet.getCategory() == SoundCategory.BLOCKS && packet.getSound() == SoundEvents.ENTITY_GENERIC_EXPLODE) {
                 for (Entity e : mc.world.loadedEntityList) {

@@ -144,7 +144,7 @@ public class BlockLag extends Hack {
     @EventHandler
     private final Listener<EventPacket.ReceivePacket> PacketEvent = new Listener<>(event ->
     {
-        if (event.get_packet() instanceof SPacketPlayerPosLook)
+        if (event.getPacket() instanceof SPacketPlayerPosLook)
         {
             this.set_active(false);
         }

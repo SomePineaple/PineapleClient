@@ -18,7 +18,7 @@ public class EventHandler implements Listenable {
 
 	@me.zero.alpine.fork.listener.EventHandler
 	private Listener<EventPacket.ReceivePacket> receive_event_packet = new Listener<>(event -> {
-		if (event.get_packet() instanceof SPacketTimeUpdate) {
+		if (event.getPacket() instanceof SPacketTimeUpdate) {
 			INSTANCE.update_time();
 		}
 	});

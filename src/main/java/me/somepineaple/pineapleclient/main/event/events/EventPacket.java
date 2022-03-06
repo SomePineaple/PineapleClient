@@ -15,7 +15,7 @@ public class EventPacket extends EventCancellable {
 		this.packet = packet;
 	}
 
-	public Packet get_packet() {
+	public Packet getPacket() {
 		return this.packet;
 	}
 

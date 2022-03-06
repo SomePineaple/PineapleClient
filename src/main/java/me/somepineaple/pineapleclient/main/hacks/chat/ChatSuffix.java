@@ -62,7 +62,7 @@ public class ChatSuffix extends Hack {
 	@EventHandler
 	private Listener<EventPacket.SendPacket> listener = new Listener<>(event -> {
 		// If not be the CPacketChatMessage return.
-		if (!(event.get_packet() instanceof CPacketChatMessage)) {
+		if (!(event.getPacket() instanceof CPacketChatMessage)) {
 			return;
 		}
 
@@ -72,7 +72,7 @@ public class ChatSuffix extends Hack {
 		// Get value.
 		boolean ignore_prefix = ignore.getValue(true);
 
-		String message = ((CPacketChatMessage) event.get_packet()).getMessage();
+		String message = ((CPacketChatMessage) event.getPacket()).getMessage();
 
 		// If is with some caracther.
 		if (message.startsWith("/")  && ignore_prefix) accept_suffix = false;
@@ -126,7 +126,7 @@ public class ChatSuffix extends Hack {
 		}
 
 		// Send the message.
-		((CPacketChatMessage) event.get_packet()).message = message;
+		((CPacketChatMessage) event.getPacket()).message = message;
 	});
 
 	// Get the random values string.

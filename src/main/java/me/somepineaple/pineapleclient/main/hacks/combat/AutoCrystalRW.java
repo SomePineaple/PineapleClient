@@ -4,6 +4,7 @@ import com.mojang.realmsclient.util.Pair;
 import io.netty.util.internal.ConcurrentSet;
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.events.EventMotionUpdate;
+import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
@@ -18,9 +19,7 @@ import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.*;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
 import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
@@ -827,6 +826,17 @@ public class AutoCrystalRW extends Hack {
         if (event.stage == 1) {
             PosManager.restorePosition();
             RotationUtil.restoreRotations();
+        }
+    });
+
+    @EventHandler
+    private final Listener<EventPacket.SendPacket> send_listener = new Listener<>(event -> {
+        if (event.getPacket() instanceof CPacketHeldItemChange) {
+            switchTimer.reset();
+
+            Item switchItem = mc.player.inventory.getStackInSlot(((CPacketHeldItemChange) event.getPacket()).getSlotId()).getItem();
+            if (!(switchItem instanceof ItemEndCrystal))
+                switchTicks = 0;
         }
     });
 

@@ -118,7 +118,7 @@ public class Freecam extends Hack {
 
     @EventHandler
     private final Listener<EventPacket.SendPacket> sendPacketListener = new Listener<>(event -> {
-        if (cancelpackets.getValue(true) && (event.get_packet() instanceof CPacketPlayer || event.get_packet() instanceof CPacketInput)) {
+        if (cancelpackets.getValue(true) && (event.getPacket() instanceof CPacketPlayer || event.getPacket() instanceof CPacketInput)) {
             event.cancel();
         }
     });
