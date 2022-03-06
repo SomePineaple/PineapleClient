@@ -170,12 +170,12 @@ public class ConfigManager {
             final BufferedWriter br = new BufferedWriter(new FileWriter(file));
 
             for (Setting setting : PineapleClient.getSettingManager().get_settings_with_hack(hack)) {
-                switch (setting.get_type()) {
+                switch (setting.getType()) {
                     case "button":
                         br.write(setting.get_tag() + ":" + setting.getValue(true) + "\r\n");
                         break;
                     case "combobox":
-                        br.write(setting.get_tag() + ":" + setting.get_current_value() + "\r\n");
+                        br.write(setting.get_tag() + ":" + setting.getCurrentValue() + "\r\n");
                         break;
                     case "label":
                         br.write(setting.get_tag() + ":" + setting.getValue("") + "\r\n");
@@ -218,7 +218,7 @@ public class ConfigManager {
                     // send_minecraft_log("Attempting to assign value '" + value + "' to setting '" + tag + "'");
 
                     try {
-                        switch (setting.get_type()) {
+                        switch (setting.getType()) {
                             case "button":
                                 setting.setValue(Boolean.parseBoolean(value));
                                 break;

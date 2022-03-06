@@ -51,12 +51,12 @@ public class Combobox extends AbstractWidget {
 
 		this.can = true;
 
-		for (String values : this.setting.get_values()) {
+		for (String values : this.setting.getValues()) {
 			this.values.add(values);
 		}
 
 		for (int i = 0; i >= this.values.size(); i++) {
-			if (this.values.get(i).equals(this.setting.get_current_value())) {
+			if (this.values.get(i).equals(this.setting.getCurrentValue())) {
 				this.combobox_actual_value = i;
 
 				break;
@@ -158,7 +158,7 @@ public class Combobox extends AbstractWidget {
 		int ns_b = PineapleClient.clickGui.themeWidgetNameB;
 		int ns_a = PineapleClient.clickGui.themeWidgetNameB;
 
-		Draw.drawString(this.combobox_name + " " + this.setting.get_current_value(), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
+		Draw.drawString(this.combobox_name + " " + this.setting.getCurrentValue(), this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 
 		if (this.combobox_actual_value >= this.values.size()) {
 			this.combobox_actual_value = 0;

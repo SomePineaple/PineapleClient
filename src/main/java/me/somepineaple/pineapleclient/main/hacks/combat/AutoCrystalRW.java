@@ -1,5 +1,6 @@
 package me.somepineaple.pineapleclient.main.hacks.combat;
 
+import com.mojang.realmsclient.util.Pair;
 import io.netty.util.internal.ConcurrentSet;
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
@@ -18,10 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.network.play.client.CPacketHeldItemChange;
+import net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock;
 import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
@@ -324,7 +328,7 @@ public class AutoCrystalRW extends Hack {
                 CrystalPosition idealPos = positionMap.lastEntry().getValue();
 
                 // Required damage for the crystal to be continued
-                double requiredDamage = explodeDamage.getValue(1.0);
+                double requiredDamage = placeDamage.getValue(1.0);
 
                 // Find out if we need to override the required damage
                 if (override.getValue(true)) {
@@ -415,7 +419,139 @@ public class AutoCrystalRW extends Hack {
     }
 
     private void placeCrystal() {
+        if (placePosition != null) {
+            if (!rotate.in("None") && (rotateWhen.in("Place") || rotateWhen.in("Both"))) {
+                interactVector = new Vec3d(placePosition.getPosition()).add(0.5, 0.5, 0.5);
 
+                if (rotate.in("Client")) {
+                    float[] angles = MathUtil.calcAngle(mc.player.getPositionEyes(mc.getRenderPartialTicks()), interactVector);
+
+                    mc.player.rotationYaw = angles[0];
+                    mc.player.rotationYawHead = angles[0];
+                    mc.player.rotationPitch = angles[1];
+                }
+            }
+
+            if (placeSwitch.in("Packet"))
+                previousSlot = mc.player.inventory.currentItem;
+
+            if (PlayerUtil.isEating())
+                switchTicks = 0;
+
+            if (placeSwitch.in("Normal"))
+                ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+
+            switchTicks++;
+
+            if (!PlayerUtil.isHolding(Items.END_CRYSTAL)) {
+                if (switchTicks <= 10 && placeSwitch.in("Normal"))
+                    return;
+
+                int crystalSlot = getCrystalSlot();
+                if (crystalSlot != -1) {
+                    if (explodeWeakness.in("Normal"))
+                        mc.player.inventory.currentItem = crystalSlot;
+
+                    mc.player.connection.sendPacket(new CPacketHeldItemChange(crystalSlot));
+
+                    if (placeSwitch.in("Packet"))
+                        ((IPlayerControllerMP) mc.playerController).hookSyncCurrentPlayItem();
+                }
+            }
+
+            if (placeTimer.passed(placeDelay.getValue(1)) && (PlayerUtil.isHolding(Items.END_CRYSTAL) || placeSwitch.in("Packet"))) {
+                // directions of placement
+                double facingX = 0;
+                double facingY = 0;
+                double facingZ = 0;
+
+                // assume the face is visible
+                EnumFacing facingDirection = EnumFacing.UP;
+
+                float[] rotationAngles = MathUtil.calcAngle(mc.player.getPositionEyes(mc.getRenderPartialTicks()), interactVector);
+                Vec3d placeVector = MathUtil.getVectorForRotation(rotationAngles);
+                RayTraceResult vectorResult = mc.world.rayTraceBlocks(mc.player.getPositionEyes(1), mc.player.getPositionEyes(1).add(placeVector.x * placeRange.getValue(1.0), placeVector.y * placeRange.getValue(1.0), placeVector.z * placeRange.getValue(1.0)), false, false, false);
+
+                if (placeInteract.in("None")) {
+                    facingDirection = EnumFacing.DOWN;
+                    facingX = 0.5;
+                    facingY = 0.5;
+                    facingZ = 0.5;
+                } else if (placeInteract.in("Normal")) {
+                    // find the direction to place against
+                    RayTraceResult laxResult = mc.world.rayTraceBlocks(mc.player.getPositionEyes(1), interactVector);
+
+                    if (laxResult != null && laxResult.typeOfHit.equals(RayTraceResult.Type.BLOCK)) {
+                        facingDirection = laxResult.sideHit;
+
+                        // if we're at world height, we can still place a crystal if we interact with the bottom of the block, this doesn't work on strict servers
+                        if (placePosition.getPosition().getY() >= (mc.world.getActualHeight() - 1)) {
+                            facingDirection = EnumFacing.DOWN;
+                        }
+                    }
+
+                    // find rotations based on the placement
+                    if (vectorResult != null && vectorResult.hitVec != null) {
+                        facingX = vectorResult.hitVec.x - placePosition.getPosition().getX();
+                        facingY = vectorResult.hitVec.y - placePosition.getPosition().getY();
+                        facingZ = vectorResult.hitVec.z - placePosition.getPosition().getZ();
+                    }
+                } else if (placeInteract.in("Strict")) {
+                    // if the place position is likely out of sight
+                    if (placePosition.getPosition().getY() > mc.player.posY + mc.player.getEyeHeight()) {
+                        // the place vectors lowest bounds
+                        Vec3d strictVector = new Vec3d(placePosition.getPosition());
+
+                        // our nearest visible face
+                        Pair<Double, EnumFacing> closestDirection = Pair.of(Double.MAX_VALUE, EnumFacing.UP);
+
+                        // iterate through all points on the block
+                        for (float x = 0; x <= 1; x += 0.05) {
+                            for (float y = 0; y <= 1; y += 0.05) {
+                                for (float z = 0; z <= 1; z += 0.05) {
+                                    // find the vector to raytrace to
+                                    Vec3d traceVector = strictVector.add(x, y, z);
+
+                                    // check visibility, raytrace to the current point
+                                    RayTraceResult strictResult = mc.world.rayTraceBlocks(mc.player.getPositionEyes(1), traceVector, false, true, false);
+
+                                    // if our raytrace is a block, check distances
+                                    if (strictResult != null && strictResult.typeOfHit.equals(RayTraceResult.Type.BLOCK)) {
+                                        // distance to face
+                                        double directionDistance = mc.player.getDistance(traceVector.x, traceVector.y, traceVector.z);
+
+                                        // if the face is the closest to the player and trace distance is reasonably close, then we have found a new ideal visible side to place against
+                                        if (directionDistance < closestDirection.first()) {
+                                            closestDirection = Pair.of(directionDistance, strictResult.sideHit);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        facingDirection = closestDirection.second();
+                    }
+
+                    // find rotations based on the placement
+                    if (vectorResult != null && vectorResult.hitVec != null) {
+                        facingX = vectorResult.hitVec.x - placePosition.getPosition().getX();
+                        facingY = vectorResult.hitVec.y - placePosition.getPosition().getY();
+                        facingZ = vectorResult.hitVec.z - placePosition.getPosition().getZ();
+                    }
+                }
+
+                placeCrystal(placePosition.getPosition(), facingDirection, new Vec3d(facingX, facingY, facingZ), placePacket.getValue(true));
+                swingCrystal(placeHand);
+
+                if (placeSwitch.in("Packet")) {
+                    mc.player.connection.sendPacket(new CPacketHeldItemChange(previousSlot));
+                    previousSlot = -1;
+                }
+
+                placeTimer.reset();
+                attemptedPlacements.put(placePosition.getPosition(), attemptedPlacements.containsKey(placePosition.getPosition()) ? attemptedPlacements.get(placePosition.getPosition()) + 1 : 1);
+            }
+        }
     }
 
     private void explodeCrystal(EntityEnderCrystal crystal, boolean packet) {
@@ -424,6 +560,18 @@ public class AutoCrystalRW extends Hack {
                 mc.player.connection.sendPacket(new CPacketUseEntity(crystal));
             else
                 mc.playerController.attackEntity(mc.player, crystal);
+        }
+    }
+
+    public void placeCrystal(BlockPos position, EnumFacing facing, Vec3d vector, boolean packet) {
+        if (position != null) {
+            if (packet) {
+                mc.player.connection.sendPacket(new CPacketPlayerTryUseItemOnBlock(position, facing, mc.player.getHeldItemMainhand().getItem().equals(Items.END_CRYSTAL) || placeSwitch.in("Packet") ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND, (float) vector.x, (float) vector.y, (float) vector.z));
+            }
+
+            else {
+                mc.playerController.processRightClickBlock(mc.player, mc.world, position, facing, vector, mc.player.getHeldItemMainhand().getItem().equals(Items.END_CRYSTAL) || placeSwitch.in("Packet") ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND);
+            }
         }
     }
 
@@ -603,7 +751,6 @@ public class AutoCrystalRW extends Hack {
             ItemStack stack = mc.player.inventory.getStackInSlot(i);
             if (stack.getItem() instanceof ItemSword) {
                 swordSlot = i;
-                mc.playerController.updateController();
                 break;
             }
         }
@@ -618,12 +765,24 @@ public class AutoCrystalRW extends Hack {
             ItemStack stack = mc.player.inventory.getStackInSlot(i);
             if (stack.getItem() instanceof ItemPickaxe) {
                 pickSlot = i;
-                mc.playerController.updateController();
                 break;
             }
         }
 
         return pickSlot;
+    }
+
+    private int getCrystalSlot() {
+        int crystalSlot = -1;
+
+        for (int i = 0; i < 9; i++) {
+            ItemStack stack = mc.player.inventory.getStackInSlot(i);
+            if (stack.getItem().equals(Items.END_CRYSTAL)) {
+                crystalSlot = i;
+            }
+        }
+
+        return crystalSlot;
     }
 
     // Utility classes

@@ -56,9 +56,9 @@ public class Slider extends AbstractWidget {
 		this.double_  = 8192;
 		this.intenger = 8192;
 
-		if (this.setting.get_type().equals("doubleslider")) {
+		if (this.setting.getType().equals("doubleslider")) {
 			this.double_ = this.setting.getValue(1.0);
-		} else if (this.setting.get_type().equals("integerslider")) {
+		} else if (this.setting.getType().equals("integerslider")) {
 			this.intenger = this.setting.getValue(1);
 		}
 	}
@@ -177,15 +177,15 @@ public class Slider extends AbstractWidget {
 
 		if (this.click) {
 			if (mouse != 0) {
-				this.setting.setValue(TurokDouble.round(((mouse / this.width) * (this.setting.get_max(1.0) - this.setting.get_min(1.0)) + this.setting.get_min(1.0))));
+				this.setting.setValue(TurokDouble.round(((mouse / this.width) * (this.setting.getMax(1.0) - this.setting.getMin(1.0)) + this.setting.getMin(1.0))));
 			} else {
-				this.setting.setValue(this.setting.get_min(1.0));
+				this.setting.setValue(this.setting.getMin(1.0));
 			}
 		}
 
 		String slider_value = !this.compare ? java.lang.Double.toString(this.setting.getValue(this.double_)) : Integer.toString(this.setting.getValue(this.intenger));
 
-		Draw.drawRect(this.x, this.save_y, this.x + (int)((this.width) * (this.setting.getValue(1.0) - this.setting.get_min(1.0)) / (this.setting.get_max(1.0) - this.setting.get_min(1.0))), this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
+		Draw.drawRect(this.x, this.save_y, this.x + (int)((this.width) * (this.setting.getValue(1.0) - this.setting.getMin(1.0)) / (this.setting.getMax(1.0) - this.setting.getMin(1.0))), this.save_y + this.height, bg_r, bg_g, bg_b, bg_a);
 
 		Draw.drawString(this.slider_name, this.x + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);
 		Draw.drawString(slider_value, this.x + this.width - separe - font.get_string_width(slider_value) + 2, this.save_y, ns_r, ns_g, ns_b, ns_a);

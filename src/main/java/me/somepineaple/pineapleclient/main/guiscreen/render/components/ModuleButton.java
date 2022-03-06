@@ -73,7 +73,7 @@ public class ModuleButton {
 		this.count = 0;
 
 		for (Setting settings : PineapleClient.getSettingManager().get_settings_with_hack(module)) {
-			if (settings.get_type().equals("button")) {
+			if (settings.getType().equals("button")) {
 				this.widget.add(new Button(master, this, settings.get_tag(), this.settings_height));
 
 				this.settings_height += 10;
@@ -81,7 +81,7 @@ public class ModuleButton {
 				this.count++;
 			}
 
-			if (settings.get_type().equals("combobox")) {
+			if (settings.getType().equals("combobox")) {
 				this.widget.add(new Combobox(master, this, settings.get_tag(), this.settings_height));
 
 				this.settings_height += 10;
@@ -89,7 +89,7 @@ public class ModuleButton {
 				this.count++;
 			}
 
-			if (settings.get_type().equals("label")) {
+			if (settings.getType().equals("label")) {
 				this.widget.add(new Label(master, this, settings.get_tag(), this.settings_height));
 
 				this.settings_height += 10;
@@ -97,7 +97,7 @@ public class ModuleButton {
 				this.count++;
 			}
 
-			if (settings.get_type().equals("doubleslider") || settings.get_type().equals("integerslider")) {
+			if (settings.getType().equals("doubleslider") || settings.getType().equals("integerslider")) {
 				this.widget.add(new Slider(master, this, settings.get_tag(), this.settings_height));
 
 				this.settings_height += 10;

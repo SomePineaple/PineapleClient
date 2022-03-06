@@ -125,7 +125,7 @@ public class MathUtil {
         final double deltaX = pos.x - x;
         final double deltaY = pos.y - y;
         final double deltaZ = pos.z - z;
-        return (double) MathHelper.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+        return MathHelper.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
     }
 
     public static double[] calcIntersection(double[] line, double[] line2)
@@ -234,21 +234,6 @@ public class MathUtil {
         return bd.floatValue();
     }
 
-//    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(final Map<K, V> map, final boolean descending) {
-//        final List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
-//        if (descending) {
-//            list.sort((Comparator<? super Map.Entry<K, V>>)Map.Entry.comparingByValue(Comparator.reverseOrder()));
-//        }
-//        else {
-//            list.sort(Map.Entry.comparingByValue());
-//        }
-//        final Map<K, V> result = new LinkedHashMap<K, V>();
-//        for (final Map.Entry<K, V> entry : list) {
-//            result.put(entry.getKey(), entry.getValue());
-//        }
-//        return result;
-//    }
-
     public static String getTimeOfDay() {
         final Calendar c = Calendar.getInstance();
         final int timeOfDay = c.get(11);
@@ -345,5 +330,16 @@ public class MathUtil {
 
     static {
         random = new Random();
+    }
+
+    public static Vec3d getVectorForRotation(float[] rotations) {
+        float yaw = rotations[0];
+        float pitch = rotations[1];
+
+        float yawCos = cos(-yaw * 0.017453292F - (float) Math.PI);
+        float yawSin = sin(-yaw * 0.017453292F - (float) Math.PI);
+        float pitchCos = -cos(-pitch * 0.017453292F);
+        float pitchSin = sin(-pitch * 0.017453292F);
+        return new Vec3d(yawSin * pitchCos, pitchSin, yawCos * pitchCos);
     }
 }

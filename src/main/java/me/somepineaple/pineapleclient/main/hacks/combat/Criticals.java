@@ -39,6 +39,6 @@ public class Criticals extends Hack {
 
 	@Override
 	public String array_detail() {
-		return mode.get_current_value();
+		return mode.getCurrentValue();
 	}
 }

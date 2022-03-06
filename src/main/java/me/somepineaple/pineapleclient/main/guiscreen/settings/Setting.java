@@ -93,23 +93,15 @@ public class Setting {
 	}
 
 	public void setValue(double value) {
-		if (value >= get_max(value)) {
-			this.slider = get_max(value);
-		} else if (value <= get_min(value)) {
-			this.slider = get_min(value);
-		} else {
-			this.slider = value;
-		}
+		if (value >= getMax(value)) {
+			this.slider = getMax(value);
+		} else this.slider = Math.max(value, getMin(value));
 	}
 
 	public void setValue(int value) {
-		if (value >= get_max(value)) {
-			this.slider = get_max(value);
-		} else if (value <= get_min(value)) {
-			this.slider = get_min(value);
-		} else {
-			this.slider = value;
-		}
+		if (value >= getMax(value)) {
+			this.slider = getMax(value);
+		} else this.slider = Math.max(value, getMin(value));
 	}
 
 	public boolean is_info() {
@@ -124,11 +116,11 @@ public class Setting {
 		return this.button;
 	}
 
-	public List<String> get_values() {
+	public List<String> getValues() {
 		return this.combobox;
 	}
 
-	public String get_current_value() {
+	public String getCurrentValue() {
 		return this.current;
 	}
 
@@ -144,23 +136,23 @@ public class Setting {
 		return ((int) Math.round(this.slider));
 	}
 
-	public double get_min(double type) {
+	public double getMin(double type) {
 		return this.min;
 	}
 
-	public double get_max(double type) {
+	public double getMax(double type) {
 		return this.max;
 	}
 
-	public int get_min(int type) {
+	public int getMin(int type) {
 		return ((int) this.min);
 	}
 
-	public int get_max(int type) {
+	public int getMax(int type) {
 		return ((int) this.max);
 	}
 
-	public String get_type() {
+	public String getType() {
 		return this.type;
 	}
 }

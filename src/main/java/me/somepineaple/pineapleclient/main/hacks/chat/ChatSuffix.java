@@ -142,6 +142,6 @@ public class ChatSuffix extends Hack {
 	@Override
 	public String array_detail() {
 		// Update the detail.
-		return this.type.get_current_value();
+		return this.type.getCurrentValue();
 	}
 }
