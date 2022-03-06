@@ -3,12 +3,16 @@ package me.somepineaple.pineapleclient.main.hacks.combat;
 import com.mojang.realmsclient.util.Pair;
 import io.netty.util.internal.ConcurrentSet;
 import me.somepineaple.pineapleclient.PineapleClient;
+import me.somepineaple.pineapleclient.main.event.events.EventMotionUpdate;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
 import me.somepineaple.pineapleclient.main.util.*;
+import me.somepineaple.pineapleclient.mixins.IEntityPlayerSP;
 import me.somepineaple.pineapleclient.mixins.IPlayerControllerMP;
 import me.somepineaple.turok.draw.RenderHelp;
+import me.zero.alpine.fork.listener.EventHandler;
+import me.zero.alpine.fork.listener.Listener;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,11 +29,13 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 
 import java.awt.*;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -784,6 +790,45 @@ public class AutoCrystalRW extends Hack {
 
         return crystalSlot;
     }
+
+    @EventHandler
+    private final Listener<EventMotionUpdate> on_movement = new Listener<>(event -> {
+        if (event.stage == 0) {
+            PosManager.updatePosition();
+            RotationUtil.updateRotations();
+
+            if (rotate.in("Packet")) {
+                float[] packetAngles = MathUtil.calcAngle(mc.player.getPositionEyes(1), interactVector);
+
+                if (rotateRandom.getValue(1) > 0) {
+                    Random randomAngle = new Random();
+                    packetAngles[0] = packetAngles[0] + (randomAngle.nextFloat() * (randomAngle.nextBoolean() ? rotateRandom.getValue(1) : -rotateRandom.getValue(1)));
+                }
+
+                if (!rotateLimit.in("None")) {
+                    float yawDiff = MathHelper.wrapDegrees(packetAngles[0] - ((IEntityPlayerSP) mc.player).getLastReportedYaw());
+
+                    if (Math.abs(yawDiff) > 55 && !yawLimit) {
+                        packetAngles[0] = ((IEntityPlayerSP) mc.player).getLastReportedYaw();
+                        strictTicks++;
+                        yawLimit = true;
+                    }
+
+                    if (strictTicks <= 0) {
+                        if (rotateLimit.in("Strict"))
+                            packetAngles[0] = ((IEntityPlayerSP) mc.player).getLastReportedYaw() + (yawDiff > 0 ? Math.min(Math.abs(yawDiff), 55) : -Math.min(Math.abs(yawDiff), 55));
+                        yawLimit = false;
+                    }
+
+                    RotationUtil.setPlayerRotations(packetAngles[0], packetAngles[1]);
+                }
+            }
+        }
+        if (event.stage == 1) {
+            PosManager.restorePosition();
+            RotationUtil.restoreRotations();
+        }
+    });
 
     // Utility classes
     public static class CrystalPosition {

@@ -20,6 +20,7 @@
 		"MixinRenderLivingBase",
 		"MixinAbstractClientPlayer",
 		"MixinRenderManager",
-		"IPlayerControllerMP"
+		"IPlayerControllerMP",
+		"IEntityPlayerSP"
 	]
 }
