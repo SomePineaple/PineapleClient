@@ -5,6 +5,7 @@ import io.netty.util.internal.ConcurrentSet;
 import me.somepineaple.pineapleclient.PineapleClient;
 import me.somepineaple.pineapleclient.main.event.events.EventMotionUpdate;
 import me.somepineaple.pineapleclient.main.event.events.EventPacket;
+import me.somepineaple.pineapleclient.main.event.events.EventRender;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
@@ -619,7 +620,7 @@ public class AutoCrystalRW extends Hack {
     }
 
     @Override
-    public void render() {
+    public void render(EventRender event) {
         if (placePosition == null)
             return;
 
@@ -666,14 +667,14 @@ public class AutoCrystalRW extends Hack {
     }
 
     private void renderBlock(BlockPos pos, boolean solid, boolean outline, boolean glow, boolean glowLines) {
-        BlockPos render_block = (topBlock.getValue(true) ? pos.up() : pos);
-
         float h = (float) height.getValue(1.0);
+
+        MessageUtil.clientMessageSimple("rendering block at pos " + pos.getX() + " " + pos.getY() + " " + pos.getZ());
 
         if (solid) {
             RenderHelp.prepare("quads");
             RenderHelp.draw_cube(RenderHelp.get_buffer_build(),
-                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    pos.getX(), pos.getY(), pos.getZ(),
                     1, h, 1,
                     r.getValue(1), g.getValue(1), b.getValue(1), a.getValue(1),
                     "all"
@@ -684,7 +685,7 @@ public class AutoCrystalRW extends Hack {
         if (outline) {
             RenderHelp.prepare("lines");
             RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
-                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    pos.getX(), pos.getY(), pos.getZ(),
                     1, h, 1,
                     r.getValue(1), g.getValue(1), b.getValue(1), aOutline.getValue(1),
                     "all"
@@ -695,7 +696,7 @@ public class AutoCrystalRW extends Hack {
         if (glow) {
             RenderHelp.prepare("lines");
             RenderHelp.draw_cube_line(RenderHelp.get_buffer_build(),
-                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    pos.getX(), pos.getY(), pos.getZ(),
                     1, 0, 1,
                     r.getValue(1), g.getValue(1), b.getValue(1), aOutline.getValue(1),
                     "all"
@@ -703,7 +704,7 @@ public class AutoCrystalRW extends Hack {
             RenderHelp.release();
             RenderHelp.prepare("quads");
             RenderHelp.draw_gradiant_cube(RenderHelp.get_buffer_build(),
-                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    pos.getX(), pos.getY(), pos.getZ(),
                     1, h, 1,  new Color(r.getValue(1), g.getValue(1), b.getValue(1), a.getValue(1)),
                     new Color(0, 0, 0, 0),
                     "all"
@@ -714,7 +715,7 @@ public class AutoCrystalRW extends Hack {
         if (glowLines) {
             RenderHelp.prepare("lines");
             RenderHelp.draw_gradiant_outline(RenderHelp.get_buffer_build(),
-                    render_block.getX(), render_block.getY(), render_block.getZ(),
+                    pos.getX(), pos.getY(), pos.getZ(),
                     h, new Color(r.getValue(1), g.getValue(1), b.getValue(1), aOutline.getValue(1)),
                     new Color(0, 0, 0, 0),
                     "all"
