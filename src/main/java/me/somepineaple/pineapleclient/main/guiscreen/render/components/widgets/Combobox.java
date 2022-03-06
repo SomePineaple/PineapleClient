@@ -54,6 +54,9 @@ public class Combobox extends AbstractWidget {
 			this.values.add(values);
 		}
 
+		if (values.isEmpty())
+			throw new RuntimeException("Could not create combobox for setting w/ tag " + tag + " combobox appears to be empty");
+
 		for (int i = 0; i >= this.values.size(); i++) {
 			if (this.values.get(i).equals(this.setting.getCurrentValue())) {
 				this.combobox_actual_value = i;

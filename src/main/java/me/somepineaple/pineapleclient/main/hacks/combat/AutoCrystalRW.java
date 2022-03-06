@@ -120,10 +120,10 @@ public class AutoCrystalRW extends Hack {
     // Render settings
     private final Setting renderMode = create("Render", "acrwrm", "Pretty", combobox("Pretty", "Solid", "Outline", "Glow", "Glow 2", "None"));
     private final Setting topBlock = create("Render Top Block", "acrwrtb", false);
-    private final Setting r = create("R", "acrwr", 255, 0, 255);
-    private final Setting g = create("G", "acrwg", 255, 0, 255);
-    private final Setting b = create("B", "acrwb", 255, 0, 255);
-    private final Setting a = create("A", "acrwa", 100, 0, 255);
+    private final Setting r = create("R", "acrwrr", 255, 0, 255);
+    private final Setting g = create("G", "acrwrg", 255, 0, 255);
+    private final Setting b = create("B", "acrwrb", 255, 0, 255);
+    private final Setting a = create("A", "acrwra", 100, 0, 255);
     private final Setting aOutline = create("Outline A", "acrwoutlinea", 255, 0, 255);
     private final Setting height = create("Glow Height", "acrwheight", 1.0, 0.0, 1.0);
     private final Setting renderDamage = create("Render Damage", "acrwrda",true);
