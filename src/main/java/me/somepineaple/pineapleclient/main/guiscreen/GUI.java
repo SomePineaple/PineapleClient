@@ -92,12 +92,16 @@ public class GUI extends GuiScreen {
 				mc.displayGuiScreen(null);
 			}
 
-			if (key == Keyboard.KEY_DOWN || key == 200) {
-				frame.setY(frame.getY()-3);
+			//System.out.println("Pressed key " + key);
+
+			if (key == Keyboard.KEY_DOWN) {
+				//System.out.println("Shifting down");
+				frame.setY(frame.getY()-10);
 			}
 
-			if (key == Keyboard.KEY_UP || key == 208) {
-				frame.setY(frame.getY()+3);
+			if (key == Keyboard.KEY_UP) {
+				//System.out.println("Shifting up");
+				frame.setY(frame.getY()+10);
 			}
 		}
 	}

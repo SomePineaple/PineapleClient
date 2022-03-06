@@ -11,6 +11,8 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.network.play.client.CPacketPlayer;
 import net.minecraft.util.math.MathHelper;
 
+import java.util.Objects;
+
 
 public class Strafe extends Hack {
 
@@ -75,14 +77,14 @@ public class Strafe extends Hack {
 	}
 
 	@EventHandler
-	private Listener<EventPlayerJump> on_jump = new Listener<>(event -> {
+	private final Listener<EventPlayerJump> on_jump = new Listener<>(event -> {
 		if (speed_mode.in("Strafe")) {
 			event.cancel();
 		}
 	});
 
 	@EventHandler
-	private Listener<EventMove> player_move = new Listener<>(event -> {
+	private final Listener<EventMove> player_move = new Listener<>(event -> {
 
 		if (speed_mode.in("On Ground")) return;
 
@@ -98,7 +100,7 @@ public class Strafe extends Hack {
 		float rotation_yaw = mc.player.rotationYaw;
 
 		if (mc.player.isPotionActive(MobEffects.SPEED)) {
-			final int amp = mc.player.getActivePotionEffect(MobEffects.SPEED).getAmplifier();
+			final int amp = Objects.requireNonNull(mc.player.getActivePotionEffect(MobEffects.SPEED)).getAmplifier();
 			player_speed *= (1.2f * (amp+1));
 		}
 
@@ -124,12 +126,20 @@ public class Strafe extends Hack {
                 }
 			}
 
-            event.set_x((move_forward * player_speed) * Math.cos(Math.toRadians((rotation_yaw + 90.0f))) + (move_strafe * player_speed) * Math.sin(Math.toRadians((rotation_yaw + 90.0f))));
-            event.set_z((move_forward * player_speed) * Math.sin(Math.toRadians((rotation_yaw + 90.0f))) - (move_strafe * player_speed) * Math.cos(Math.toRadians((rotation_yaw + 90.0f))));
+			double cos = Math.cos(Math.toRadians((rotation_yaw + 90.0f)));
+			double sin = Math.sin(Math.toRadians((rotation_yaw + 90.0f)));
+			event.set_x((move_forward * player_speed) * cos + (move_strafe * player_speed) * sin);
+            event.set_z((move_forward * player_speed) * sin - (move_strafe * player_speed) * cos);
 		}
 
 		event.cancel();
 	});
+
+	@Override
+	protected void disable() {
+		mc.player.motionX = 0;
+		mc.player.motionY = 0;
+	}
 
 	private float get_rotation_yaw() {
 		float rotation_yaw = mc.player.rotationYaw;

@@ -55,15 +55,15 @@ public class AutoCrystalRW extends Hack {
     // Explode settings
     private final Setting explode = create("Explode", "acrwexp", true);
     private final Setting explodeRange = create("Explode Range", "acrwexpr", 6.0, 0.0, 8.0);
-    private final Setting explodeWall = create("Explode Wall Range", "acrwexpwr", 3.5, 0.0, 8.0);
+    private final Setting explodeWall = create("Explode Wall", "acrwexpwr", 3.5, 0.0, 8.0);
     private final Setting explodeDelay = create("Explode Delay", "acrwexpd", 60, 0, 500);
-    private final Setting explodeRandom = create("Explode Random Delay", "acrwexprd", 0, 0, 500);
+    private final Setting explodeRandom = create("Random Delay", "acrwexprd", 0, 0, 500);
     private final Setting explodeSwitch = create("Switch Delay", "acrwswd", 0, 0, 500);
     private final Setting explodeTicksExisted = create("Ticks Existed", "acrwte", 0, 0, 5);
     private final Setting explodeDamage = create("Explode Damage", "acrwexpda", 5.0, 0.0, 36.0);
-    private final Setting explodeLocal = create("Explode Local Damage", "acrwexplda", 5.0, 0.0, 36.0);
+    private final Setting explodeLocal = create("Explode Local", "acrwexplda", 5.0, 0.0, 36.0);
     private final Setting explodeLimit = create("Limit", "acrwexpl", 10, 0, 10);
-    private final Setting explodePacket = create("Explode w/ Packets", "acrwexpwpk", true);
+    private final Setting explodePacket = create("Explode Packets", "acrwexpwpk", true);
     private final Setting explodeInhibit = create("Inhibit", "acrwexpi", false);
     private final Setting explodeHand = create("Hand", "acrweh", "Mainhand", combobox("Offhand", "Mainhand", "Packet", "None"));
     private final Setting explodeWeakness = create("Anti Weakness", "acrwsw", "Off", combobox("Swap", "Silent", "Off"));
@@ -71,13 +71,13 @@ public class AutoCrystalRW extends Hack {
     // Place settings
     private final Setting place = create("Place", "acrwpl", true);
     private final Setting placeRange = create("Place Range", "acrwplr", 5.0, 0.0, 8.0);
-    private final Setting placeWall = create("Place Range Wall", "acrwplrw", 3.5, 0.0, 8.0);
+    private final Setting placeWall = create("Place Wall", "acrwplrw", 3.5, 0.0, 8.0);
     private final Setting placeDelay = create("Place Delay", "acrwpld", 20, 0, 500);
     private final Setting placeDamage = create("Place Damage", "acrwplda", 5.0, 0.0, 36.0);
-    private final Setting placeLocal = create("Place Local Damage", "acrwpllda", 5.0, 0.0, 36.0);
+    private final Setting placeLocal = create("Place Local", "acrwpllda", 5.0, 0.0, 36.0);
     private final Setting placePacket = create("Place Packet", "acrwplp", true);
     private final Setting placeInteract = create("Place Interact", "acrwpli", "Normal", combobox("Strict", "None", "Normal"));
-    private final Setting placeRaytrace = create("Place Raytrace", "acrwplr", "Base", combobox("Normal", "Double", "Triple", "None", "Base"));
+    private final Setting placeRaytrace = create("Place Raytrace", "acrwplray", "Base", combobox("Normal", "Double", "Triple", "None", "Base"));
     private final Setting placeHand = create("Place Hand", "acrwplh", "Mainhand", combobox("Offhand", "Mainhand", "Packet", "None"));
     private final Setting placeSwitch = create("Switch", "acrwplsw", "Off", combobox("Swap", "Silent", "Off"));
 
@@ -97,9 +97,9 @@ public class AutoCrystalRW extends Hack {
 
     // Rotation settings
     private final Setting rotate = create("Rotation", "acrwr", "None", combobox("Packet", "Client", "None"));
-    private final Setting rotateLimit = create("Yaw Limit", "acrwryl", "None", combobox("Normal", "Strict", "None"));
-    private final Setting rotateWhen = create("Rotate When", "acrwrw", "Both", combobox("Break", "Place", "Both"));
-    private final Setting rotateRandom = create("Rotate Random", "acrwrr", 0, 0, 5);
+    private final Setting rotateLimit = create("Yaw Limit", "acrwroyl", "None", combobox("Normal", "Strict", "None"));
+    private final Setting rotateWhen = create("Rotate When", "acrwrow", "Both", combobox("Break", "Place", "Both"));
+    private final Setting rotateRandom = create("Rotate Random", "acrwror", 0, 0, 5);
 
     // Calculations settings
     private final Setting timing = create("Timing", "acrwc", "Linear", combobox("Uniform", "Sequential", "Tick", "Linear"));
@@ -156,24 +156,24 @@ public class AutoCrystalRW extends Hack {
     private static double  responseTime = 0;
 
     // For speeedy execution
-    private Thread thinkerThread = null;
+    //private Thread thinkerThread = null;
 
     @Override
     protected void enable() {
-        thinkerThread = new Thread(this::runMultiThread);
-        thinkerThread.start();
+        //thinkerThread = new Thread(this::runMultiThread);
+        //thinkerThread.start();
     }
 
     @Override
     protected void disable(){
-        if (thinkerThread != null) {
+        /*if (thinkerThread != null) {
             try {
                 thinkerThread.join();
             } catch (InterruptedException e) {
                 System.err.println("Failed to join autocrystalrw thinker thread");
                 e.printStackTrace();
             }
-        }
+        }*/
 
         reset();
     }
@@ -181,6 +181,17 @@ public class AutoCrystalRW extends Hack {
     @Override
     public void update() {
         // Check tick clearance
+        if (pause.getValue(true)) {
+            if (checkPause()) {
+                reset();
+                strictTicks = 2;
+                return;
+            }
+        }
+
+        explodeCrystal = searchCrystal();
+        placePosition = searchPosition();
+
         if (strictTicks > 0)
             strictTicks--;
         else {
@@ -201,6 +212,8 @@ public class AutoCrystalRW extends Hack {
 
             explodeCrystal = searchCrystal();
             placePosition = searchPosition();
+
+            System.out.println("Ran multi thread");
         }
     }
 

@@ -98,10 +98,9 @@ public class Hack implements Listenable {
 
 	public void setDisable() {
 		this.moduleState = false;
+		PineapleEventBus.EVENT_BUS.unsubscribe(this);
 
 		disable();
-
-		PineapleEventBus.EVENT_BUS.unsubscribe(this);
 	}
 
 	public void set_enable() {
