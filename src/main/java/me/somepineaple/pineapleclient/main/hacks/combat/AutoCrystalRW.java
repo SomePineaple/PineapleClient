@@ -8,8 +8,8 @@ import me.somepineaple.pineapleclient.main.event.events.EventPacket;
 import me.somepineaple.pineapleclient.main.guiscreen.settings.Setting;
 import me.somepineaple.pineapleclient.main.hacks.Category;
 import me.somepineaple.pineapleclient.main.hacks.Hack;
-import me.somepineaple.pineapleclient.main.util.*;
 import me.somepineaple.pineapleclient.main.util.Timer;
+import me.somepineaple.pineapleclient.main.util.*;
 import me.somepineaple.pineapleclient.mixins.ICPacketUseEntity;
 import me.somepineaple.pineapleclient.mixins.IEntityPlayerSP;
 import me.somepineaple.pineapleclient.mixins.IPlayerControllerMP;
@@ -79,7 +79,7 @@ public class AutoCrystalRW extends Hack {
     private final Setting placeInteract = create("Place Interact", "acrwpli", "Normal", combobox("Strict", "None", "Normal"));
     private final Setting placeRaytrace = create("Place Raytrace", "acrwplray", "Base", combobox("Normal", "Double", "Triple", "None", "Base"));
     private final Setting placeHand = create("Place Hand", "acrwplh", "Mainhand", combobox("Offhand", "Mainhand", "Packet", "None"));
-    private final Setting placeSwitch = create("Switch", "acrwplsw", "Off", combobox("Swap", "Silent", "Off"));
+    private final Setting placeSwitch = create("Switch", "acrwplsw", "Off", combobox("Normal", "Silent", "Off"));
 
     // Pause settings
     private final Setting pause = create("Pause", "acrwp", true);
@@ -1002,20 +1002,34 @@ public class AutoCrystalRW extends Hack {
             }
         } else if (event.getPacket() instanceof SPacketSoundEffect && ((SPacketSoundEffect) event.getPacket()).getSound().equals(SoundEvents.ENTITY_GENERIC_EXPLODE)) {
             inhibitExplosions.clear();
-            for (Entity entity : mc.world.loadedEntityList) {
-                if (!(entity instanceof EntityEnderCrystal) || entity.isDead)
-                    continue;
+            // schedule to main mc thread
+            mc.addScheduledTask(() -> {
+                for (Iterator<Entity> entityList = mc.world.loadedEntityList.iterator(); entityList.hasNext();) {
+                    // next entity in the world
+                    Entity entity = entityList.next();
 
-                double soundDistance = entity.getDistance(((SPacketSoundEffect) event.getPacket()).getX(), ((SPacketSoundEffect) event.getPacket()).getY(), ((SPacketSoundEffect) event.getPacket()).getZ());
-                if (soundDistance > 6)
-                    continue;
+                    // make sure it's a crystal
+                    if (!(entity instanceof EntityEnderCrystal) || entity.isDead) {
+                        continue;
+                    }
 
-                if (explodeInhibit.getValue(true))
-                    inhibitExplosions.add((EntityEnderCrystal) entity);
+                    // make sure the crystal is in range from the sound to be destroyed
+                    double soundDistance = entity.getDistance(((SPacketSoundEffect) event.getPacket()).getX(), ((SPacketSoundEffect) event.getPacket()).getY(), ((SPacketSoundEffect) event.getPacket()).getZ());
+                    if (soundDistance > 6) {
+                        continue;
+                    }
 
-                if (sync.in("Sound"))
-                    mc.world.removeEntityDangerously(entity);
-            }
+                    // going to be exploded anyway, so don't attempt explosion
+                    if (explodeInhibit.getValue(true)) {
+                        inhibitExplosions.add((EntityEnderCrystal) entity);
+                    }
+
+                    // the world sets the crystal dead one tick after this packet, but we can speed up the placements by setting it dead here
+                    if (sync.in("Sound")) {
+                        mc.world.removeEntityDangerously(entity);
+                    }
+                }
+            });
         }
     });
 
