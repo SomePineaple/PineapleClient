@@ -25,10 +25,11 @@ public class AntiHoleFill extends Hack {
 		this.description = "Fill up holes w/ pressure plates";
     }
 
-    Setting holeToggle = create("Toggle", "HoleFillToggle", true);
-    Setting holeRotate = create("Rotate", "HoleFillRotate", true);
-    Setting holeRange = create("Range", "HoleFillRange", 4, 1, 6);
-    Setting swing = create("Swing", "HoleFillSwing", "Mainhand", combobox("Mainhand", "Offhand", "Both", "None"));
+    Setting holeToggle = create("Toggle", "AntiHoleFillToggle", true);
+    Setting holeRotate = create("Rotate", "AntiHoleFillRotate", true);
+    Setting holeRange = create("Range", "AntiHoleFillRange", 4, 1, 6);
+    Setting swing = create("Swing", "AntiHoleFillSwing", "Mainhand", combobox("Mainhand", "Offhand", "Both", "None"));
+    Setting self = create("Self Fill", "AntiHoleFillSelf", false);
 
     private final ArrayList<BlockPos> holes = new ArrayList<>();
 
@@ -69,12 +70,18 @@ public class AntiHoleFill extends Hack {
 
             if (pos == null) continue;
 
-            ValidResult result = BlockInteractHelper.valid(pos);
+            ValidResult result = BlockInteractHelper.valid(pos, false);
 
             if (result != ValidResult.Ok) {
                 holes.remove(pos);
                 continue;
             }
+
+            if (!self.getValue(true) && pos.equals(PlayerUtil.GetLocalPlayerPosFloored())) {
+                holes.remove(pos);
+                continue;
+            }
+
             posToFill = pos;
             break;
         }

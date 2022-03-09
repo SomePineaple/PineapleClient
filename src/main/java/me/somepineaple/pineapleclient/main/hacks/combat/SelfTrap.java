@@ -55,7 +55,7 @@ public class SelfTrap extends Hack {
 
         }
 
-        ValidResult result = BlockInteractHelper.valid(trap_pos);
+        ValidResult result = BlockInteractHelper.valid(trap_pos, true);
 
         if (result == ValidResult.AlreadyBlockThere && !mc.world.getBlockState(trap_pos).getMaterial().isReplaceable()) {
             return;
@@ -74,7 +74,7 @@ public class SelfTrap extends Hack {
 
             for (BlockPos pos_ : tests) {
 
-                ValidResult result_ = BlockInteractHelper.valid(pos_);
+                ValidResult result_ = BlockInteractHelper.valid(pos_, true);
 
                 if (result_ == ValidResult.NoNeighbors || result_ == ValidResult.NoEntityCollision) continue;
 

@@ -66,17 +66,15 @@ public class Webfill extends Hack {
 
         BlockPos pos_to_fill = null;
 
-        for (BlockPos pos : new ArrayList<BlockPos>(holes)) {
+        for (BlockPos pos : new ArrayList<>(holes)) {
 
             if (pos == null) continue;
 
-            BlockInteractHelper.ValidResult result = BlockInteractHelper.valid(pos);
+            BlockInteractHelper.ValidResult result = BlockInteractHelper.valid(pos, true);
 
             if (result != ValidResult.Ok) {
-
                 holes.remove(pos);
                 continue;
-
             }
 
             pos_to_fill = pos;

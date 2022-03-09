@@ -72,7 +72,7 @@ public class HoleFill extends Hack {
 
             if (pos == null) continue;
 
-            BlockInteractHelper.ValidResult result = BlockInteractHelper.valid(pos);
+            BlockInteractHelper.ValidResult result = BlockInteractHelper.valid(pos, true);
 
             if (result != ValidResult.Ok) {
                 holes.remove(pos);

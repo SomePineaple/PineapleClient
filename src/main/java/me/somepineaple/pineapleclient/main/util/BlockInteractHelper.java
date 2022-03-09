@@ -101,10 +101,10 @@ public class BlockInteractHelper {
         return PlaceResult.CantPlace;
     }
 
-    public static ValidResult valid(BlockPos pos)
+    public static ValidResult valid(BlockPos pos, boolean checkEntity)
     {
         // There are no entities to block placement,
-        if (!mc.world.checkNoEntityCollision(new AxisAlignedBB(pos)))
+        if (!mc.world.checkNoEntityCollision(new AxisAlignedBB(pos)) && checkEntity)
             return ValidResult.NoEntityCollision;
 
         if (!checkForNeighbours(pos))

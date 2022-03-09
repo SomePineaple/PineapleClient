@@ -97,7 +97,7 @@ public class BlockLag extends Hack {
             toPlaceAt = feetBlock;
         else // find a supporting position for feet block
         {
-            BlockInteractHelper.ValidResult result = BlockInteractHelper.valid(feetBlock);
+            BlockInteractHelper.ValidResult result = BlockInteractHelper.valid(feetBlock, true);
 
             // find a supporting block
             if (result != BlockInteractHelper.ValidResult.Ok && result != BlockInteractHelper.ValidResult.AlreadyBlockThere)
@@ -152,7 +152,7 @@ public class BlockLag extends Hack {
 
     private boolean isValidPlaceBlockState(BlockPos pos)
     {
-        BlockInteractHelper.ValidResult result = BlockInteractHelper.valid(pos);
+        BlockInteractHelper.ValidResult result = BlockInteractHelper.valid(pos, true);
 
         if (result == BlockInteractHelper.ValidResult.AlreadyBlockThere)
             return mc.world.getBlockState(pos).getMaterial().isReplaceable();

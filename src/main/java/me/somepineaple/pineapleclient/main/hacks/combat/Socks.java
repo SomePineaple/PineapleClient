@@ -82,7 +82,7 @@ public class Socks extends Hack {
 
         for (BlockPos pos : blocks_to_fill) {
 
-            ValidResult result = BlockInteractHelper.valid(pos);
+            ValidResult result = BlockInteractHelper.valid(pos, true);
 
             if (result != ValidResult.Ok) continue;
 
