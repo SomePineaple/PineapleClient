@@ -13,7 +13,6 @@ import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 
 public class Offhand extends Hack {
-
     public Offhand() {
         super(Category.COMBAT);
 
@@ -47,32 +46,32 @@ public class Offhand extends Hack {
 
             if (hp > totemSwitch.getValue(1)) {
                 if (switchMode.in("Crystal") && (PineapleClient.getHackManager().getModuleWithTag("AutoCrystal").isActive() || PineapleClient.getHackManager().getModuleWithTag("AutoCrystalRW").isActive())) {
-                    swapItems(get_item_slot(Items.END_CRYSTAL),0);
+                    swapItems(getItemSlot(Items.END_CRYSTAL),0);
                     return;
                 }
-                if (gappleInHole.getValue(true) && hp > gappleHoleHp.getValue(1) && is_in_hole()) {
-                    swapItems(get_item_slot(Items.GOLDEN_APPLE), delay.getValue(true) ? 1 : 0);
+                if (gappleInHole.getValue(true) && hp > gappleHoleHp.getValue(1) && isInHole()) {
+                    swapItems(getItemSlot(Items.GOLDEN_APPLE), delay.getValue(true) ? 1 : 0);
                     return;
                 }
                 if (switchMode.in("Totem")) {
-                    swapItems(get_item_slot(Items.TOTEM_OF_UNDYING), delay.getValue(true) ? 1 : 0);
+                    swapItems(getItemSlot(Items.TOTEM_OF_UNDYING), delay.getValue(true) ? 1 : 0);
                     return;
                 }
                 if (switchMode.in("Gapple")) {
-                    swapItems(get_item_slot(Items.GOLDEN_APPLE), delay.getValue(true) ? 1 : 0);
+                    swapItems(getItemSlot(Items.GOLDEN_APPLE), delay.getValue(true) ? 1 : 0);
                     return;
                 }
                 if (switchMode.in("Crystal") && !PineapleClient.getHackManager().getModuleWithTag("AutoCrystal").isActive()) {
-                    swapItems(get_item_slot(Items.TOTEM_OF_UNDYING),0);
+                    swapItems(getItemSlot(Items.TOTEM_OF_UNDYING),0);
                     return;
                 }
             } else {
-                swapItems(get_item_slot(Items.TOTEM_OF_UNDYING), delay.getValue(true) ? 1 : 0);
+                swapItems(getItemSlot(Items.TOTEM_OF_UNDYING), delay.getValue(true) ? 1 : 0);
                 return;
             }
 
             if (mc.player.getHeldItemOffhand().getItem() == Items.AIR) {
-                swapItems(get_item_slot(Items.TOTEM_OF_UNDYING), delay.getValue(true) ? 1 : 0);
+                swapItems(getItemSlot(Items.TOTEM_OF_UNDYING), delay.getValue(true) ? 1 : 0);
             }
 
         }
@@ -100,8 +99,7 @@ public class Offhand extends Hack {
         mc.playerController.updateController();
     }
 
-    private boolean is_in_hole() {
-
+    private boolean isInHole() {
         BlockPos player_block = PlayerUtil.GetLocalPlayerPosFloored();
 
         return mc.world.getBlockState(player_block.east()).getBlock() != Blocks.AIR
@@ -111,7 +109,7 @@ public class Offhand extends Hack {
     }
 
 
-    private int get_item_slot(Item input) {
+    private int getItemSlot(Item input) {
         if (input == mc.player.getHeldItemOffhand().getItem()) return -1;
         for(int i = 36; i >= 0; i--) {
             final Item item = mc.player.inventory.getStackInSlot(i).getItem();

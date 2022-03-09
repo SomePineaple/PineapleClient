@@ -8,9 +8,7 @@ import me.somepineaple.pineapleclient.main.util.BlockInteractHelper.ValidResult;
 import me.somepineaple.pineapleclient.main.util.BlockUtil;
 import me.somepineaple.pineapleclient.main.util.MessageUtil;
 import me.somepineaple.pineapleclient.main.util.PlayerUtil;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEnderChest;
-import net.minecraft.block.BlockObsidian;
+import net.minecraft.block.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -18,15 +16,15 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 
-public class HoleFill extends Hack {
-    public HoleFill() {
+public class AntiHoleFill extends Hack {
+    public AntiHoleFill() {
 		super(Category.COMBAT);
 
-		this.name        = "Hole Fill"; 
-		this.tag         = "HoleFill";
-		this.description = "Turn holes into floors";
+		this.name        = "Anti Hole Fill";
+		this.tag         = "AntiHoleFill";
+		this.description = "Fill up holes w/ pressure plates";
     }
-    
+
     Setting holeToggle = create("Toggle", "HoleFillToggle", true);
     Setting holeRotate = create("Rotate", "HoleFillRotate", true);
     Setting holeRange = create("Range", "HoleFillRange", 4, 1, 6);
@@ -60,25 +58,24 @@ public class HoleFill extends Hack {
                 this.setDisable();
                 MessageUtil.toggle_message(this);
                 return;
-
             } else {
                 findNewHoles();
             }
         }
 
-        BlockPos pos_to_fill = null;
+        BlockPos posToFill = null;
 
         for (BlockPos pos : new ArrayList<>(holes)) {
 
             if (pos == null) continue;
 
-            BlockInteractHelper.ValidResult result = BlockInteractHelper.valid(pos);
+            ValidResult result = BlockInteractHelper.valid(pos);
 
             if (result != ValidResult.Ok) {
                 holes.remove(pos);
                 continue;
             }
-            pos_to_fill = pos;
+            posToFill = pos;
             break;
         }
 
@@ -87,9 +84,9 @@ public class HoleFill extends Hack {
             return;
         }
 
-        if (pos_to_fill != null) {
-            if (BlockUtil.placeBlock(pos_to_fill, findInHotbar(), holeRotate.getValue(true), holeRotate.getValue(true), true, swing)) {
-                holes.remove(pos_to_fill);
+        if (posToFill != null) {
+            if (BlockUtil.placeBlock(posToFill, findInHotbar(), holeRotate.getValue(true), holeRotate.getValue(true), true, swing)) {
+                holes.remove(posToFill);
             }
         }
 
@@ -98,7 +95,7 @@ public class HoleFill extends Hack {
     public void findNewHoles() {
         holes.clear();
 
-        for (BlockPos pos : BlockInteractHelper.getSphere(PlayerUtil.GetLocalPlayerPosFloored(), holeRange.getValue(1), (int) holeRange.getValue(1), false, true, 0)) {
+        for (BlockPos pos : BlockInteractHelper.getSphere(PlayerUtil.GetLocalPlayerPosFloored(), holeRange.getValue(1), holeRange.getValue(1), false, true, 0)) {
 
             if (!mc.world.getBlockState(pos).getBlock().equals(Blocks.AIR)) {
                 continue;
@@ -141,13 +138,8 @@ public class HoleFill extends Hack {
             if (stack != ItemStack.EMPTY && stack.getItem() instanceof ItemBlock) {
                 final Block block = ((ItemBlock) stack.getItem()).getBlock();
 
-                if (block instanceof BlockEnderChest) {
+                if (block instanceof BlockPressurePlate || block instanceof BlockPressurePlateWeighted)
                     return i;
-                }
-
-                if (block instanceof BlockObsidian) {
-                    return i;
-                }
             }
         }
         return -1;

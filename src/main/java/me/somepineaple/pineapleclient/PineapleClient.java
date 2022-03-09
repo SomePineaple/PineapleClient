@@ -25,7 +25,7 @@ public class PineapleClient {
 	private static PineapleClient MASTER;
 
 	public static final String NAME = "PineapleClient";
-	public static final String VERSION = "2.0";
+	public static final String VERSION = "2.1.2";
 	public static final String SIGN = " - ";
 
 	public static final int KEY_GUI = Keyboard.KEY_RSHIFT;

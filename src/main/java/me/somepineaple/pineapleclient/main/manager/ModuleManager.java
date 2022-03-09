@@ -52,6 +52,7 @@ public class ModuleManager {
 		addHack(new AutoCrystal());
 		addHack(new AutoCrystalRW());
 		addHack(new HoleFill());
+		addHack(new AntiHoleFill());
 		addHack(new Trap());
 		addHack(new Socks());
 		addHack(new SelfTrap());
